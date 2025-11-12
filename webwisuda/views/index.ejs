@@ -832,7 +832,7 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
               <li><strong>Pendaftaran dibuka 3 bulan sebelum pelaksanaan wisuda</strong></li>
               <li>Semua dokumen harus diupload dalam format PDF atau JPG (max 2MB per file)</li>
               <li>Verifikasi dokumen dilakukan maksimal 2 minggu setelah upload</li>
-              <li>Jika dokumen ditolak, mahasiswa wajib melakukan upload ulang</li>
+              <li>Jika dokumen ditolak, mahasiswa wajib melakukan upload ulang</li> 
               <li>Pendaftaran yang tidak lengkap tidak akan diproses</li>
               <li>Untuk informasi lebih lanjut hubungi: <strong>wisuda@polinela.ac.id</strong></li>
             </ul>
@@ -844,7 +844,7 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
 </section>
 
 <!-- STATISTIK KELULUSAN -->
-<section class="section-statistik" id="panduan">
+<section class="section-statistik">
   <div class="container">
     <h2 class="section-title">Statistik Kelulusan</h2>
     <p class="section-subtitle">Data kelulusan dan keberhasilan mahasiswa Politeknik Negeri Lampung</p>
@@ -1102,83 +1102,96 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
+
 <script>
-  // --- Grafik Kelulusan Per Tahun ---
-  const ctx = document.getElementById('chartKelulusan').getContext('2d');
-  const chartKelulusan = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
-      datasets: [{
-        label: 'Jumlah Lulusan',
-        data: [350, 370, 400, 420, 450, 480],
-        backgroundColor: 'rgba(0, 71, 171, 0.8)',
-        borderColor: '#0047AB',
-        borderWidth: 2,
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false }
+  // --- Ambil data dari EJS (controller) ---
+  const chartYears = <%- JSON.stringify(chartYears) %>;
+  const chartYearData = <%- JSON.stringify(chartYearData) %>;
+  const chartMajors = <%- JSON.stringify(chartMajors) %>;
+  const chartMajorData = <%- JSON.stringify(chartMajorData) %>;
+
+  console.log("Chart Years:", chartYears);
+  console.log("Chart Data:", chartYearData);
+
+  // --- Grafik Kelulusan Tiap Tahun ---
+  const ctxTahun = document.getElementById('chartKelulusan');
+  if (ctxTahun) {
+    new Chart(ctxTahun, {
+      type: 'bar',
+      data: {
+        labels: chartYears,
+        datasets: [{
+          label: 'Jumlah Lulusan',
+          data: chartYearData,
+          backgroundColor: 'rgba(0, 71, 171, 0.8)',
+          borderColor: '#0047AB',
+          borderWidth: 2,
+          borderRadius: 10,
+        }]
       },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#333', font: { size: 12, weight: '500' } }
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
         },
-        x: {
-          ticks: { color: '#333', font: { size: 12, weight: '500' } }
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: '#333', font: { size: 12 } },
+            grid: { color: 'rgba(0,0,0,0.05)' }
+          },
+          x: {
+            ticks: { color: '#333', font: { size: 12 } },
+            grid: { display: false }
+          }
         }
       }
-    }
-  });
+    });
+  }
 
   // --- Grafik Kelulusan Per Jurusan ---
-  const ctxJurusan = document.getElementById('chartJurusan').getContext('2d');
-  const chartJurusan = new Chart(ctxJurusan, {
-    type: 'pie',
-    data: {
-      labels: ['Teknik Informatika', 'Akuntansi', 'Manajemen Informatika', 'Teknik Mesin', 'Teknik Sipil'],
-      datasets: [{
-        data: [150, 120, 100, 80, 60], // isi sesuai data kamu
-        backgroundColor: [
-          '#0047AB',
-          '#00D084',
-          '#FFC107',
-          '#FF6B6B',
-          '#B366FF'
-        ],
-        borderWidth: 3,
-        borderColor: '#ffffff'
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            font: { size: 12, family: 'Poppins' },
-            usePointStyle: true,
-            pointStyle: 'circle'
+  const ctxJurusan = document.getElementById('chartJurusan');
+  if (ctxJurusan) {
+    new Chart(ctxJurusan, {
+      type: 'pie',
+      data: {
+        labels: chartMajors,
+        datasets: [{
+          data: chartMajorData,
+          backgroundColor: [
+            '#0047AB',
+            '#00D084',
+            '#FFC107',
+            '#FF6B6B',
+            '#B366FF'
+          ],
+          borderColor: '#fff',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: { size: 12, family: 'Poppins' },
+              usePointStyle: true,
+              pointStyle: 'circle'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            titleFont: { size: 13 },
+            bodyFont: { size: 12 }
           }
-        },
-        tooltip: {
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          padding: 10,
-          titleFont: { size: 13 },
-          bodyFont: { size: 12 }
         }
       }
-    }
-  });
+    });
+  }
 </script>
-
 </body>
 </html>
