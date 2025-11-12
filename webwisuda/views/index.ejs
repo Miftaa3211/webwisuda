@@ -111,11 +111,11 @@
     }
     
     .circle-2 {
-      width: 550px;
-      height: 550px;
+      width: 470px;
+      height: 470px;
       background: white;
-      bottom: 100px;
-      left: -80px;
+      bottom: 600px;
+      left: -120px;
     }
     
     .circle-3 {
@@ -130,14 +130,14 @@
       width: 100px;
       height: 100px;
       background: white;
-      top: 20%;
-      left: 15%;
+      top: 30%;
+      left: 36%;
     }
     .circle-5 {
       width: 130px;
       height: 130px;
       background: white;
-      top: 24%;
+      top: 13%;
       left: 55%;
     }
     .circle-6 {
@@ -151,21 +151,21 @@
       width: 150px;
       height: 150px;
       background: white;
-      top: 54%;
+      top: 40%;
       left: 30%;
     }
         .circle-8 {
       width: 100px;
       height: 100px;
       background: white;
-      top: 50%;
+      top: 40%;
       left: 45%;
     }
         .circle-9 {
       width: 150px;
       height: 150px;
       background: white;
-      top: 18%;
+      top: 17%;
       left: 26%;
     }
     .hero-content {
@@ -937,7 +937,7 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
         <!-- Stats Grid -->
         <div class="about-stats-grid">
           <div class="about-stat-card">
-            <h4>15+</h4>
+            <h4>35</h4>
             <p>Program Studi</p>
           </div>
           <div class="about-stat-card">
@@ -945,11 +945,11 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
             <p>Mahasiswa Aktif</p>
           </div>
           <div class="about-stat-card">
-            <h4>200+</h4>
-            <p>Tenaga Kependidikan</p>
+            <h4>8</h4>
+            <p>Jurusan</p>
           </div>
           <div class="about-stat-card">
-            <h4>A</h4>
+            <h4>B</h4>
             <p>Akreditasi</p>
           </div>
         </div>
@@ -1115,6 +1115,8 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
 
   console.log("Chart Years:", chartYears);
   console.log("Chart Data:", chartYearData);
+  console.log("Chart Majors:", chartMajors);
+console.log("Chart Major Data:", chartMajorData);
 
   // --- Grafik Kelulusan Tiap Tahun ---
   const ctxTahun = document.getElementById('chartKelulusan');
@@ -1153,45 +1155,48 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
   }
 
   // --- Grafik Kelulusan Per Jurusan ---
-  const ctxJurusan = document.getElementById('chartJurusan');
-  if (ctxJurusan) {
-    new Chart(ctxJurusan, {
-      type: 'pie',
-      data: {
-        labels: chartMajors,
-        datasets: [{
-          data: chartMajorData,
-          backgroundColor: [
-            '#0047AB',
-            '#00D084',
-            '#FFC107',
-            '#FF6B6B',
-            '#B366FF'
-          ],
-          borderColor: '#fff',
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              font: { size: 12, family: 'Poppins' },
-              usePointStyle: true,
-              pointStyle: 'circle'
-            }
-          },
-          tooltip: {
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            titleFont: { size: 13 },
-            bodyFont: { size: 12 }
+const ctxJurusan = document.getElementById('chartJurusan');
+if (ctxJurusan) {
+  new Chart(ctxJurusan, {
+    type: 'pie',
+    data: {
+      labels: chartMajors,
+      datasets: [{
+        data: chartMajorData,
+        backgroundColor: [
+          '#0047AB', // biru
+          '#00D084', // hijau
+          '#FFC107', // kuning
+          '#FF6B6B', // merah
+          '#B366FF', // ungu
+          '#FF8C00', // oranye
+          '#6C757D', // abu-abu
+          '#28A745'  // hijau tua
+        ],
+        borderColor: '#fff',
+        borderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            font: { size: 12, family: 'Poppins' },
+            usePointStyle: true,
+            pointStyle: 'circle'
           }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          titleFont: { size: 13 },
+          bodyFont: { size: 12 }
         }
       }
-    });
-  }
+    }
+  });
+}
 </script>
 </body>
 </html>
