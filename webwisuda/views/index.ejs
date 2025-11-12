@@ -89,6 +89,7 @@
     ============================================ */
     .hero-section {
       background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%);
+      background-color: ;
       min-height: 100vh;
       padding-top: 80px;
       position: relative;
@@ -111,8 +112,8 @@
     }
     
     .circle-2 {
-      width: 250px;
-      height: 250px;
+      width: 550px;
+      height: 550px;
       background: white;
       bottom: 100px;
       left: -80px;
@@ -121,7 +122,7 @@
     .circle-3 {
       width: 150px;
       height: 150px;
-      background: #FFC107;
+      background: white;
       top: 40%;
       right: 10%;
     }
@@ -129,14 +130,14 @@
     .circle-4 {
       width: 100px;
       height: 100px;
-      background: #FFC107;
+      background: white;
       top: 20%;
       left: 15%;
     }
     .circle-5 {
       width: 130px;
       height: 130px;
-      background: yellow;
+      background: white;
       top: 24%;
       left: 55%;
     }
@@ -146,6 +147,27 @@
       background: white;
       top: 20%;
       left: 44%;
+    }
+        .circle-7 {
+      width: 150px;
+      height: 150px;
+      background: white;
+      top: 54%;
+      left: 30%;
+    }
+        .circle-8 {
+      width: 100px;
+      height: 100px;
+      background: white;
+      top: 50%;
+      left: 45%;
+    }
+        .circle-9 {
+      width: 150px;
+      height: 150px;
+      background: white;
+      top: 18%;
+      left: 26%;
     }
     .hero-content {
       position: relative;
@@ -200,7 +222,23 @@
       max-width: 800px;
       animation: float 3s ease-in-out infinite;
     }
-    
+  .wave-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 40px;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .wave-bottom svg {
+    position: relative;
+    display: block;
+    width: calc(150% + 1.3px);
+    height: 150px;
+  }
+
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
@@ -683,14 +721,17 @@
   <div class="circle-decoration circle-4"></div>
   <div class="circle-decoration circle-5"></div>
   <div class="circle-decoration circle-6"></div>
+  <div class="circle-decoration circle-7"></div>
+  <div class="circle-decoration circle-8"></div>
+  <div class="circle-decoration circle-9"></div>
   
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-6 hero-content">
         <h1 class="hero-title">Wisuda<br>Politeknik Negeri Lampung</h1>
         <p class="hero-subtitle">
-          Sistem pendaftaran wisuda online yang memudahkan mahasiswa dalam proses pendaftaran, 
-          verifikasi dokumen, dan tracking status wisuda secara real-time dengan sistem yang modern dan terintegrasi.
+          Kamu datang dengan mimpi, bertahan dengan tekad, lulus dengan cerita yang 
+          layak diperjuangkan. Yuk, daftar! Panggungnya udah siap,  tinggal kamu yang bersinar!
         </p>
         <button class="btn-daftar" data-bs-toggle="modal" data-bs-target="#loginModal">
           Daftar Sekarang
@@ -704,6 +745,11 @@
       </div>
     </div>
   </div>
+     <svg viewBox="0 0 1440 320">
+<path fill="#ffffff" fill-opacity="1"
+d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></path>
+
+    </svg> 
 </section>
 
 <!-- PERSYARATAN WISUDA -->
