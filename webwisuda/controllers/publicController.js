@@ -56,31 +56,36 @@ exports.index = async (req, res) => {
     
     const chartYears = yearData.map(row => row.tahun_lulus);
     const chartYearData = yearData.map(row => row.jumlah);
+// --- Query data untuk chart kelulusan per jurusan ---
+let [majorData] = await db.query(`
+  SELECT jurusan, COUNT(*) as total 
+  FROM mahasiswa 
+  WHERE tahun_lulus IS NOT NULL 
+  GROUP BY jurusan 
+  ORDER BY total DESC
+`);
 
-    // Query data untuk chart kelulusan per jurusan
-    let [majorData] = await db.query(`
-      SELECT jurusan, COUNT(*) as total 
-      FROM mahasiswa 
-      WHERE tahun_lulus IS NOT NULL 
-      GROUP BY jurusan 
-      ORDER BY total DESC 
-      LIMIT 5
-    `);
-    
-    // Fallback: jika tidak ada data jurusan
-    if (majorData.length === 0) {
-      majorData = [
-        { jurusan: 'Teknik Elektro', total: 580 },
-        { jurusan: 'Teknologi Informasi', total: 520 },
-        { jurusan: 'Teknik Mesin', total: 480 },
-        { jurusan: 'Akuntansi', total: 450 },
-        { jurusan: 'Teknik Sipil', total: 420 }
-      ];
-    }
-    
-    const chartMajors = majorData.map(row => row.jurusan);
-    const chartMajorData = majorData.map(row => row.total);
+// Fallback: jika tidak ada data jurusan
+if (majorData.length === 0) {
+  majorData = [
+    { jurusan: 'Budidaya Tanaman Pangan', total: 0 },
+    { jurusan: 'Budidaya Tanaman Perkebunan', total: 0 },
+    { jurusan: 'Teknologi Pertanian', total: 0 },
+    { jurusan: 'Peternakan', total: 0 },
+    { jurusan: 'Ekonomi dan Bisnis', total: 0 },
+    { jurusan: 'Teknik', total: 0 },
+    { jurusan: 'Perikanan dan Kelautan', total: 0 },
+    { jurusan: 'Teknologi Informasi', total: 0 }
+  ];
+}
 
+const chartMajors = majorData.map(row => row.jurusan);
+const chartMajorData = majorData.map(row => row.total);
+
+console.log('Chart Years:', chartYears);
+console.log('Chart Year Data:', chartYearData);
+console.log('Chart Majors:', chartMajors);
+console.log('Chart Major Data:', chartMajorData);
     // Render halaman
     res.render('index', {
       title: 'Wisuda Politeknik Negeri Lampung',
