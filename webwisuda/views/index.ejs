@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wisuda Politeknik Negeri Lampung</title>
+  
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- DataTables -->
+  <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      background: #fff;
+    }
+    
+    /* ============================================
+       NAVBAR - Persis seperti desain
+    ============================================ */
+    .navbar-custom {
+      background: #0047AB;
+      padding: 0.5rem 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      color: white !important;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    
+    .navbar-brand img {
+      height: 35px;
+      margin-right: 10px;
+    }
+    
+    .navbar-custom .nav-link {
+      color: white !important;
+      font-weight: 400;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem !important;
+      transition: all 0.3s;
+    }
+    
+    .navbar-custom .nav-link:hover {
+      opacity: 0.8;
+    }
+    
+    .btn-masuk {
+      background: #FFC107;
+      color: #333 !important;
+      font-weight: 600;
+      padding: 0.5rem 2rem;
+      border-radius: 25px;
+      border: none;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    
+    .btn-masuk:hover {
+      background: #FFD54F;
+      transform: translateY(-2px);
+    }
+    
+    /* ============================================
+       HERO SECTION - Persis seperti desain
+    ============================================ */
+    .hero-section {
+      background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%);
+      min-height: 100vh;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Decorative circles */
+    .circle-decoration {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+    }
+    
+    .circle-1 {
+      width: 400px;
+      height: 400px;
+      background: white;
+      top: -100px;
+      right: -100px;
+    }
+    
+    .circle-2 {
+      width: 250px;
+      height: 250px;
+      background: white;
+      bottom: 100px;
+      left: -80px;
+    }
+    
+    .circle-3 {
+      width: 150px;
+      height: 150px;
+      background: #FFC107;
+      top: 40%;
+      right: 10%;
+    }
+    
+    .circle-4 {
+      width: 100px;
+      height: 100px;
+      background: #FFC107;
+      top: 20%;
+      left: 15%;
+    }
+    .circle-5 {
+      width: 130px;
+      height: 130px;
+      background: yellow;
+      top: 24%;
+      left: 55%;
+    }
+    .circle-6 {
+      width: 300px;
+      height: 300px;
+      background: white;
+      top: 20%;
+      left: 44%;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 3rem 0;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+    
+    .btn-daftar {
+      background: #FFC107;
+      color: #333;
+      font-weight: 600;
+      padding: 0.8rem 2.5rem;
+      border-radius: 25px;
+      border: none;
+      font-size: 1rem;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .btn-daftar:hover {
+      background: #FFD54F;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255,193,7,0.4);
+    }
+    
+    /* Hero Illustration */
+    .hero-illustration {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-illustration img {
+      width: 120%;
+      max-width: 800px;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    /* ============================================
+       PERSYARATAN SECTION
+    ============================================ */
+    .section-persyaratan {
+      padding: 5rem 0;
+      background: #F8F9FA;
+    }
+    
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #333;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 3rem;
+      font-size: 0.95rem;
+    }
+    
+    /* Accordion Custom - Persis seperti desain */
+    .accordion-custom {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .accordion-custom .accordion-item {
+      border: none;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .accordion-custom .accordion-button {
+      background: #FFC107;
+      color: #333;
+      font-weight: 600;
+      padding: 1rem 1.5rem;
+      font-size: 0.95rem;
+      border: none;
+    }
+    
+    .accordion-custom .accordion-button:not(.collapsed) {
+      background: #0047AB;
+      color: white;
+    }
+    
+    .accordion-custom .accordion-button::after {
+      filter: brightness(0) invert(1);
+    }
+    
+    .accordion-custom .accordion-button:focus {
+      box-shadow: none;
+      border: none;
+    }
+    
+    .accordion-custom .accordion-body {
+      background: white;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .accordion-custom .accordion-body ul {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+    
+    .accordion-custom .accordion-body li {
+      margin-bottom: 0.5rem;
+      color: #555;
+      line-height: 1.6;
+    }
+    
+    /* Catatan Penting - Blue background */
+    .accordion-catatan .accordion-button {
+      background: #0047AB;
+      color: white;
+    }
+    
+    .accordion-catatan .accordion-button:not(.collapsed) {
+      background: #003380;
+    }
+    
+    /* ============================================
+       STATISTIK KELULUSAN
+    ============================================ */
+    .section-statistik {
+      padding: 5rem 0;
+      background: white;
+    }
+    
+    /* Stats Cards - Persis seperti desain */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    .stats-card {
+      border-radius: 15px;
+      padding: 2rem 1.5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .stats-card-blue {
+      background: linear-gradient(135deg, #0066FF 0%, #0047AB 100%);
+    }
+    
+    .stats-card-green {
+      background: linear-gradient(135deg, #00D084 0%, #00A86B 100%);
+    }
+    
+    .stats-card-purple {
+      background: linear-gradient(135deg, #B366FF 0%, #9333EA 100%);
+    }
+    
+    .stats-card h3 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    
+    .stats-card p {
+      font-size: 1rem;
+      margin: 0;
+      opacity: 0.95;
+      font-weight: 400;
+    }
+    
+    /* Chart Containers */
+    .chart-wrapper {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    }
+    
+    .chart-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    /* ============================================
+       TABEL IPK TERTINGGI
+    ============================================ */
+    .section-ipk {
+      padding: 5rem 0;
+      background: #F8F9FA;
+    }
+    
+    .table-wrapper {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    }
+    
+    .table-custom {
+      margin-top: 1.5rem;
+    }
+    
+    .table-custom thead th {
+      background: #0047AB;
+      color: white;
+      font-weight: 600;
+      border: none;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .table-custom tbody td {
+      padding: 1rem;
+      vertical-align: middle;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .table-custom tbody tr:hover {
+      background: #f8f9fa;
+    }
+    
+    .rank-badge {
+      background: #FFC107;
+      color: #333;
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+    
+    .ipk-value {
+      color: #0047AB;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    
+    /* DataTables Custom */
+    .dataTables_wrapper .dataTables_filter input {
+      border: 2px solid #e0e0e0;
+      border-radius: 25px;
+      padding: 0.5rem 1.5rem;
+      margin-left: 0.5rem;
+    }
+    
+    .dataTables_wrapper .dataTables_length select {
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 0.3rem 0.8rem;
+    }
+    
+    /* ============================================
+       TENTANG POLITEKNIK
+    ============================================ */
+    .section-tentang {
+      padding: 5rem 0;
+      background: white;
+    }
+    
+    .about-text {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #555;
+      text-align: justify;
+      margin-bottom: 2rem;
+    }
+    
+    /* Stats Grid */
+    .about-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .about-stat-card {
+      background: #0047AB;
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+    }
+    
+    .about-stat-card h4 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    
+    .about-stat-card p {
+      font-size: 0.9rem;
+      margin: 0;
+      opacity: 0.95;
+    }
+    
+    /* Pengumuman Card */
+    .pengumuman-card {
+      background: #0047AB;
+      color: white;
+      border-radius: 15px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .pengumuman-card h5 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .pengumuman-item {
+      display: flex;
+      align-items: start;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .pengumuman-item i {
+      color: #FFC107;
+      margin-right: 1rem;
+      font-size: 1.2rem;
+      margin-top: 2px;
+    }
+    
+    .campus-image {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    
+    /* ============================================
+       FOOTER - Persis seperti desain
+    ============================================ */
+    .footer {
+      background: #1A1A1A;
+      color: white;
+      padding: 3rem 0 1rem;
+    }
+    
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-logo img {
+      height: 40px;
+      margin-right: 12px;
+    }
+    
+    .footer-logo h5 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    .footer-text {
+      color: #ccc;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    
+    .footer h6 {
+      color: #FFC107;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.6rem;
+    }
+    
+    .footer-links a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: #FFC107;
+    }
+    
+    .footer-links i {
+      margin-right: 8px;
+      color: #FFC107;
+      font-size: 0.8rem;
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    
+    .social-icons a {
+      width: 35px;
+      height: 35px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+    
+    .social-icons a:hover {
+      background: #FFC107;
+      color: #333;
+    }
+    
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      text-align: center;
+      color: #999;
+      font-size: 0.85rem;
+    }
+    
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 992px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .about-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 0.9rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .about-stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+    <img src="/images/logopolinela.png" alt="">
+      <span>Wisuda Polinela</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border-color: rgba(255,255,255,0.3);">
+      <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link" href="#informasi">Informasi</a></li>
+        <li class="nav-item"><a class="nav-link" href="#panduan">Panduan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
+      </ul>
+      <button class="btn-masuk" data-bs-toggle="modal" data-bs-target="#loginModal">
+        Masuk
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <!-- Decorative Circles -->
+  <div class="circle-decoration circle-1"></div>
+  <div class="circle-decoration circle-2"></div>
+  <div class="circle-decoration circle-3"></div>
+  <div class="circle-decoration circle-4"></div>
+  <div class="circle-decoration circle-5"></div>
+  <div class="circle-decoration circle-6"></div>
+  
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 hero-content">
+        <h1 class="hero-title">Wisuda<br>Politeknik Negeri Lampung</h1>
+        <p class="hero-subtitle">
+          Sistem pendaftaran wisuda online yang memudahkan mahasiswa dalam proses pendaftaran, 
+          verifikasi dokumen, dan tracking status wisuda secara real-time dengan sistem yang modern dan terintegrasi.
+        </p>
+        <button class="btn-daftar" data-bs-toggle="modal" data-bs-target="#loginModal">
+          Daftar Sekarang
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      <div class="col-lg-6 text-center">
+        <div class="hero-illustration">
+        <img src="/images/Wisuda.png" alt="Graduation"  >
+         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSYARATAN WISUDA -->
+<section class="section-persyaratan" id="informasi">
+  <div class="container">
+    <h2 class="section-title">Persyaratan Wisuda</h2>
+    <p class="section-subtitle">Pastikan Anda memenuhi semua persyaratan dan ketentuan wisuda sebelum melakukan pendaftaran</p>
+    
+    <div class="accordion accordion-custom" id="persyaratanAccordion">
+      <!-- Persyaratan Akademik -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#akademik">
+            <i class="fas fa-graduation-cap me-2"></i> Persyaratan Akademik
+          </button>
+        </h2>
+        <div id="akademik" class="accordion-collapse collapse show">
+          <div class="accordion-body">
+            <ul>
+              <li>Telah menyelesaikan seluruh mata kuliah sesuai kurikulum (120 SKS)</li>
+              <li>IPK minimal 2.50 (skala 4.00)</li>
+              <li>Tidak memiliki nilai D lebih dari 3 mata kuliah</li>
+              <li>Telah lulus Tugas Akhir dengan nilai minimal B</li>
+              <li>Memiliki sertifikat TOEIC minimal skor 400</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persyaratan Administrasi -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#administrasi">
+            <i class="fas fa-file-alt me-2"></i> Persyaratan Administrasi
+          </button>
+        </h2>
+        <div id="administrasi" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <ul>
+              <li>Fotocopy KTP (1 lembar)</li>
+              <li>Fotocopy Kartu Keluarga (1 lembar)</li>
+              <li>Fotocopy Kartu Tanda Mahasiswa (KTM)</li>
+              <li>Transkrip Nilai sementara</li>
+              <li>Pas foto berwarna ukuran 3x4 (4 lembar, background biru)</li>
+              <li>Cover Tugas Akhir (PDF)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persyaratan Khusus -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#khusus">
+            <i class="fas fa-check-circle me-2"></i> Persyaratan Khusus
+          </button>
+        </h2>
+        <div id="khusus" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <ul>
+              <li>Surat Keterangan Bebas Pinjaman Perpustakaan</li>
+              <li>Surat Keterangan Bebas Tanggungan Jurusan</li>
+              <li>Surat Keterangan Bebas Tanggungan Keuangan</li>
+              <li>Bukti lunas biaya wisuda</li>
+              <li>Sertifikat TOEIC (asli dan fotocopy)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catatan Penting -->
+      <div class="accordion-item accordion-catatan">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#catatan">
+            <i class="fas fa-exclamation-triangle me-2"></i> Catatan Penting
+          </button>
+        </h2>
+        <div id="catatan" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <ul>
+              <li><strong>Pendaftaran dibuka 3 bulan sebelum pelaksanaan wisuda</strong></li>
+              <li>Semua dokumen harus diupload dalam format PDF atau JPG (max 2MB per file)</li>
+              <li>Verifikasi dokumen dilakukan maksimal 2 minggu setelah upload</li>
+              <li>Jika dokumen ditolak, mahasiswa wajib melakukan upload ulang</li>
+              <li>Pendaftaran yang tidak lengkap tidak akan diproses</li>
+              <li>Untuk informasi lebih lanjut hubungi: <strong>wisuda@polinela.ac.id</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATISTIK KELULUSAN -->
+<section class="section-statistik" id="panduan">
+  <div class="container">
+    <h2 class="section-title">Statistik Kelulusan</h2>
+    <p class="section-subtitle">Data kelulusan dan keberhasilan mahasiswa Politeknik Negeri Lampung</p>
+    
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stats-card stats-card-blue">
+        <h3><%= totalLulusan %></h3>
+        <p>Total Lulusan</p>
+      </div>
+      <div class="stats-card stats-card-green">
+        <h3><%= lulusanAktif %></h3>
+        <p>Lulusan 2024</p>
+      </div>
+      <div class="stats-card stats-card-purple">
+        <h3><%= persentaseKelulusan %>%</h3>
+        <p>Persentase Kelulusan</p>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row">
+      <div class="col-lg-8 mb-4">
+        <div class="chart-wrapper">
+          <h4 class="chart-title">Grafik Kelulusan per Tahun</h4>
+          <canvas id="yearChart" height="80"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-4">
+        <div class="chart-wrapper">
+          <h4 class="chart-title">Kelulusan per Jurusan</h4>
+          <canvas id="majorChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TABEL IPK TERTINGGI -->
+<section class="section-ipk" id="faq">
+  <div class="container">
+    <h2 class="section-title">Daftar Mahasiswa IPK Tertinggi</h2>
+    <p class="section-subtitle">Mahasiswa berprestasi dengan IPK terbaik tahun 2024</p>
+    
+    <div class="table-wrapper">
+      <table id="ipkTable" class="table table-hover table-custom" style="width:100%">
+        <thead>
+          <tr>
+            <th style="width: 80px;">Rank</th>
+            <th>Nama Mahasiswa</th>
+            <th>NIM</th>
+            <th>Jurusan</th>
+            <th style="width: 100px;">IPK</th>
+            <th style="width: 120px;">Tahun Lulus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% topStudents.forEach((student, index) => { %>
+          <tr>
+            <td><span class="rank-badge">#<%= index + 1 %></span></td>
+            <td><%= student.nama %></td>
+            <td><%= student.nim %></td>
+            <td><%= student.jurusan %></td>
+            <td><span class="ipk-value"><%= student.ipk %></span></td>
+            <td><%= student.tahun_lulus %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TENTANG POLITEKNIK -->
+<section class="section-tentang" id="tentang">
+  <div class="container">
+    <h2 class="section-title">Tentang Politeknik Negeri Lampung</h2>
+    <p class="section-subtitle">Lembaga pendidikan vokasi terkemuka di Provinsi Lampung</p>
+    
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4">
+        <p class="about-text">
+          Politeknik Negeri Lampung adalah perguruan tinggi vokasi yang berkomitmen menghasilkan lulusan 
+          berkompeten, profesional, dan siap kerja. Dengan berbagai program studi terakreditasi dan 
+          didukung oleh tenaga pendidik berpengalaman serta fasilitas modern, Polinela terus berinovasi 
+          dalam mengembangkan pendidikan vokasi yang relevan dengan kebutuhan industri dan menghasilkan 
+          lulusan yang mampu bersaing di dunia kerja.
+        </p>
+        
+        <!-- Stats Grid -->
+        <div class="about-stats-grid">
+          <div class="about-stat-card">
+            <h4>15+</h4>
+            <p>Program Studi</p>
+          </div>
+          <div class="about-stat-card">
+            <h4>5000+</h4>
+            <p>Mahasiswa Aktif</p>
+          </div>
+          <div class="about-stat-card">
+            <h4>200+</h4>
+            <p>Tenaga Kependidikan</p>
+          </div>
+          <div class="about-stat-card">
+            <h4>A</h4>
+            <p>Akreditasi</p>
+          </div>
+        </div>
+
+        <!-- Pengumuman Card -->
+        <div class="pengumuman-card">
+          <h5>
+            <i class="fas fa-bullhorn"></i>
+            Pengumuman Wisuda Periode 2025
+          </h5>
+          <div class="pengumuman-item">
+            <i class="fas fa-calendar-alt"></i>
+            <div>
+              <strong>Tanggal Wisuda:</strong> Mei 2025
+            </div>
+          </div>
+          <div class="pengumuman-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <strong>Mulai Pendaftaran:</strong> April 2025
+            </div>
+          </div>
+          <div class="pengumuman-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <strong>Tempat:</strong> Gedung Serba Guna Polinela
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-6 mb-4">
+        <img src="/images/polinela.png" alt="Kampus Polinela" class="campus-image" >
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <!-- Brand -->
+      <div class="col-lg-4 mb-4">
+        <div class="footer-logo">
+          <img src="/images/logopolinela.png" alt="">
+           <h5>Wisuda Online Polinela</h5>
+        </div>
+        <p class="footer-text">
+          Sistem pendaftaran wisuda online Politeknik Negeri Lampung yang memudahkan 
+          mahasiswa dalam proses pendaftaran dan verifikasi dokumen secara digital.
+        </p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      
+      <!-- Menu Cepat -->
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6>Menu Cepat</h6>
+        <ul class="footer-links">
+          <li><a href="#informasi">Informasi</a></li>
+          <li><a href="#panduan">Panduan</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#tentang">Tentang</a></li>
+        </ul>
+      </div>
+      
+      <!-- Kontak -->
+      <div class="col-lg-3 col-md-6 mb-4">
+        <h6>Kontak</h6>
+        <ul class="footer-links">
+          <li><i class="fas fa-map-marker-alt"></i>Jl. Soekarno Hatta No.10, Rajabasa</li>
+          <li><i class="fas fa-envelope"></i>wisuda@polinela.ac.id</li>
+          <li><i class="fas fa-phone"></i>(0721) 787309</li>
+          <li><i class="fas fa-globe"></i>www.polinela.ac.id</li>
+        </ul>
+      </div>
+      
+      <!-- Jam Layanan -->
+      <div class="col-lg-3 col-md-6 mb-4">
+        <h6>Jam Pelayanan</h6>
+        <ul class="footer-links">
+          <li><i class="fas fa-clock"></i>Senin - Jumat</li>
+          <li><i class="fas fa-clock"></i>08:00 - 16:00 WIB</li>
+          <li style="margin-top: 1rem; color: #FFC107;">
+            <i class="fas fa-info-circle"></i>Libur pada hari besar nasional
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Politeknik Negeri Lampung. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
+      <div class="modal-header" style="border: none; background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%); color: white; padding: 1.5rem;">
+        <h5 class="modal-title fw-bold"><i class="fas fa-sign-in-alt me-2"></i>Login Wisuda Online</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i><%= error_msg %>
+          </div>
+        <% } %>
+        
+        <form action="/auth/login" method="POST">
+          <div class="mb-3">
+            <label class="form-label fw-semibold"><i class="fas fa-envelope me-2 text-primary"></i>Email</label>
+            <input type="email" name="email" class="form-control" placeholder="email@polinela.ac.id" required 
+                   style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold"><i class="fas fa-lock me-2 text-primary"></i>Password</label>
+            <input type="password" name="password" class="form-control" placeholder="••••••••" required 
+                   style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="remember">
+            <label class="form-check-label" for="remember">Ingat saya</label>
+          </div>
+          <button type="submit" class="btn w-100" 
+                  style="background: #0047AB; color: white; border: none; border-radius: 10px; padding: 0.75rem; font-weight: 600;">
+            <i class="fas fa-sign-in-alt me-2"></i>Masuk
+          </button>
+        </form>
+        <hr class="my-4">
+        <div class="text-center">
+          <p class="mb-0">Belum punya akun? <a href="/auth/register" style="color: #0047AB; font-weight: 600; text-decoration: none;">Daftar di sini</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  // DataTable
+  $(document).ready(function() {
+    $('#ipkTable').DataTable({
+      language: {
+        search: "Cari Nama, NIM, Jurusan:",
+        lengthMenu: "Tampilkan _MENU_ data",
+        info: "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+        infoEmpty: "Tidak ada data",
+        zeroRecords: "Data tidak ditemukan",
+        paginate: {
+          first: "Pertama",
+          last: "Terakhir",
+          next: "Selanjutnya",
+          previous: "Sebelumnya"
+        }
+      },
+      order: [[4, 'desc']],
+      pageLength: 10,
+      responsive: true
+    });
+  });
+
+  // Chart.js - Bar Chart
+  const yearCtx = document.getElementById('yearChart');
+  new Chart(yearCtx, {
+    type: 'bar',
+    data: {
+      labels: <%= JSON.stringify(chartYears) %>,
+      datasets: [{
+        label: 'Jumlah Lulusan',
+        data: <%= JSON.stringify(chartYearData) %>,
+        backgroundColor: '#0047AB',
+        borderRadius: 8,
+        barThickness: 50
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            font: { size: 12, family: 'Poppins' },
+            padding: 15
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          padding: 12,
+          cornerRadius: 8,
+          titleFont: { size: 13, family: 'Poppins' },
+          bodyFont: { size: 12, family: 'Poppins' }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 200,
+            font: { size: 11, family: 'Poppins' }
+          },
+          grid: {
+            color: 'rgba(0, 0, 0, 0.05)'
+          }
+        },
+        x: {
+          ticks: {
+            font: { size: 11, family: 'Poppins' }
+          },
+          grid: {
+            display: false
+          }
+        }
+      }
+    }
+  });
+
+  // Chart.js - Pie Chart
+  const majorCtx = document.getElementById('majorChart');
+  new Chart(majorCtx, {
+    type: 'pie',
+    data: {
+      labels: <%= JSON.stringify(chartMajors) %>,
+      datasets: [{
+        data: <%= JSON.stringify(chartMajorData) %>,
+        backgroundColor: [
+          '#0047AB',
+          '#00D084',
+          '#B366FF',
+          '#FFC107',
+          '#FF6B6B'
+        ],
+        borderWidth: 3,
+        borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            padding: 12,
+            font: { size: 10, family: 'Poppins' },
+            usePointStyle: true,
+            pointStyle: 'circle'
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          padding: 12,
+          cornerRadius: 8,
+          titleFont: { size: 12, family: 'Poppins' },
+          bodyFont: { size: 11, family: 'Poppins' }
+        }
+      }
+    }
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const offsetTop = target.offsetTop - 70;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Flash messages
+  <% if (typeof success_msg !== 'undefined' && success_msg.length > 0) { %>
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil!',
+      text: '<%= success_msg %>',
+      confirmButtonColor: '#0047AB',
+      confirmButtonText: 'OK'
+    });
+  <% } %>
+  
+  <% if (typeof error_msg !== 'undefined' && error_msg.length > 0 && error_msg !== 'Email atau password salah') { %>
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: '<%= error_msg %>',
+      confirmButtonColor: '#0047AB',
+      confirmButtonText: 'OK'
+    });
+  <% } %>
+  
+  // Navbar scroll effect
+  window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar-custom');
+    if (window.scrollY > 50) {
+      navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+    } else {
+      navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+    }
+  });
+</script>
+
+</body>
+</html>
