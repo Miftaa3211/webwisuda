@@ -114,16 +114,25 @@ exports.showUploadBerkas = async (req, res) => {
   }
 };
 
-// Process pendaftaran/upload
-exports.submitPendaftaran = async (req, res) => {
-  upload(req, res, async (err) => {
-    if (err) {
+// Process pendaftaran/upload - FIXED VERSION
+exports.submitPendaftaran = (req, res) => {
+  upload(req, res, async function(err) {
+    // Handle multer errors
+    if (err instanceof multer.MulterError) {
+      console.error('Multer Error:', err);
+      req.flash('error_msg', 'Error upload: ' + err.message);
+      return res.redirect('/mahasiswa/upload-berkas');
+    } else if (err) {
+      console.error('Upload Error:', err);
       req.flash('error_msg', err.message || 'Gagal mengupload file');
       return res.redirect('/mahasiswa/upload-berkas');
     }
     
     try {
       const userId = req.session.user.id;
+      
+      console.log('User ID:', userId);
+      console.log('Files uploaded:', Object.keys(req.files || {}));
       
       // Get mahasiswa data
       const [mahasiswa] = await db.query(
@@ -137,6 +146,13 @@ exports.submitPendaftaran = async (req, res) => {
       }
       
       const mahasiswaId = mahasiswa[0].id;
+      console.log('Mahasiswa ID:', mahasiswaId);
+      
+      // Validate that files were uploaded
+      if (!req.files || Object.keys(req.files).length === 0) {
+        req.flash('error_msg', 'Tidak ada file yang diupload');
+        return res.redirect('/mahasiswa/upload-berkas');
+      }
       
       // Check if already registered
       const [existingPendaftaran] = await db.query(
@@ -153,6 +169,7 @@ exports.submitPendaftaran = async (req, res) => {
           'UPDATE pendaftaran_wisuda SET status = "Diajukan", tanggal_daftar = CURDATE() WHERE id = ?',
           [pendaftaranId]
         );
+        console.log('Updated existing pendaftaran:', pendaftaranId);
       } else {
         // Insert new pendaftaran
         const [pendaftaranResult] = await db.query(
@@ -160,21 +177,29 @@ exports.submitPendaftaran = async (req, res) => {
           [mahasiswaId]
         );
         pendaftaranId = pendaftaranResult.insertId;
+        console.log('Created new pendaftaran:', pendaftaranId);
       }
       
-      // Insert dokumen
-      const fileFields = ['ijazah', 'transkrip', 'bukti_bayar', 'foto', 'skl'];
+      // Insert dokumen - sesuai dengan field name di form
+      const fileFields = ['ktp', 'kk', 'ktm', 'transkrip', 'foto', 'toeic', 'bebas_tanggungan', 'cover_ta'];
       const dokumenMap = {
-        'ijazah': 'KTP',
+        'ktp': 'KTP',
+        'kk': 'KK',
+        'ktm': 'KTM',
         'transkrip': 'Transkrip',
-        'bukti_bayar': 'KK',
         'foto': 'Foto',
-        'skl': 'Bebas_Tanggungan'
+        'toeic': 'TOEIC',
+        'bebas_tanggungan': 'Bebas_Tanggungan',
+        'cover_ta': 'Cover_TA'
       };
       
+      let uploadedCount = 0;
+      
       for (const field of fileFields) {
-        if (req.files[field]) {
+        if (req.files[field] && req.files[field][0]) {
           const file = req.files[field][0];
+          
+          console.log(`Processing ${field}:`, file.filename);
           
           // Check if dokumen already exists
           const [existing] = await db.query(
@@ -188,22 +213,33 @@ exports.submitPendaftaran = async (req, res) => {
               'UPDATE dokumen_wisuda SET nama_file = ?, path_file = ?, uploaded_at = NOW() WHERE id = ?',
               [file.originalname, file.filename, existing[0].id]
             );
+            console.log(`Updated ${field}`);
           } else {
             // Insert
             await db.query(
               'INSERT INTO dokumen_wisuda (pendaftaran_id, jenis_dokumen, nama_file, path_file) VALUES (?, ?, ?, ?)',
               [pendaftaranId, dokumenMap[field], file.originalname, file.filename]
             );
+            console.log(`Inserted ${field}`);
           }
+          
+          uploadedCount++;
         }
       }
       
-      req.flash('success_msg', 'Pendaftaran wisuda berhasil diajukan! Mohon tunggu proses verifikasi.');
+      console.log(`Total files uploaded: ${uploadedCount}`);
+      
+      if (uploadedCount === 0) {
+        req.flash('error_msg', 'Tidak ada dokumen yang berhasil diupload');
+        return res.redirect('/mahasiswa/upload-berkas');
+      }
+      
+      req.flash('success_msg', `Pendaftaran wisuda berhasil! ${uploadedCount} dokumen telah diupload. Mohon tunggu proses verifikasi.`);
       res.redirect('/mahasiswa/dashboard');
       
     } catch (error) {
-      console.error('Error:', error);
-      req.flash('error_msg', 'Terjadi kesalahan saat menyimpan data');
+      console.error('Database Error:', error);
+      req.flash('error_msg', 'Terjadi kesalahan saat menyimpan data: ' + error.message);
       res.redirect('/mahasiswa/upload-berkas');
     }
   });
@@ -248,6 +284,44 @@ exports.detailPendaftaran = async (req, res) => {
       mahasiswa: mahasiswa[0],
       pendaftaran: pendaftaran[0],
       dokumen
+    });
+    
+  } catch (error) {
+    console.error('Error:', error);
+    req.flash('error_msg', 'Terjadi kesalahan');
+    res.redirect('/mahasiswa/dashboard');
+  }
+};
+// Show riwayat pendaftaran
+exports.riwayatPendaftaran = async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+    
+    const [mahasiswa] = await db.query(
+      'SELECT * FROM mahasiswa WHERE user_id = ?',
+      [userId]
+    );
+    
+    if (mahasiswa.length === 0) {
+      req.flash('error_msg', 'Data mahasiswa tidak ditemukan');
+      return res.redirect('/mahasiswa/dashboard');
+    }
+    
+    // Get all pendaftaran history
+    const [riwayat] = await db.query(`
+      SELECT p.*, 
+             COUNT(d.id) as jumlah_dokumen
+      FROM pendaftaran_wisuda p
+      LEFT JOIN dokumen_wisuda d ON d.pendaftaran_id = p.id
+      WHERE p.mahasiswa_id = ?
+      GROUP BY p.id
+      ORDER BY p.created_at DESC
+    `, [mahasiswa[0].id]);
+    
+    res.render('riwayat_pendaftaran', {
+      title: 'Riwayat Pendaftaran Wisuda',
+      mahasiswa: mahasiswa[0],
+      riwayat
     });
     
   } catch (error) {
