@@ -5,16 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wisuda Politeknik Negeri Lampung</title>
   <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
-  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   
-  <!-- DataTables -->
   <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
@@ -102,72 +98,16 @@
       opacity: 0.1;
     }
     
-    .circle-1 {
-      width: 400px;
-      height: 400px;
-      background: white;
-      top: -100px;
-      right: -100px;
-    }
+    .circle-1 { width: 400px; height: 400px; background: white; top: -100px; right: -100px; }
+    .circle-2 { width: 470px; height: 470px; background: white; bottom: 600px; left: -120px; }
+    .circle-3 { width: 150px; height: 150px; background: white; top: 40%; right: 10%; }
+    .circle-4 { width: 100px; height: 100px; background: white; top: 30%; left: 36%; }
+    .circle-5 { width: 130px; height: 130px; background: white; top: 13%; left: 55%; }
+    .circle-6 { width: 300px; height: 300px; background: white; top: 20%; left: 44%; }
+    .circle-7 { width: 150px; height: 150px; background: white; top: 40%; left: 30%; }
+    .circle-8 { width: 100px; height: 100px; background: white; top: 40%; left: 45%; }
+    .circle-9 { width: 150px; height: 150px; background: white; top: 17%; left: 26%; }
     
-    .circle-2 {
-      width: 470px;
-      height: 470px;
-      background: white;
-      bottom: 600px;
-      left: -120px;
-    }
-    
-    .circle-3 {
-      width: 150px;
-      height: 150px;
-      background: white;
-      top: 40%;
-      right: 10%;
-    }
-    
-    .circle-4 {
-      width: 100px;
-      height: 100px;
-      background: white;
-      top: 30%;
-      left: 36%;
-    }
-    .circle-5 {
-      width: 130px;
-      height: 130px;
-      background: white;
-      top: 13%;
-      left: 55%;
-    }
-    .circle-6 {
-      width: 300px;
-      height: 300px;
-      background: white;
-      top: 20%;
-      left: 44%;
-    }
-        .circle-7 {
-      width: 150px;
-      height: 150px;
-      background: white;
-      top: 40%;
-      left: 30%;
-    }
-        .circle-8 {
-      width: 100px;
-      height: 100px;
-      background: white;
-      top: 40%;
-      left: 45%;
-    }
-        .circle-9 {
-      width: 150px;
-      height: 150px;
-      background: white;
-      top: 17%;
-      left: 26%;
-    }
     .hero-content {
       position: relative;
       z-index: 2;
@@ -221,23 +161,7 @@
       max-width: 800px;
       animation: float 3s ease-in-out infinite;
     }
-  .wave-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50%;
-    height: 70px;
-    overflow: hidden;
-    line-height: 0;
-  }
-
-  .wave-bottom svg {
-    position: relative;
-    display: block;
-    width: calc(150% + 1.3px);
-    height: 150px;
-  }
-
+    
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
@@ -358,17 +282,9 @@
       justify-content: center;
     }
     
-    .stats-card-blue {
-      background: linear-gradient(135deg, #0066FF 0%, #0047AB 100%);
-    }
-    
-    .stats-card-green {
-      background: linear-gradient(135deg, #00D084 0%, #00A86B 100%);
-    }
-    
-    .stats-card-purple {
-      background: linear-gradient(135deg, #B366FF 0%, #9333EA 100%);
-    }
+    .stats-card-blue { background: linear-gradient(135deg, #0066FF 0%, #0047AB 100%); }
+    .stats-card-green { background: linear-gradient(135deg, #00D084 0%, #00A86B 100%); }
+    .stats-card-purple { background: linear-gradient(135deg, #B366FF 0%, #9333EA 100%); }
     
     .stats-card h3 {
       font-size: 2.8rem;
@@ -451,20 +367,6 @@
       color: #0047AB;
       font-weight: 700;
       font-size: 1rem;
-    }
-    
-    /* DataTables Custom */
-    .dataTables_wrapper .dataTables_filter input {
-      border: 2px solid #e0e0e0;
-      border-radius: 25px;
-      padding: 0.5rem 1.5rem;
-      margin-left: 0.5rem;
-    }
-    
-    .dataTables_wrapper .dataTables_length select {
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 0.3rem 0.8rem;
     }
     
     /* ============================================
@@ -550,7 +452,7 @@
     }
     
     /* ============================================
-       FOOTER - Persis seperti desain
+       FOOTER
     ============================================ */
     .footer {
       background: #1A1A1A;
@@ -649,45 +551,133 @@
     }
     
     /* ============================================
-       RESPONSIVE
+       RESPONSIVE MEDIA QUERIES (OPTIMAL)
     ============================================ */
+    
+    /* --- 1. Tablet & Laptop Kecil (Max 992px) --- */
     @media (max-width: 992px) {
-      .hero-title {
-        font-size: 2.5rem;
+      /* Hero: Teks mengecil sedikit */
+      .hero-title { 
+        font-size: 2.8rem; 
       }
       
-      .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+      /* Stats: Dari 3 kolom jadi 1 kolom agar kartu tidak gepeng */
+      .stats-grid { 
+        grid-template-columns: 1fr; 
+        gap: 1rem; 
       }
       
-      .about-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+      /* Tentang: Grid tetap 2 kolom tapi lebih rapat */
+      .about-stats-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+      }
+      
+      /* Ilustrasi Hero: Geser ke bawah teks */
+      .hero-section .row {
+        text-align: center;
+      }
+      
+      .hero-illustration img {
+        margin-top: 2rem;
+        width: 70%; /* Kecilkan sedikit */
+      }
+      
+      .btn-daftar {
+        margin-bottom: 1rem;
       }
     }
     
+    /* --- 2. Mobile / HP (Max 768px) --- */
     @media (max-width: 768px) {
-      .hero-title {
-        font-size: 2rem;
+      /* Global: Kurangi padding section agar tidak terlalu boros tempat */
+      .section-persyaratan, 
+      .section-statistik, 
+      .section-ipk, 
+      .section-tentang { 
+        padding: 3rem 0; 
+      }
+
+      /* Hero: Sesuaikan untuk layar sempit */
+      .hero-section {
+        padding-top: 100px;
+        min-height: auto; /* Jangan paksa 100vh di HP */
+        padding-bottom: 4rem;
       }
       
-      .hero-subtitle {
-        font-size: 0.9rem;
+      .hero-title { 
+        font-size: 2.2rem; /* Font lebih kecil */
       }
       
-      .section-title {
-        font-size: 1.8rem;
+      .hero-subtitle { 
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Sembunyikan dekorasi lingkaran besar agar layar bersih */
+      .circle-1, .circle-2 { 
+        display: none; 
+      }
+
+      /* Judul Section */
+      .section-title { 
+        font-size: 1.8rem; 
+      }
+
+      /* Tabel: Pastikan bisa di-scroll horizontal */
+      .table-wrapper {
+        padding: 1rem; /* Kurangi padding kartu tabel */
+        overflow-x: auto; /* KUNCI AGAR TABEL TIDAK MERUSAK LAYOUT */
       }
       
-      .about-stats-grid {
-        grid-template-columns: 1fr;
+      /* Tentang Polinela: Stack jadi 1 kolom */
+      .about-stats-grid { 
+        grid-template-columns: 1fr; 
+      }
+      
+      /* Footer: Rata tengah dan menumpuk */
+      .footer {
+        text-align: center;
+      }
+      
+      .footer-logo {
+        justify-content: center;
+      }
+      
+      .social-icons {
+        justify-content: center;
+      }
+      
+      .footer-links li {
+        text-align: center;
+      }
+      
+      /* Tombol Close Modal di HP */
+      .modal-header .btn-close-white {
+        filter: none; /* Agar terlihat jelas */
       }
     }
+    
+    /* --- 3. HP Kecil (Max 480px) --- */
+    @media (max-width: 480px) {
+      .hero-title { 
+        font-size: 1.8rem; 
+      }
+      
+      /* Tombol jadi full width agar mudah dipencet */
+      .btn-daftar, .btn-masuk {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .stats-card h3 {
+        font-size: 2rem;
+      }
+    }
+    
   </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-custom">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -700,7 +690,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item"><a class="nav-link" href="#informasi">Informasi</a></li>
-        <li class="nav-item"><a class="nav-link" href="#panduan">Panduan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#statistik">Statistik kelulusan</a></li>
         <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
         <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
       </ul>
@@ -711,9 +701,7 @@
   </div>
 </nav>
 
-<!-- HERO SECTION -->
 <section class="hero-section">
-  <!-- Decorative Circles -->
   <div class="circle-decoration circle-1"></div>
   <div class="circle-decoration circle-2"></div>
   <div class="circle-decoration circle-3"></div>
@@ -751,14 +739,12 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
     </svg> 
 </section>
 
-<!-- PERSYARATAN WISUDA -->
 <section class="section-persyaratan" id="informasi">
   <div class="container">
     <h2 class="section-title">Persyaratan Wisuda</h2>
     <p class="section-subtitle">Pastikan Anda memenuhi semua persyaratan dan ketentuan wisuda sebelum melakukan pendaftaran</p>
     
     <div class="accordion accordion-custom" id="persyaratanAccordion">
-      <!-- Persyaratan Akademik -->
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#akademik">
@@ -778,7 +764,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
         </div>
       </div>
 
-      <!-- Persyaratan Administrasi -->
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#administrasi">
@@ -799,7 +784,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
         </div>
       </div>
 
-      <!-- Persyaratan Khusus -->
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#khusus">
@@ -819,8 +803,7 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
         </div>
       </div>
 
-      <!-- Catatan Penting -->
-      <div class="accordion-item accordion-catatan">
+      <div class="accordion-item accordion-catatan" id="statistik">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#catatan">
             <i class="fas fa-exclamation-triangle me-2"></i> Catatan Penting
@@ -843,13 +826,11 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
   </div>
 </section>
 
-<!-- STATISTIK KELULUSAN -->
 <section class="section-statistik">
   <div class="container">
     <h2 class="section-title">Statistik Kelulusan</h2>
     <p class="section-subtitle">Data kelulusan dan keberhasilan mahasiswa Politeknik Negeri Lampung</p>
     
-    <!-- Stats Cards -->
     <div class="stats-grid">
       <div class="stats-card stats-card-blue">
         <h3><%= totalLulusan %></h3>
@@ -865,7 +846,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
       </div>
     </div>
 
-    <!-- Charts -->
     <div class="row">
       <div class="col-lg-8 mb-4">
       <div class="chart-wrapper">
@@ -883,42 +863,58 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
   </div>
 </section>
 
-<!-- TABEL IPK TERTINGGI -->
 <section class="section-ipk" id="faq">
   <div class="container">
     <h2 class="section-title">Daftar Mahasiswa IPK Tertinggi</h2>
     <p class="section-subtitle">Mahasiswa berprestasi dengan IPK terbaik tahun 2024</p>
-    
     <div class="table-wrapper">
-      <table id="ipkTable" class="table table-hover table-custom" style="width:100%">
-        <thead>
-          <tr>
-            <th style="width: 80px;">Rank</th>
-            <th>Nama Mahasiswa</th>
-            <th>NIM</th>
-            <th>Jurusan</th>
-            <th style="width: 100px;">IPK</th>
-            <th style="width: 120px;">Tahun Lulus</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% topStudents.forEach((student, index) => { %>
-          <tr>
-            <td><span class="rank-badge">#<%= index + 1 %></span></td>
-            <td><%= student.nama %></td>
-            <td><%= student.nim %></td>
-            <td><%= student.jurusan %></td>
-            <td><span class="ipk-value"><%= student.ipk %></span></td>
-            <td><%= student.tahun_lulus %></td>
-          </tr>
-          <% }); %>
-        </tbody>
-      </table>
+      <div class="search-box-container mb-4">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-8">
+            <div class="custom-search-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="customSearch" class="custom-search-input" placeholder="Cari berdasarkan nama mahasiswa...">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table id="ipkTable" class="table table-hover table-custom" style="width:100%">
+          <thead>
+            <tr>
+              <th style="width: 80px;">Rank</th>
+              <th>Nama Mahasiswa</th>
+              <th>NIM</th>
+              <th>Jurusan</th>
+              <th style="width: 100px;">IPK</th>
+              <th style="width: 120px;">Tahun Lulus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% topStudents.forEach((student, index) => { %>
+            <tr>
+              <td class="rank-cell"></td>
+              <td class="nama-column"><%= student.nama %></td>
+              <td><%= student.nim %></td>
+              <td><%= student.jurusan %></td>
+              <td><span class="ipk-value"><%= student.ipk %></span></td>
+              <td><%= student.tahun_lulus %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <div class="search-results-info text-center mt-3" id="searchInfo" style="display: none;">
+        <small class="text-muted">
+          <i class="fas fa-check-circle text-success me-1"></i>
+          Ditemukan <strong class="text-primary" id="resultCount">0</strong> hasil
+        </small>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- TENTANG POLITEKNIK -->
+
 <section class="section-tentang" id="tentang">
   <div class="container">
     <h2 class="section-title">Tentang Politeknik Negeri Lampung</h2>
@@ -934,7 +930,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
           lulusan yang mampu bersaing di dunia kerja.
         </p>
         
-        <!-- Stats Grid -->
         <div class="about-stats-grid">
           <div class="about-stat-card">
             <h4>35</h4>
@@ -954,7 +949,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
           </div>
         </div>
 
-        <!-- Pengumuman Card -->
         <div class="pengumuman-card">
           <h5>
             <i class="fas fa-bullhorn"></i>
@@ -988,11 +982,9 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="row">
-      <!-- Brand -->
       <div class="col-lg-4 mb-4">
         <div class="footer-logo">
           <img src="/images/logopolinela.png" alt="">
@@ -1009,7 +1001,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
           <a href="https://www.youtube.com/@politeknik_negeri_lampung" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
-      <!-- Menu Cepat -->
       <div class="col-lg-2 col-md-6 mb-4">
         <h6>Menu Cepat</h6>
         <ul class="footer-links">
@@ -1020,7 +1011,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
         </ul>
       </div>
       
-      <!-- Kontak -->
       <div class="col-lg-3 col-md-6 mb-4">
         <h6>Kontak</h6>
         <ul class="footer-links">
@@ -1031,7 +1021,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
         </ul>
       </div>
       
-      <!-- Jam Layanan -->
       <div class="col-lg-3 col-md-6 mb-4">
         <h6>Jam Pelayanan</h6>
         <ul class="footer-links">
@@ -1050,7 +1039,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
   </div>
 </footer>
 
-<!-- LOGIN MODAL -->
 <div class="modal fade" id="loginModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
@@ -1094,7 +1082,6 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
   </div>
 </div>
 
-<!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -1103,19 +1090,12 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-
 <script>
   // --- Ambil data dari EJS (controller) ---
   const chartYears = <%- JSON.stringify(chartYears) %>;
   const chartYearData = <%- JSON.stringify(chartYearData) %>;
   const chartMajors = <%- JSON.stringify(chartMajors) %>;
   const chartMajorData = <%- JSON.stringify(chartMajorData) %>;
-
-  console.log("Chart Years:", chartYears);
-  console.log("Chart Data:", chartYearData);
-  console.log("Chart Majors:", chartMajors);
-console.log("Chart Major Data:", chartMajorData);
 
   // --- Grafik Kelulusan Tiap Tahun ---
   const ctxTahun = document.getElementById('chartKelulusan');
@@ -1135,9 +1115,7 @@ console.log("Chart Major Data:", chartMajorData);
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: { display: false }
-        },
+        plugins: { legend: { display: false } },
         scales: {
           y: {
             beginAtZero: true,
@@ -1154,48 +1132,226 @@ console.log("Chart Major Data:", chartMajorData);
   }
 
   // --- Grafik Kelulusan Per Jurusan ---
-const ctxJurusan = document.getElementById('chartJurusan');
-if (ctxJurusan) {
-  new Chart(ctxJurusan, {
-    type: 'pie',
-    data: {
-      labels: chartMajors,
-      datasets: [{
-        data: chartMajorData,
-        backgroundColor: [
-          '#0047AB', // biru
-          '#00D084', // hijau
-          '#FFC107', // kuning
-          '#FF6B6B', // merah
-          '#B366FF', // ungu
-          '#FF8C00', // oranye
-          '#6C757D', // abu-abu
-          '#28A745'  // hijau tua
-        ],
-        borderColor: '#fff',
-        borderWidth: 3
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            font: { size: 12, family: 'Poppins' },
-            usePointStyle: true,
-            pointStyle: 'circle'
+  const ctxJurusan = document.getElementById('chartJurusan');
+  if (ctxJurusan) {
+    new Chart(ctxJurusan, {
+      type: 'pie',
+      data: {
+        labels: chartMajors,
+        datasets: [{
+          data: chartMajorData,
+          backgroundColor: ['#0047AB', '#00D084', '#FFC107', '#FF6B6B', '#B366FF', '#FF8C00', '#6C757D', '#28A745'],
+          borderColor: '#fff',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { font: { size: 12, family: 'Poppins' }, usePointStyle: true, pointStyle: 'circle' }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            titleFont: { size: 13 },
+            bodyFont: { size: 12 }
           }
-        },
-        tooltip: {
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          titleFont: { size: 13 },
-          bodyFont: { size: 12 }
         }
       }
-    }
+    });
+  }
+
+  $(document).ready(function() {
+    
+    // Initialize DataTable dengan Pagination Aktif
+    const table = $('#ipkTable').DataTable({
+      "language": {
+        "zeroRecords": "Tidak ada data yang ditemukan",
+        "emptyTable": "Tidak ada data mahasiswa",
+        "search": "",
+        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ mahasiswa",
+        "paginate": {
+            "previous": "<i class='fas fa-chevron-left'></i>",
+            "next": "<i class='fas fa-chevron-right'></i>"
+        }
+      },
+      "searching": true,
+      "paging": true,           // Mengaktifkan Pagination
+      "pageLength": 15,         // Batas 15 data per halaman
+      "info": true,             // Menampilkan info "Showing 1 to 15..."
+      "lengthChange": false,    // Menyembunyikan selector jumlah entries
+      "order": [[4, 'desc']], 
+      "columnDefs": [
+        { 
+          "orderable": false, 
+          "targets": 0,
+          // Menggunakan meta.row untuk ranking berlanjut antar halaman
+          "render": function(data, type, row, meta) {
+            return '<span class="rank-badge">#' + (meta.row + 1) + '</span>';
+          }
+        }
+      ]
+    });
+
+    // Custom search - HANYA KOLOM NAMA (index 1)
+    $('#customSearch').on('keyup', function() {
+      const searchValue = this.value;
+      table.column(1).search(searchValue).draw();
+      
+      if (searchValue) {
+        const visibleRows = table.rows({ search: 'applied' }).count();
+        $('#resultCount').text(visibleRows);
+        $('#searchInfo').fadeIn();
+        $(this).addClass('searching');
+        
+        if (!$('.clear-search').length) {
+          $(this).after('<button type="button" class="clear-search" title="Hapus pencarian"><i class="fas fa-times"></i></button>');
+        }
+      } else {
+        $('#searchInfo').fadeOut();
+        $(this).removeClass('searching');
+        $('.clear-search').remove();
+      }
+    });
+
+    // Hide default DataTables search box
+    $('.dataTables_filter').hide();
+    $('.dataTables_length').hide();
+
+    // Clear search button
+    $(document).on('click', '.clear-search', function() {
+      $('#customSearch').val('').trigger('keyup');
+      $(this).remove();
+    });
+
+    // Escape key to clear search
+    $('#customSearch').on('keydown', function(e) {
+      if (e.key === 'Escape') {
+        $(this).val('').trigger('keyup');
+      }
+    });
   });
-}
+
+  // Add animations and Custom CSS for Pagination
+  const style = document.createElement('style');
+  style.textContent = `
+    /* --- Styling Pagination Polinela --- */
+    .dataTables_wrapper .dataTables_paginate {
+        margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .dataTables_wrapper .dataTables_info {
+        margin-top: 1rem;
+        color: #666;
+        font-size: 0.85rem;
+        text-align: center; 
+        display: block;
+    }
+
+    .page-item .page-link {
+        color: #0047AB; /* Warna Biru Polinela */
+        border: none;
+        padding: 0.5rem 1rem;
+        margin: 0 2px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+
+    .page-item.active .page-link {
+        background-color: #0047AB;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 71, 171, 0.3);
+    }
+
+    .page-item .page-link:hover {
+        background-color: #E0E7FF;
+        color: #003380;
+    }
+    
+    .page-item.disabled .page-link {
+        color: #ccc;
+        background: transparent;
+    }
+
+    /* Other Styles */
+    .searching {
+      border-color: #FFC107 !important;
+      box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.2) !important;
+    }
+
+    .clear-search {
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #E0E7FF;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #0047AB;
+      transition: all 0.3s;
+      z-index: 2;
+    }
+
+    .clear-search:hover {
+      background: #0047AB;
+      color: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    /* Hide default search but KEEP pagination visible */
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_length {
+      display: none !important;
+    }
+
+    /* Empty state styling */
+    .dataTables_empty {
+      padding: 3rem !important;
+      text-align: center;
+      color: #999;
+      font-size: 1rem;
+    }
+
+    .dataTables_empty::before {
+      content: "🔍 ";
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .nama-column {
+      font-weight: 500;
+      color: #333;
+    }
+
+    tr:hover .nama-column {
+      color: #0047AB;
+    }
+
+    #searchInfo {
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rank-badge {
+      transition: all 0.3s ease;
+    }
+  `;
+  document.head.appendChild(style);
 </script>
 </body>
 </html>
