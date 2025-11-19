@@ -11,6 +11,20 @@ const requireAdmin = (req, res, next) => {
 };
 
 router.use(requireAdmin);
+
+// Dashboard & Monitoring
 router.get('/dashboard', adminController.dashboard);
+router.get('/monitoring', adminController.monitoring);
+
+// Detail & Verification
+router.get('/detail/:id', adminController.detailPendaftaran);
+router.post('/update-status/:id', adminController.updateStatus);
+router.post('/update-dokumen/:id', adminController.updateDokumen);
+
+// Export
+router.get('/export', adminController.exportData);
+router.get('/cetak-detail/:id', adminController.cetakDetailPendaftaran);
+// Bantuan Page
+router.get('/bantuan', adminController.bantuan);
 
 module.exports = router;
