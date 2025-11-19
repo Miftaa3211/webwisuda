@@ -16,6 +16,7 @@ router.get('/dashboard', mahasiswaController.dashboard);
 router.get('/upload-berkas', mahasiswaController.showUploadBerkas);
 router.post('/submit-pendaftaran', mahasiswaController.submitPendaftaran);
 router.get('/detail-pendaftaran', mahasiswaController.detailPendaftaran);
-router.get('/riwayat', mahasiswaController.riwayatPendaftaran); // ← TAMBAHKAN INI
+router.get('/riwayat', mahasiswaController.riwayatPendaftaran);
+router.get('/cetak-bukti', mahasiswaController.cetakBukti);
 
 module.exports = router;
