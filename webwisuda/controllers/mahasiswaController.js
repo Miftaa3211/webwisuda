@@ -209,17 +209,17 @@ exports.submitPendaftaran = (req, res) => {
           
           if (existing.length > 0) {
             // Update
-            await db.query(
-              'UPDATE dokumen_wisuda SET nama_file = ?, path_file = ?, uploaded_at = NOW() WHERE id = ?',
-              [file.originalname, file.filename, existing[0].id]
-            );
+          await db.query(
+            'UPDATE dokumen_wisuda SET nama_file = ?, path_file = ?, status = "Lengkap", uploaded_at = NOW() WHERE id = ?',
+            [file.originalname, file.filename, existing[0].id]
+          );
             console.log(`Updated ${field}`);
           } else {
             // Insert
-            await db.query(
-              'INSERT INTO dokumen_wisuda (pendaftaran_id, jenis_dokumen, nama_file, path_file) VALUES (?, ?, ?, ?)',
-              [pendaftaranId, dokumenMap[field], file.originalname, file.filename]
-            );
+          await db.query(
+            'INSERT INTO dokumen_wisuda (pendaftaran_id, jenis_dokumen, nama_file, path_file, status) VALUES (?, ?, ?, ?, "Lengkap")',
+            [pendaftaranId, dokumenMap[field], file.originalname, file.filename]
+          );
             console.log(`Inserted ${field}`);
           }
           
@@ -327,6 +327,53 @@ exports.riwayatPendaftaran = async (req, res) => {
   } catch (error) {
     console.error('Error:', error);
     req.flash('error_msg', 'Terjadi kesalahan');
+    res.redirect('/mahasiswa/dashboard');
+  }
+};
+exports.cetakBukti = async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+
+    // PERBAIKAN: Hanya ambil kolom yang PASTI ADA di database Anda
+    const [rows] = await db.query(`
+      SELECT 
+        m.nama,
+        m.nim,
+        m.prodi,
+        m.jurusan,
+        m.no_hp,
+        p.tanggal_daftar,
+        p.status,
+        p.id as pendaftaran_id
+      FROM mahasiswa m
+      JOIN pendaftaran_wisuda p ON m.id = p.mahasiswa_id
+      WHERE m.user_id = ?
+    `, [userId]);
+
+    if (rows.length === 0) {
+      req.flash('error_msg', 'Data pendaftaran tidak ditemukan');
+      return res.redirect('/mahasiswa/dashboard');
+    }
+
+    const data = rows[0];
+
+    // Ambil status dokumen
+    const [dokumen] = await db.query(`
+      SELECT jenis_dokumen, status 
+      FROM dokumen_wisuda 
+      WHERE pendaftaran_id = ?
+    `, [data.pendaftaran_id]);
+
+    res.render('cetak_bukti', {
+      title: 'Cetak Bukti Pendaftaran',
+      data: data,
+      dokumen: dokumen,
+      user: req.session.user
+    });
+
+  } catch (error) {
+    console.error(error);
+    req.flash('error_msg', 'Gagal memuat halaman cetak');
     res.redirect('/mahasiswa/dashboard');
   }
 };
