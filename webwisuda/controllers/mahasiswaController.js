@@ -377,3 +377,97 @@ exports.cetakBukti = async (req, res) => {
     res.redirect('/mahasiswa/dashboard');
   }
 };
+
+exports.editProfile = async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+    
+    const [rows] = await db.query(`SELECT * FROM mahasiswa WHERE user_id = ?`, [userId]);
+    
+    if (rows.length === 0) return res.redirect('/mahasiswa/dashboard');
+
+    res.render('edit_profile', {
+      title: 'Edit Profil',
+      user: req.session.user,
+      mahasiswa: rows[0] // Mengirim data mahasiswa ke EJS
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.redirect('/mahasiswa/dashboard');
+  }
+};
+
+// 2. PROSES UPDATE PROFIL
+exports.updateProfile = async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+    const { nama, no_hp, angkatan, tahun_lulus, ipk } = req.body;
+    
+    // Query Update Dasar
+    let query = `
+      UPDATE mahasiswa 
+      SET nama = ?, no_hp = ?, angkatan = ?, tahun_lulus = ?, ipk = ?
+    `;
+    let params = [nama, no_hp, angkatan, tahun_lulus, ipk];
+
+    // Cek jika ada file foto baru yang diupload
+    if (req.file) {
+      // Hapus foto lama jika ada (opsional, agar hemat storage)
+      const [oldData] = await db.query(`SELECT foto_profil FROM mahasiswa WHERE user_id = ?`, [userId]);
+      if (oldData[0].foto_profil) {
+        const oldPath = path.join(__dirname, '../public/uploads/profile', oldData[0].foto_profil);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+
+      // Tambahkan update foto ke query
+      query += `, foto_profil = ?`;
+      params.push(req.file.filename);
+    }
+
+    query += ` WHERE user_id = ?`;
+    params.push(userId);
+
+    await db.query(query, params);
+
+    // Update session nama
+    req.session.user.nama = nama;
+
+    req.flash('success_msg', 'Profil berhasil diperbarui');
+    res.redirect('/mahasiswa/edit-profile');
+
+  } catch (error) {
+    console.error(error);
+    req.flash('error_msg', 'Gagal update profil: ' + error.message);
+    res.redirect('/mahasiswa/edit-profile');
+  }
+};
+
+// 3. PROSES HAPUS FOTO (AJAX Fetch)
+exports.deleteProfilePhoto = async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+
+    // Ambil nama file
+    const [rows] = await db.query(`SELECT foto_profil FROM mahasiswa WHERE user_id = ?`, [userId]);
+    
+    if (rows.length > 0 && rows[0].foto_profil) {
+      // Hapus file fisik
+      const filePath = path.join(__dirname, '../public/uploads/profile', rows[0].foto_profil);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+
+      // Hapus nama file di database
+      await db.query(`UPDATE mahasiswa SET foto_profil = NULL WHERE user_id = ?`, [userId]);
+      
+      return res.json({ success: true, message: 'Foto berhasil dihapus' });
+    }
+
+    res.json({ success: false, message: 'Foto tidak ditemukan' });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Terjadi kesalahan server' });
+  }
+};
