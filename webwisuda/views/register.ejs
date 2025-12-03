@@ -4,109 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registrasi - Wisuda Polinela</title>
+  
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    :root {
-      --polinela-blue: #0047AB;
-      --polinela-yellow: #FFC107;
-    }
-    
-    body {
-      background: linear-gradient(135deg, var(--polinela-blue) 0%, #0066CC 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
-    .register-container {
-      max-width: 800px;
-      margin: 2rem auto;
-    }
-    
-    .register-card {
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 10px 50px rgba(0,0,0,0.2);
-      overflow: hidden;
-    }
-    
-    .register-header {
-      background: linear-gradient(135deg, var(--polinela-blue) 0%, #0066CC 100%);
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
-    
-    .register-header h2 {
-      margin: 0;
-      font-weight: 700;
-    }
-    
-    .register-body {
-      padding: 2rem;
-    }
-    
-    .form-label {
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 0.5rem;
-    }
-    
-    .form-control {
-      border-radius: 10px;
-      padding: 0.75rem;
-      border: 2px solid #e0e0e0;
-      transition: all 0.3s;
-    }
-    
-    .form-control:focus {
-      border-color: var(--polinela-blue);
-      box-shadow: 0 0 0 0.2rem rgba(0, 71, 171, 0.25);
-    }
-    
-    .form-select {
-      border-radius: 10px;
-      padding: 0.75rem;
-      border: 2px solid #e0e0e0;
-    }
-    
-    .btn-register {
-      background: var(--polinela-blue);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 0.75rem;
-      font-weight: 600;
-      width: 100%;
-      transition: all 0.3s;
-    }
-    
-    .btn-register:hover {
-      background: #003380;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 71, 171, 0.3);
-    }
-    
-    .back-link {
-      color: var(--polinela-blue);
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-block;
-      margin-bottom: 1rem;
-      transition: color 0.3s;
-    }
-    
-    .back-link:hover {
-      color: #003380;
-    }
-    
-    .alert {
-      border-radius: 10px;
-      border: none;
-    }
-  </style>
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/register.css">
 </head>
 <body>
 
@@ -129,7 +38,7 @@
           </div>
         <% } %>
         
-        <form action="/auth/register" method="POST">
+        <form action="/auth/register" method="POST" id="registerForm">
           <div class="row">
             <!-- Data Akun -->
             <div class="col-12">
@@ -144,12 +53,12 @@
             
             <div class="col-md-6 mb-3">
               <label class="form-label"><i class="fas fa-lock me-2"></i>Password</label>
-              <input type="password" name="password" class="form-control" placeholder="Minimal 6 karakter" required minlength="6">
+              <input type="password" name="password" id="password" class="form-control" placeholder="Minimal 6 karakter" required minlength="6">
             </div>
             
             <div class="col-md-6 mb-3">
               <label class="form-label"><i class="fas fa-lock me-2"></i>Konfirmasi Password</label>
-              <input type="password" name="password_confirm" class="form-control" placeholder="Ulangi password" required>
+              <input type="password" name="password_confirm" id="password_confirm" class="form-control" placeholder="Ulangi password" required>
             </div>
             
             <!-- Data Mahasiswa -->
@@ -171,12 +80,14 @@
               <label class="form-label"><i class="fas fa-building me-2"></i>Jurusan</label>
               <select name="jurusan" class="form-select" required>
                 <option value="">Pilih Jurusan</option>
-                <option value="Teknik Elektro">Teknik Elektro</option>
-                <option value="Teknik Mesin">Teknik Mesin</option>
-                <option value="Teknik Sipil">Teknik Sipil</option>
-                <option value="Akuntansi">Akuntansi</option>
-                <option value="Administrasi Niaga">Administrasi Niaga</option>
                 <option value="Teknologi Informasi">Teknologi Informasi</option>
+                <option value="Budidaya Tanaman Pangan">Budidaya Tanaman Pangan</option>
+                <option value="Budidaya Tanaman Perkebunan">Budidaya Tanaman Perkebunan</option>
+                <option value="Teknologi Pertanian">Teknologi Pertanian</option>
+                <option value="Teknik">Teknik</option>
+                <option value="Peternakan">Peternakan</option>
+                <option value="Ekonomi dan Bisnis">Ekonomi dan Bisnis</option>
+                <option value="Perikanan dan Kelautan">Perikanan dan Kelautan</option>
               </select>
             </div>
             
@@ -214,7 +125,10 @@
             </div>
             
             <div class="col-12 mt-3 text-center">
-              <p class="mb-0">Sudah punya akun? <a href="/" data-bs-toggle="modal" data-bs-target="#loginModal" style="color: var(--polinela-blue); font-weight: 600;">Login di sini</a></p>
+              <p class="mb-0">
+                Sudah punya akun? 
+                <a href="#" class="login-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login di sini</a>
+              </p>
             </div>
           </div>
         </form>
@@ -223,6 +137,176 @@
   </div>
 </div>
 
+<!-- LOGIN MODAL -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
+      <div class="modal-header" style="border: none; background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%); color: white; padding: 1.5rem;">
+        <h5 class="modal-title fw-bold" id="loginModalLabel">
+          <i class="fas fa-sign-in-alt me-2"></i>Login Wisuda Online
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i><%= error_msg %>
+          </div>
+        <% } %>
+        
+        <form action="/auth/login" method="POST">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fas fa-envelope me-2 text-primary"></i>Email
+            </label>
+            <input type="email" name="email" class="form-control" placeholder="email@polinela.ac.id" required 
+                   style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fas fa-lock me-2 text-primary"></i>Password
+            </label>
+            <input type="password" name="password" class="form-control" placeholder="••••••••" required 
+                   style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="remember">
+            <label class="form-check-label" for="remember">Ingat saya</label>
+          </div>
+          
+          <div class="d-flex justify-content-end mb-3">
+            <a href="#" class="text-primary" style="font-size: 0.9rem; text-decoration: none;" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" onclick="closePreviousModal()">
+              <i class="fas fa-key me-1"></i>Lupa Password?
+            </a>
+          </div>
+          
+          <button type="submit" class="btn w-100" 
+                  style="background: #0047AB; color: white; border: none; border-radius: 10px; padding: 0.75rem; font-weight: 600;">
+            <i class="fas fa-sign-in-alt me-2"></i>Masuk
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD MODAL -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
+      <div class="modal-header" style="border: none; background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%); color: white; padding: 1.5rem;">
+        <h5 class="modal-title fw-bold" id="forgotPasswordModalLabel">
+          <i class="fas fa-key me-2"></i>Lupa Password
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="alert alert-info" style="background: #E3F2FD; border: none; color: #0047AB;">
+          <i class="fas fa-info-circle me-2"></i>
+          Masukkan email Anda yang terdaftar. Kami akan mengirimkan link reset password ke email Anda.
+        </div>
+        
+        <form id="forgotPasswordFormRegister">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fas fa-envelope me-2 text-primary"></i>Email Terdaftar
+            </label>
+            <input type="email" name="email" id="forgotEmailRegister" class="form-control" placeholder="email@polinela.ac.id" required 
+                   style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
+            <small class="text-muted">Email yang Anda gunakan saat registrasi</small>
+          </div>
+          
+          <button type="submit" class="btn w-100" 
+                  style="background: #0047AB; color: white; border: none; border-radius: 10px; padding: 0.75rem; font-weight: 600;">
+            <i class="fas fa-paper-plane me-2"></i>Kirim Link Reset Password
+          </button>
+        </form>
+        
+        <hr class="my-4">
+        
+        <div class="text-center">
+          <p class="mb-0">
+            Sudah ingat password? 
+            <a href="#" class="text-primary" style="font-weight: 600; text-decoration: none;" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">
+              Login di sini
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+function closePreviousModal() {
+  const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+  if (loginModal) {
+    loginModal.hide();
+  }
+}
+
+// Handle forgot password from register page
+document.getElementById('forgotPasswordFormRegister').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const email = document.getElementById('forgotEmailRegister').value;
+  const formData = new FormData(this);
+  
+  Swal.fire({
+    title: 'Mengirim...',
+    html: 'Sedang memproses permintaan reset password Anda',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
+  
+  fetch('/auth/forgot-password', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Email Terkirim!',
+        html: `Link reset password telah dikirim ke <strong>${email}</strong>.<br>Silakan cek email Anda (termasuk folder spam).`,
+        confirmButtonColor: '#0047AB',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+        if (modal) modal.hide();
+        document.getElementById('forgotPasswordFormRegister').reset();
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Gagal!',
+        text: data.message || 'Email tidak ditemukan atau terjadi kesalahan.',
+        confirmButtonColor: '#0047AB'
+      });
+    }
+  })
+  .catch(error => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: 'Terjadi kesalahan saat memproses permintaan.',
+      confirmButtonColor: '#0047AB'
+    });
+  });
+});
+</script>
+
+<!-- Custom JS -->
+<script src="/js/register.js"></script>
+
 </body>
 </html>
