@@ -5,683 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wisuda Politeknik Negeri Lampung</title>
   <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   
+  <!-- DataTables CSS -->
   <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-      overflow-x: hidden;
-      background: #fff;
-    }
-    
-    /* ============================================
-    NAVBAR - Persis seperti desain
-    ============================================ */
-    .navbar-custom {
-      background: #0047AB;
-      padding: 0.5rem 0;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      color: white !important;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-    
-    .navbar-brand img {
-      height: 35px;
-      margin-right: 10px;
-    }
-    
-    .navbar-custom .nav-link {
-      color: white !important;
-      font-weight: 400;
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem !important;
-      transition: all 0.3s;
-    }
-    
-    .navbar-custom .nav-link:hover {
-      opacity: 0.8;
-    }
-    
-    .btn-masuk {
-      background: #FFC107;
-      color: #333 !important;
-      font-weight: 600;
-      padding: 0.5rem 2rem;
-      border-radius: 25px;
-      border: none;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-    }
-    
-    .btn-masuk:hover {
-      background: #FFD54F;
-      transform: translateY(-2px);
-    }
-    
-    /* ============================================
-       HERO SECTION - Persis seperti desain
-    ============================================ */
-    .hero-section {
-      background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%);
-      min-height: 100vh;
-      padding-top: 80px;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    /* Decorative circles */
-    .circle-decoration {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.1;
-    }
-    
-    .circle-1 { width: 400px; height: 400px; background: white; top: -100px; right: -100px; }
-    .circle-2 { width: 470px; height: 470px; background: white; bottom: 600px; left: -120px; }
-    .circle-3 { width: 150px; height: 150px; background: white; top: 40%; right: 10%; }
-    .circle-4 { width: 100px; height: 100px; background: white; top: 30%; left: 36%; }
-    .circle-5 { width: 130px; height: 130px; background: white; top: 13%; left: 55%; }
-    .circle-6 { width: 300px; height: 300px; background: white; top: 20%; left: 44%; }
-    .circle-7 { width: 150px; height: 150px; background: white; top: 40%; left: 30%; }
-    .circle-8 { width: 100px; height: 100px; background: white; top: 40%; left: 45%; }
-    .circle-9 { width: 150px; height: 150px; background: white; top: 17%; left: 26%; }
-    
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 3rem 0;
-    }
-    
-    .hero-title {
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: white;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-    }
-    
-    .hero-subtitle {
-      font-size: 1rem;
-      color: rgba(255,255,255,0.9);
-      line-height: 1.8;
-      margin-bottom: 2rem;
-      max-width: 500px;
-    }
-    
-    .btn-daftar {
-      background: #FFC107;
-      color: #333;
-      font-weight: 600;
-      padding: 0.8rem 2.5rem;
-      border-radius: 25px;
-      border: none;
-      font-size: 1rem;
-      transition: all 0.3s;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .btn-daftar:hover {
-      background: #FFD54F;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255,193,7,0.4);
-    }
-    
-    /* Hero Illustration */
-    .hero-illustration {
-      position: relative;
-      z-index: 2;
-    }
-    
-    .hero-illustration img {
-      width: 120%;
-      max-width: 800px;
-      animation: float 3s ease-in-out infinite;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-    
-    /* ============================================
-       PERSYARATAN SECTION
-    ============================================ */
-    .section-persyaratan {
-      padding: 5rem 0;
-      background: #F8F9FA;
-    }
-    
-    .section-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #333;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    
-    .section-subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 3rem;
-      font-size: 0.95rem;
-    }
-    
-    /* Accordion Custom - Persis seperti desain */
-    .accordion-custom {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    
-    .accordion-custom .accordion-item {
-      border: none;
-      margin-bottom: 1rem;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    
-    .accordion-custom .accordion-button {
-      background: #FFC107;
-      color: #333;
-      font-weight: 600;
-      padding: 1rem 1.5rem;
-      font-size: 0.95rem;
-      border: none;
-    }
-    
-    .accordion-custom .accordion-button:not(.collapsed) {
-      background: #0047AB;
-      color: white;
-    }
-    
-    .accordion-custom .accordion-button::after {
-      filter: brightness(0) invert(1);
-    }
-    
-    .accordion-custom .accordion-button:focus {
-      box-shadow: none;
-      border: none;
-    }
-    
-    .accordion-custom .accordion-body {
-      background: white;
-      padding: 1.5rem;
-      font-size: 0.9rem;
-    }
-    
-    .accordion-custom .accordion-body ul {
-      margin: 0;
-      padding-left: 1.5rem;
-    }
-    
-    .accordion-custom .accordion-body li {
-      margin-bottom: 0.5rem;
-      color: #555;
-      line-height: 1.6;
-    }
-    
-    /* Catatan Penting - Blue background */
-    .accordion-catatan .accordion-button {
-      background: #0047AB;
-      color: white;
-    }
-    
-    .accordion-catatan .accordion-button:not(.collapsed) {
-      background: #003380;
-    }
-    
-    /* ============================================
-       STATISTIK KELULUSAN
-    ============================================ */
-    .section-statistik {
-      padding: 5rem 0;
-      background: white;
-    }
-    
-    /* Stats Cards - Persis seperti desain */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-    
-    .stats-card {
-      border-radius: 15px;
-      padding: 2rem 1.5rem;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      min-height: 140px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .stats-card-blue { background: linear-gradient(135deg, #0066FF 0%, #0047AB 100%); }
-    .stats-card-green { background: linear-gradient(135deg, #00D084 0%, #00A86B 100%); }
-    .stats-card-purple { background: linear-gradient(135deg, #B366FF 0%, #9333EA 100%); }
-    
-    .stats-card h3 {
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-    
-    .stats-card p {
-      font-size: 1rem;
-      margin: 0;
-      opacity: 0.95;
-      font-weight: 400;
-    }
-    
-    /* Chart Containers */
-    .chart-wrapper {
-      background: white;
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-    }
-    
-    .chart-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    
-    /* ============================================
-       TABEL IPK TERTINGGI
-    ============================================ */
-    .section-ipk {
-      padding: 5rem 0;
-      background: #F8F9FA;
-    }
-    
-    .table-wrapper {
-      background: white;
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-    }
-    
-    .table-custom {
-      margin-top: 1.5rem;
-    }
-    
-    .table-custom thead th {
-      background: #0047AB;
-      color: white;
-      font-weight: 600;
-      border: none;
-      padding: 1rem;
-      font-size: 0.9rem;
-    }
-    
-    .table-custom tbody td {
-      padding: 1rem;
-      vertical-align: middle;
-      font-size: 0.9rem;
-      border-bottom: 1px solid #f0f0f0;
-    }
-    
-    .table-custom tbody tr:hover {
-      background: #f8f9fa;
-    }
-    
-    .rank-badge {
-      background: #FFC107;
-      color: #333;
-      font-weight: 700;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-    }
-    
-    .ipk-value {
-      color: #0047AB;
-      font-weight: 700;
-      font-size: 1rem;
-    }
-    
-    /* ============================================
-       TENTANG POLITEKNIK
-    ============================================ */
-    .section-tentang {
-      padding: 5rem 0;
-      background: white;
-    }
-    
-    .about-text {
-      font-size: 0.95rem;
-      line-height: 1.8;
-      color: #555;
-      text-align: justify;
-      margin-bottom: 2rem;
-    }
-    
-    /* Stats Grid */
-    .about-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    .about-stat-card {
-      background: #0047AB;
-      color: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      text-align: center;
-    }
-    
-    .about-stat-card h4 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-    
-    .about-stat-card p {
-      font-size: 0.9rem;
-      margin: 0;
-      opacity: 0.95;
-    }
-    
-    /* Pengumuman Card */
-    .pengumuman-card {
-      background: #0047AB;
-      color: white;
-      border-radius: 15px;
-      padding: 2rem;
-      margin-top: 2rem;
-    }
-    
-    .pengumuman-card h5 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .pengumuman-item {
-      display: flex;
-      align-items: start;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-    }
-    
-    .pengumuman-item i {
-      color: #FFC107;
-      margin-right: 1rem;
-      font-size: 1.2rem;
-      margin-top: 2px;
-    }
-    
-    .campus-image {
-      width: 180%;
-      border-radius: 25px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    }
-    
-    /* ============================================
-       FOOTER
-    ============================================ */
-    .footer {
-      background: #1A1A1A;
-      color: white;
-      padding: 3rem 0 1rem;
-    }
-    
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    
-    .footer-logo img {
-      height: 40px;
-      margin-right: 12px;
-    }
-    
-    .footer-logo h5 {
-      margin: 0;
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-    
-    .footer-text {
-      color: #ccc;
-      font-size: 0.85rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    
-    .footer h6 {
-      color: #FFC107;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-    }
-    
-    .footer-links {
-      list-style: none;
-      padding: 0;
-    }
-    
-    .footer-links li {
-      margin-bottom: 0.6rem;
-    }
-    
-    .footer-links a {
-      color: #ccc;
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.3s;
-    }
-    
-    .footer-links a:hover {
-      color: #FFC107;
-    }
-    
-    .footer-links i {
-      margin-right: 8px;
-      color: #FFC107;
-      font-size: 0.8rem;
-    }
-    
-    .social-icons {
-      display: flex;
-      gap: 0.8rem;
-      margin-top: 1rem;
-    }
-    
-    .social-icons a {
-      width: 35px;
-      height: 35px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      transition: all 0.3s;
-      font-size: 0.9rem;
-    }
-    
-    .social-icons a:hover {
-      background: #FFC107;
-      color: #333;
-    }
-    
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      text-align: center;
-      color: #999;
-      font-size: 0.85rem;
-    }
-    
-    /* ============================================
-       RESPONSIVE MEDIA QUERIES (OPTIMAL)
-    ============================================ */
-    
-    /* --- 1. Tablet & Laptop Kecil (Max 992px) --- */
-    @media (max-width: 992px) {
-      /* Hero: Teks mengecil sedikit */
-      .hero-title { 
-        font-size: 2.8rem; 
-      }
-      
-      /* Stats: Dari 3 kolom jadi 1 kolom agar kartu tidak gepeng */
-      .stats-grid { 
-        grid-template-columns: 1fr; 
-        gap: 1rem; 
-      }
-      
-      /* Tentang: Grid tetap 2 kolom tapi lebih rapat */
-      .about-stats-grid { 
-        grid-template-columns: repeat(2, 1fr); 
-      }
-      
-      /* Ilustrasi Hero: Geser ke bawah teks */
-      .hero-section .row {
-        text-align: center;
-      }
-      
-      .hero-illustration img {
-        margin-top: 2rem;
-        width: 70%; /* Kecilkan sedikit */
-      }
-      
-      .btn-daftar {
-        margin-bottom: 1rem;
-      }
-    }
-    
-    /* --- 2. Mobile / HP (Max 768px) --- */
-    @media (max-width: 768px) {
-      /* Global: Kurangi padding section agar tidak terlalu boros tempat */
-      .section-persyaratan, 
-      .section-statistik, 
-      .section-ipk, 
-      .section-tentang { 
-        padding: 3rem 0; 
-      }
-
-      /* Hero: Sesuaikan untuk layar sempit */
-      .hero-section {
-        padding-top: 100px;
-        min-height: auto; /* Jangan paksa 100vh di HP */
-        padding-bottom: 4rem;
-      }
-      
-      .hero-title { 
-        font-size: 2.2rem; /* Font lebih kecil */
-      }
-      
-      .hero-subtitle { 
-        font-size: 0.95rem;
-        margin-bottom: 1.5rem;
-      }
-
-      /* Sembunyikan dekorasi lingkaran besar agar layar bersih */
-      .circle-1, .circle-2 { 
-        display: none; 
-      }
-
-      /* Judul Section */
-      .section-title { 
-        font-size: 1.8rem; 
-      }
-
-      /* Tabel: Pastikan bisa di-scroll horizontal */
-      .table-wrapper {
-        padding: 1rem; /* Kurangi padding kartu tabel */
-        overflow-x: auto; /* KUNCI AGAR TABEL TIDAK MERUSAK LAYOUT */
-      }
-      
-      /* Tentang Polinela: Stack jadi 1 kolom */
-      .about-stats-grid { 
-        grid-template-columns: 1fr; 
-      }
-      
-      /* Footer: Rata tengah dan menumpuk */
-      .footer {
-        text-align: center;
-      }
-      
-      .footer-logo {
-        justify-content: center;
-      }
-      
-      .social-icons {
-        justify-content: center;
-      }
-      
-      .footer-links li {
-        text-align: center;
-      }
-      
-      /* Tombol Close Modal di HP */
-      .modal-header .btn-close-white {
-        filter: none; /* Agar terlihat jelas */
-      }
-    }
-    
-    /* --- 3. HP Kecil (Max 480px) --- */
-    @media (max-width: 480px) {
-      .hero-title { 
-        font-size: 1.8rem; 
-      }
-      
-      /* Tombol jadi full width agar mudah dipencet */
-      .btn-daftar, .btn-masuk {
-        width: 100%;
-        justify-content: center;
-      }
-      
-      .stats-card h3 {
-        font-size: 2rem;
-      }
-    }
-    
-  </style>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-custom">
   <div class="container">
     <a class="navbar-brand" href="/">
-    <img src="/images/logopolinela.png" alt="">
+      <img src="/images/logopolinela.png" alt="Logo Polinela">
       <span>Wisuda Polinela</span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border-color: rgba(255,255,255,0.3);">
@@ -701,6 +47,7 @@
   </div>
 </nav>
 
+<!-- HERO SECTION -->
 <section class="hero-section">
   <div class="circle-decoration circle-1"></div>
   <div class="circle-decoration circle-2"></div>
@@ -718,27 +65,28 @@
         <h1 class="hero-title">Wisuda<br>Politeknik Negeri Lampung</h1>
         <p class="hero-subtitle">
           Kamu datang dengan mimpi, bertahan dengan tekad, lulus dengan cerita yang 
-          layak diperjuangkan. Yuk, daftar! Panggungnya udah siap,  tinggal kamu yang bersinar!
+          layak diperjuangkan. Yuk, daftar! Panggungnya udah siap, tinggal kamu yang bersinar!
         </p>
-        <button class="btn-daftar" data-bs-toggle="modal" data-bs-target="#loginModal">
+        <a href="/auth/register" class="btn-daftar">
           Daftar Sekarang
           <i class="fas fa-arrow-right"></i>
-        </button>
+        </a>
       </div>
       <div class="col-lg-6 text-center">
         <div class="hero-illustration">
-        <img src="/images/Wisuda.png" alt="Graduation"  >
-         </div>
+          <img src="/images/Wisuda.png" alt="Graduation">
+        </div>
       </div>
     </div>
   </div>
-     <svg viewBox="0 0 1440 320">
-<path fill="#ffffff" fill-opacity="1"
-d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></path>
-
-    </svg> 
+  
+  <!-- Wave SVG -->
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="height: 100px;">
+    <path fill="#F8F9FA" fill-opacity="1" d="M0,50 C240,80 480,80 720,50 C960,20 1200,20 1440,50 L1440,100 L0,100 Z"></path>
+  </svg>
 </section>
 
+<!-- PERSYARATAN SECTION -->
 <section class="section-persyaratan" id="informasi">
   <div class="container">
     <h2 class="section-title">Persyaratan Wisuda</h2>
@@ -803,7 +151,7 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
         </div>
       </div>
 
-      <div class="accordion-item accordion-catatan" id="statistik">
+      <div class="accordion-item accordion-catatan">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#catatan">
             <i class="fas fa-exclamation-triangle me-2"></i> Catatan Penting
@@ -826,7 +174,8 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
   </div>
 </section>
 
-<section class="section-statistik">
+<!-- STATISTIK SECTION -->
+<section class="section-statistik" id="statistik">
   <div class="container">
     <h2 class="section-title">Statistik Kelulusan</h2>
     <p class="section-subtitle">Data kelulusan dan keberhasilan mahasiswa Politeknik Negeri Lampung</p>
@@ -848,21 +197,22 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
 
     <div class="row">
       <div class="col-lg-8 mb-4">
-      <div class="chart-wrapper">
-      <h3 class="chart-title">Grafik Kelulusan Tiap Tahun</h3>
-      <canvas id="chartKelulusan" height="120"></canvas>
+        <div class="chart-wrapper">
+          <h3 class="chart-title">Grafik Kelulusan Tiap Tahun</h3>
+          <canvas id="chartKelulusan" height="120"></canvas>
         </div>
       </div>
       <div class="col-lg-4 mb-4">
         <div class="chart-wrapper">
           <h4 class="chart-title">Kelulusan per Jurusan</h4>
-         <canvas id="chartJurusan" width="400" height="200"></canvas>
+          <canvas id="chartJurusan" width="400" height="200"></canvas>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- TABEL IPK SECTION -->
 <section class="section-ipk" id="faq">
   <div class="container">
     <h2 class="section-title">Daftar Mahasiswa IPK Tertinggi</h2>
@@ -914,7 +264,7 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
   </div>
 </section>
 
-
+<!-- TENTANG SECTION -->
 <section class="section-tentang" id="tentang">
   <div class="container">
     <h2 class="section-title">Tentang Politeknik Negeri Lampung</h2>
@@ -976,19 +326,20 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
       </div>
       
       <div class="col-lg-6 mb-4">
-        <img src="/images/polinela.png" alt="Kampus Polinela" class="campus-image"  >
-        </div>
+        <img src="/images/polinela.png" alt="Kampus Polinela" class="campus-image">
+      </div>
     </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="row">
       <div class="col-lg-4 mb-4">
         <div class="footer-logo">
-          <img src="/images/logopolinela.png" alt="">
-           <h5>Wisuda Online Polinela</h5>
+          <img src="/images/logopolinela.png" alt="Logo Polinela">
+          <h5>Wisuda Online Polinela</h5>
         </div>
         <p class="footer-text">
           Sistem pendaftaran wisuda online Politeknik Negeri Lampung yang memudahkan 
@@ -1039,12 +390,15 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
   </div>
 </footer>
 
-<div class="modal fade" id="loginModal" tabindex="-1">
+<!-- LOGIN MODAL -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
       <div class="modal-header" style="border: none; background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%); color: white; padding: 1.5rem;">
-        <h5 class="modal-title fw-bold"><i class="fas fa-sign-in-alt me-2"></i>Login Wisuda Online</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        <h5 class="modal-title fw-bold" id="loginModalLabel">
+          <i class="fas fa-sign-in-alt me-2"></i>Login Wisuda Online
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-4">
         <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
@@ -1055,12 +409,16 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
         
         <form action="/auth/login" method="POST">
           <div class="mb-3">
-            <label class="form-label fw-semibold"><i class="fas fa-envelope me-2 text-primary"></i>Email</label>
+            <label class="form-label fw-semibold">
+              <i class="fas fa-envelope me-2 text-primary"></i>Email
+            </label>
             <input type="email" name="email" class="form-control" placeholder="email@polinela.ac.id" required 
                    style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
           </div>
           <div class="mb-3">
-            <label class="form-label fw-semibold"><i class="fas fa-lock me-2 text-primary"></i>Password</label>
+            <label class="form-label fw-semibold">
+              <i class="fas fa-lock me-2 text-primary"></i>Password
+            </label>
             <input type="password" name="password" class="form-control" placeholder="••••••••" required 
                    style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
           </div>
@@ -1068,6 +426,13 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
             <input type="checkbox" class="form-check-input" id="remember">
             <label class="form-check-label" for="remember">Ingat saya</label>
           </div>
+          
+          <div class="d-flex justify-content-end mb-3">
+            <a href="#" class="text-primary" style="font-size: 0.9rem; text-decoration: none;" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" data-bs-dismiss="modal">
+              <i class="fas fa-key me-1"></i>Lupa Password?
+            </a>
+          </div>
+          
           <button type="submit" class="btn w-100" 
                   style="background: #0047AB; color: white; border: none; border-radius: 10px; padding: 0.75rem; font-weight: 600;">
             <i class="fas fa-sign-in-alt me-2"></i>Masuk
@@ -1081,15 +446,64 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
     </div>
   </div>
 </div>
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
+      
+      <div class="modal-header" style="border: none; background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%); color: white; padding: 1.5rem;">
+        <h5 class="modal-title fw-bold" id="forgotPasswordModalLabel">
+          <i class="fas fa-key me-2"></i>Lupa Password
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body p-4">
+        <div class="alert alert-info" style="background: #E3F2FD; border: none; color: #0047AB;">
+          <i class="fas fa-info-circle me-2"></i>
+          Masukkan email Anda yang terdaftar. Kami akan mengirimkan link reset password ke email Anda.
+        </div>
+        
+        <form id="forgotPasswordForm">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              <i class="fas fa-envelope me-2 text-primary"></i>Email Terdaftar
+            </label>
+            <input type="email" name="email" id="forgotEmail" class="form-control" placeholder="email@polinela.ac.id" required 
+                   style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
+            <small class="text-muted">Email yang Anda gunakan saat registrasi</small>
+          </div>
+          
+          <button type="submit" class="btn w-100" 
+                  style="background: #0047AB; color: white; border: none; border-radius: 10px; padding: 0.75rem; font-weight: 600;">
+            <i class="fas fa-paper-plane me-2"></i>Kirim Link Reset Password
+          </button>
+        </form>
+        
+        <hr class="my-4">
+        
+        <div class="text-center">
+          <p class="mb-0">
+            Sudah ingat password? 
+            <a href="#" class="text-primary" style="font-weight: 600; text-decoration: none;" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">
+              Login di sini
+            </a>
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
 
+<!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<!-- Pass data from EJS to JavaScript -->
 <script>
   // --- Ambil data dari EJS (controller) ---
   const chartYears = <%- JSON.stringify(chartYears) %>;
@@ -1352,6 +766,123 @@ d="M0,280C240,240,480,220,720,240C960,260,1200,300,1440,280L1440,320L0,320Z"></p
     }
   `;
   document.head.appendChild(style);
+document.addEventListener('DOMContentLoaded', function() {
+  const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+  
+  if (forgotPasswordForm) {
+    forgotPasswordForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const emailInput = document.getElementById('forgotEmail');
+      const email = emailInput.value.trim();
+      
+      // Validasi di frontend
+      if (!email || email === '') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Email Kosong!',
+          text: 'Silakan masukkan email Anda.',
+          confirmButtonColor: '#0047AB'
+        });
+        emailInput.focus();
+        return;
+      }
+      
+      // Validasi format email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Format Email Salah!',
+          text: 'Silakan masukkan email yang valid.',
+          confirmButtonColor: '#0047AB'
+        });
+        emailInput.focus();
+        return;
+      }
+      
+      console.log('Email yang akan dikirim:', email);
+      
+      // Show loading
+      Swal.fire({
+        title: 'Mengirim...',
+        html: 'Sedang memproses permintaan reset password',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      
+      // KIRIM DENGAN URLSearchParams (BUKAN FormData!)
+      // Ini akan otomatis set Content-Type: application/x-www-form-urlencoded
+      const formData = new URLSearchParams();
+      formData.append('email', email);
+      
+      console.log('FormData yang dikirim:', formData.toString());
+      
+      // Submit via AJAX
+      fetch('/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+      })
+      .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        return response.json();
+      })
+      .then(data => {
+        console.log('Response data:', data);
+        
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Email Terkirim!',
+            html: `Link reset password telah dikirim ke <strong>${email}</strong>.<br>Silakan cek email Anda (termasuk folder spam).`,
+            confirmButtonColor: '#0047AB',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+            if (modal) modal.hide();
+            
+            // Reset form
+            forgotPasswordForm.reset();
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: data.message || 'Email tidak ditemukan atau terjadi kesalahan.',
+            confirmButtonColor: '#0047AB'
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Terjadi kesalahan saat memproses permintaan: ' + error.message,
+          confirmButtonColor: '#0047AB'
+        });
+      });
+    });
+  }
+  
+  // Handle login error parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('loginError') === 'true' || document.querySelector('#loginModal .alert')) {
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
+  }
+});
 </script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
 </body>
 </html>
