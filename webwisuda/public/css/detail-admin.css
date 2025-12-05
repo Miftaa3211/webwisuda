@@ -1,0 +1,231 @@
+body { 
+  font-family: 'Poppins', sans-serif; 
+  background: #F5F7FA; 
+  color: #333; 
+}
+
+/* Navbar */
+.navbar-admin { 
+  background: #0047AB; 
+  padding: 1rem 0; 
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+}
+.navbar-brand, .nav-link { 
+  color: white !important; 
+}
+.user-avatar { 
+  width: 40px; 
+  height: 40px; 
+  background: white; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  color: #0047AB; 
+  font-weight: 600; 
+}
+
+/* Header */
+.page-header { 
+  margin: 2rem 0; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+.breadcrumb-custom { 
+  font-size: 0.9rem; 
+  color: #666; 
+  margin-bottom: 0.5rem; 
+}
+.applicant-name { 
+  font-size: 2rem; 
+  font-weight: 700; 
+  margin: 0; 
+}
+
+/* Cards */
+.card-custom { 
+  background: white; 
+  border-radius: 12px; 
+  border: none; 
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05); 
+  padding: 1.5rem; 
+  margin-bottom: 1.5rem; 
+  height: 100%; 
+}
+.card-title-custom { 
+  font-size: 1.1rem; 
+  font-weight: 600; 
+  margin-bottom: 1.5rem; 
+  color: #1F2937; 
+}
+
+/* Detail Styles */
+.detail-label { 
+  font-size: 0.85rem; 
+  color: #6B7280; 
+  margin-bottom: 0.2rem; 
+}
+.detail-value { 
+  font-size: 1rem; 
+  font-weight: 500; 
+  color: #111827; 
+  margin-bottom: 1.2rem; 
+}
+.detail-value.email { 
+  word-break: break-all; 
+  color: #4B5563; 
+}
+
+/* Status Badges */
+.status-badge-large { 
+  display: inline-block; 
+  padding: 0.5rem 1rem; 
+  border-radius: 8px; 
+  font-weight: 600; 
+  font-size: 0.9rem; 
+  margin-bottom: 2rem; 
+  width: 100%; 
+  text-align: center; 
+}
+.bg-status-menunggu { 
+  background: #FFFBEB; 
+  color: #B45309; 
+  border: 1px solid #FCD34D; 
+}
+.bg-status-diverifikasi { 
+  background: #ECFDF5; 
+  color: #047857; 
+  border: 1px solid #6EE7B7; 
+}
+.bg-status-ditolak { 
+  background: #FEF2F2; 
+  color: #B91C1C; 
+  border: 1px solid #FCA5A5; 
+}
+
+/* Buttons */
+.btn-action-group { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 1rem; 
+  margin-top: 2rem; 
+}
+.btn-terima { 
+  background: #0284C7; 
+  color: white; 
+  border: none; 
+  padding: 0.75rem; 
+  border-radius: 8px; 
+  font-weight: 600; 
+  width: 100%; 
+  transition: 0.3s; 
+}
+.btn-terima:hover { 
+  background: #0369A1; 
+  color: white; 
+}
+.btn-tolak { 
+  background: #DC2626; 
+  color: white; 
+  border: none; 
+  padding: 0.75rem; 
+  border-radius: 8px; 
+  font-weight: 600; 
+  width: 100%; 
+  transition: 0.3s; 
+}
+.btn-tolak:hover { 
+  background: #B91C1C; 
+  color: white; 
+}
+
+/* Doc List */
+.doc-item { 
+  border: 1px solid #E5E7EB; 
+  border-radius: 10px; 
+  padding: 1rem; 
+  margin-bottom: 1rem; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  flex-wrap: wrap; 
+  gap: 1rem; 
+}
+.doc-info { 
+  flex: 1; 
+}
+.doc-name { 
+  font-weight: 600; 
+  font-size: 1rem; 
+  display: block; 
+  margin-bottom: 0.2rem; 
+}
+.doc-date { 
+  font-size: 0.8rem; 
+  color: #9CA3AF; 
+}
+
+.doc-actions { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.5rem; 
+}
+.badge-doc { 
+  padding: 0.35rem 0.8rem; 
+  border-radius: 20px; 
+  font-size: 0.75rem; 
+  font-weight: 600; 
+}
+.badge-doc.menunggu { 
+  background: #FFF7ED; 
+  color: #C2410C; 
+}
+.badge-doc.diterima { 
+  background: #ECFDF5; 
+  color: #047857; 
+}
+.badge-doc.ditolak { 
+  background: #FEF2F2; 
+  color: #B91C1C; 
+}
+
+.btn-icon { 
+  width: 32px; 
+  height: 32px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  border-radius: 6px; 
+  border: none; 
+  transition: 0.2s; 
+  text-decoration: none; 
+  cursor: pointer; 
+}
+.btn-view { 
+  background: #EFF6FF; 
+  color: #1D4ED8; 
+}
+.btn-view:hover { 
+  background: #DBEAFE; 
+}
+
+.reject-box { 
+  background: #FEF2F2; 
+  border: 1px solid #FECACA; 
+  border-radius: 8px; 
+  padding: 1rem; 
+  margin-top: 0.5rem; 
+  width: 100%; 
+}
+.reject-title { 
+  color: #991B1B; 
+  font-weight: 600; 
+  font-size: 0.9rem; 
+  margin-bottom: 0.3rem; 
+}
+.reject-text { 
+  color: #B91C1C; 
+  font-size: 0.85rem; 
+  margin: 0; 
+}
