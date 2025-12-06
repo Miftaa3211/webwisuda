@@ -56,4 +56,30 @@ router.get('/detail-pendaftaran', mahasiswaController.detailPendaftaran);
 router.get('/riwayat', mahasiswaController.riwayatPendaftaran);
 router.get('/cetak-bukti', mahasiswaController.cetakBukti);
 
+
+router.get('/preview/:id', mahasiswaController.previewFile);
+
+
+// Hapus dokumen
+router.post('/hapus-berkas/:id', async (req, res) => {
+  const db = require('../config/database');
+  const dokumenId = req.params.id;
+
+  try {
+    await db.query(`
+      UPDATE dokumen_pendaftaran
+      SET nama_file = NULL, path_file = NULL, status = 'Belum Upload', catatan_admin = NULL
+      WHERE id = ?
+    `, [dokumenId]);
+
+    req.flash('success_msg', 'Berkas berhasil dihapus.');
+    res.redirect('/mahasiswa/upload-berkas');
+  } catch (error) {
+    console.error(error);
+    req.flash('error_msg', 'Gagal menghapus berkas.');
+    res.redirect('/mahasiswa/upload-berkas');
+  }
+});
+
+
 module.exports = router;
