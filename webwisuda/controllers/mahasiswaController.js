@@ -48,6 +48,7 @@ exports.dashboard = async (req, res) => {
   try {
     const userId = req.session.user.id;
 
+    // 1. Ambil data Mahasiswa
     const [mahasiswa] = await db.query(
       'SELECT * FROM mahasiswa WHERE user_id = ?', [userId]
     );
@@ -57,16 +58,42 @@ exports.dashboard = async (req, res) => {
       return res.redirect('/');
     }
 
+    // 2. Ambil data Pendaftaran
     const [pendaftaran] = await db.query(
       'SELECT * FROM pendaftaran_wisuda WHERE mahasiswa_id = ?',
       [mahasiswa[0].id]
     );
 
+    // ============================================================
+    // MULAI EDIT DISINI (LOGIKA TENGGAT WAKTU)
+    // ============================================================
+    
+    // Ganti tanggal ini ke MASA LALU agar pendaftaran DITUTUP (Contoh: 1 Januari 2024)
+    // Ganti tanggal ini ke MASA DEPAN agar pendaftaran DIBUKA
+    const TENGGAT_WISUDA = new Date('2026-12-12T23:59:00'); 
+    
+    const sekarang = new Date();
+    
+    // Cek apakah sekarang sudah lewat tanggal tenggat?
+    const isClosed = sekarang > TENGGAT_WISUDA;
+
+    // Format tanggal biar rapi (Senin, 1 Januari 2024)
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    const tenggatWaktuStr = TENGGAT_WISUDA.toLocaleDateString('id-ID', options);
+    
+    // ============================================================
+    // AKHIR EDIT
+    // ============================================================
+
     res.render('dashboard_mahasiswa', {
       title: 'Dashboard Mahasiswa',
       mahasiswa: mahasiswa[0],
       pendaftaran: pendaftaran.length > 0 ? pendaftaran[0] : null,
-      user: req.session.user
+      user: req.session.user,
+      
+      // JANGAN LUPA: Kirim 2 variabel ini ke View (EJS)
+      isClosed: isClosed,       // Status Tutup/Buka
+      tenggatWaktu: tenggatWaktuStr // Teks Tanggal
     });
 
   } catch (error) {
