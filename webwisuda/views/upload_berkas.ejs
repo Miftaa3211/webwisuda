@@ -69,15 +69,29 @@
 <nav class="navbar navbar-expand-lg navbar-custom">
   <div class="container">
     <a class="navbar-brand" href="/mahasiswa/dashboard">
-      <i class="fas fa-graduation-cap me-2"></i>Dashboard Mahasiswa
+      <i class="fas fa-graduation-cap me-2"></i>Profil Mahasiswa
     </a>
-
-    <div class="nav-avatar-img">
-        <% if (mahasiswa.foto_profil) { %>
-            <img src="/uploads/profile/<%= mahasiswa.foto_profil %>" alt="Foto Profil">
-        <% } else { %>
-            <img src="https://ui-avatars.com/api/?name=<%= mahasiswa.nama %>&size=120&background=0047AB&color=fff&bold=true" alt="Avatar">
-        <% } %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link active" href="/mahasiswa/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/logout">Logout</a>
+        </li>
+        <li class="nav-item ms-3">
+          <div class="nav-avatar-img"> 
+            <% if (mahasiswa.foto_profil) { %>
+              <img src="/uploads/profile/<%= mahasiswa.foto_profil %>" alt="Foto Profil">
+            <% } else { %>
+              <img src="https://ui-avatars.com/api/?name=<%= mahasiswa.nama %>&size=120&background=0047AB&color=fff&bold=true" alt="Avatar">
+            <% } %>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
