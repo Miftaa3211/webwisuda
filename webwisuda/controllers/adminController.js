@@ -5,10 +5,14 @@ exports.dashboard = async (req, res) => {
   res.redirect('/admin/monitoring');
 };
 
-// Monitoring Pendaftaran
+// Monitoring Pendaftaran (Disesuaikan dengan Role)
 exports.monitoring = async (req, res) => {
   try {
-    const [pendaftaran] = await db.query(`
+    const user = req.session.user; // Ambil data user dari session
+    let queryParams = [];
+    
+    // 1. Query Dasar
+    let query = `
       SELECT 
         p.id,
         p.tanggal_daftar,
@@ -19,22 +23,29 @@ exports.monitoring = async (req, res) => {
         m.prodi,
         m.jurusan,
         m.no_hp,
-        (
-          SELECT COUNT(*) 
-          FROM dokumen_wisuda d 
-          WHERE d.pendaftaran_id = p.id
-        ) AS jumlah_dokumen,
-        (
-          SELECT COUNT(*) 
-          FROM dokumen_wisuda d 
-          WHERE d.pendaftaran_id = p.id 
-          AND d.status = 'Lengkap'
-        ) AS dokumen_lengkap
+        (SELECT COUNT(*) FROM dokumen_wisuda d WHERE d.pendaftaran_id = p.id) AS jumlah_dokumen,
+        (SELECT COUNT(*) FROM dokumen_wisuda d WHERE d.pendaftaran_id = p.id AND d.status = 'Lengkap') AS dokumen_lengkap
       FROM pendaftaran_wisuda p
       JOIN mahasiswa m ON p.mahasiswa_id = m.id
-      ORDER BY p.created_at DESC
-    `);
+    `;
 
+    // 2. Filter Berdasarkan Role
+    if (user.role === 'admin_prodi') {
+      query += ` WHERE m.prodi = ?`;
+      queryParams.push(user.prodi);
+    } else if (user.role === 'admin_jurusan') {
+      query += ` WHERE m.jurusan = ?`;
+      queryParams.push(user.jurusan);
+    } 
+    // Admin Toic & Super Admin tidak kena filter (melihat semua)
+
+    // 3. Order By
+    query += ` ORDER BY p.created_at DESC`;
+
+    // Eksekusi Query
+    const [pendaftaran] = await db.query(query, queryParams);
+
+    // Mapping Status Berkas
     const data = pendaftaran.map(p => ({
       ...p,
       status_berkas: (p.jumlah_dokumen > 0 && p.jumlah_dokumen === p.dokumen_lengkap)
@@ -45,7 +56,7 @@ exports.monitoring = async (req, res) => {
     res.render('dashboard_admin', {
       title: 'Monitoring Pendaftaran Wisuda',
       pendaftaran: data,
-      user: req.session.user
+      user: req.session.user // Kirim data user untuk Navbar
     });
 
   } catch (error) {
@@ -55,19 +66,17 @@ exports.monitoring = async (req, res) => {
   }
 };
 
-// Detail Pendaftaran
+// Detail Pendaftaran (Dengan Keamanan Role)
 exports.detailPendaftaran = async (req, res) => {
   try {
     const pendaftaranId = req.params.id;
+    const user = req.session.user;
 
+    // Ambil data pendaftaran + info mahasiswa
     const [pendaftaran] = await db.query(`
       SELECT 
         p.*,
-        m.nama,
-        m.nim,
-        m.prodi,
-        m.jurusan,
-        m.no_hp,
+        m.nama, m.nim, m.prodi, m.jurusan, m.no_hp,
         u.email AS user_email
       FROM pendaftaran_wisuda p
       JOIN mahasiswa m ON p.mahasiswa_id = m.id
@@ -80,6 +89,21 @@ exports.detailPendaftaran = async (req, res) => {
       return res.redirect('/admin/monitoring');
     }
 
+    const dataMhs = pendaftaran[0];
+
+    // --- SECURITY CHECK ---
+    // Cegah Admin Prodi A melihat data Mahasiswa Prodi B lewat URL
+    if (user.role === 'admin_prodi' && dataMhs.prodi !== user.prodi) {
+      req.flash('error_msg', 'Anda tidak memiliki akses ke data prodi lain.');
+      return res.redirect('/admin/monitoring');
+    }
+    
+    if (user.role === 'admin_jurusan' && dataMhs.jurusan !== user.jurusan) {
+      req.flash('error_msg', 'Anda tidak memiliki akses ke data jurusan lain.');
+      return res.redirect('/admin/monitoring');
+    }
+    // ----------------------
+
     const [dokumen] = await db.query(`
       SELECT * FROM dokumen_wisuda 
       WHERE pendaftaran_id = ?
@@ -88,7 +112,7 @@ exports.detailPendaftaran = async (req, res) => {
 
     res.render('detail_pendaftaran_admin', {
       title: 'Detail Pendaftaran Wisuda',
-      pendaftaran: pendaftaran[0],
+      pendaftaran: dataMhs,
       dokumen,
       user: req.session.user
     });
@@ -105,6 +129,9 @@ exports.updateStatus = async (req, res) => {
   try {
     const id = req.params.id;
     const { status, catatan } = req.body;
+
+    // Opsional: Anda bisa membatasi admin toic agar tidak bisa mengubah status kelulusan akhir
+    // if (req.session.user.role === 'admin_toic') { ... }
 
     await db.query(
       `UPDATE pendaftaran_wisuda 
@@ -127,30 +154,24 @@ exports.updateStatus = async (req, res) => {
 exports.updateDokumen = async (req, res) => {
   try {
     const dokumenId = req.params.id;
-    let { status, catatan } = req.body; // Ambil status dan catatan
+    let { status, catatan } = req.body; 
 
-    // [PERBAIKAN] Jika status Ditolak tapi tidak ada catatan, beri default
     if (status === 'Ditolak' && !catatan) {
       catatan = 'Dokumen tidak valid atau buram. Mohon unggah ulang.';
     }
 
-    // [PERBAIKAN] Reset catatan jadi NULL jika statusnya Lengkap (Diterima)
     if (status === 'Lengkap') {
       catatan = null;
     }
 
-    // Update Database termasuk kolom catatan
     await db.query(`
       UPDATE dokumen_wisuda 
       SET status = ?, catatan = ?
       WHERE id = ?
     `, [status, catatan, dokumenId]);
 
-    // Ambil ID pendaftaran untuk redirect kembali ke halaman detail
     const [row] = await db.query(`
-      SELECT pendaftaran_id 
-      FROM dokumen_wisuda 
-      WHERE id = ?
+      SELECT pendaftaran_id FROM dokumen_wisuda WHERE id = ?
     `, [dokumenId]);
 
     if (row.length > 0) {
@@ -167,27 +188,34 @@ exports.updateDokumen = async (req, res) => {
   }
 };
 
-// Export Data
+// Export Data (Disesuaikan dengan Role)
 exports.exportData = async (req, res) => {
   try {
-    const [rows] = await db.query(`
+    const user = req.session.user;
+    let queryParams = [];
+
+    // Base Query
+    let query = `
       SELECT 
-        m.nama,
-        m.nim,
-        m.prodi,
-        m.jurusan,
-        m.no_hp,
-        p.tanggal_daftar,
-        p.status,
-        (
-          SELECT COUNT(*) 
-          FROM dokumen_wisuda d 
-          WHERE d.pendaftaran_id = p.id
-        ) AS jumlah_dokumen
+        m.nama, m.nim, m.prodi, m.jurusan, m.no_hp,
+        p.tanggal_daftar, p.status,
+        (SELECT COUNT(*) FROM dokumen_wisuda d WHERE d.pendaftaran_id = p.id) AS jumlah_dokumen
       FROM pendaftaran_wisuda p
       JOIN mahasiswa m ON p.mahasiswa_id = m.id
-      ORDER BY p.created_at DESC
-    `);
+    `;
+
+    // Filter Berdasarkan Role
+    if (user.role === 'admin_prodi') {
+      query += ` WHERE m.prodi = ?`;
+      queryParams.push(user.prodi);
+    } else if (user.role === 'admin_jurusan') {
+      query += ` WHERE m.jurusan = ?`;
+      queryParams.push(user.jurusan);
+    }
+    
+    query += ` ORDER BY p.created_at DESC`;
+
+    const [rows] = await db.query(query, queryParams);
 
     let csv = 'Nama,NIM,Program Studi,Jurusan,No HP,Tanggal Daftar,Status,Jumlah Dokumen\n';
     rows.forEach(r => {
@@ -195,7 +223,7 @@ exports.exportData = async (req, res) => {
     });
 
     res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename=pendaftaran.csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=pendaftaran_wisuda.csv');
     res.send(csv);
 
   } catch (error) {
@@ -212,11 +240,13 @@ exports.bantuan = (req, res) => {
     user: req.session.user
   });
 };
+
+// Cetak Detail (Dengan Keamanan Role)
 exports.cetakDetailPendaftaran = async (req, res) => {
   try {
     const pendaftaranId = req.params.id;
+    const user = req.session.user;
 
-    // Ambil data lengkap (sama seperti detail biasa)
     const [rows] = await db.query(`
       SELECT 
         p.*,
@@ -232,14 +262,24 @@ exports.cetakDetailPendaftaran = async (req, res) => {
       return res.status(404).send('Data tidak ditemukan');
     }
 
+    const dataMhs = rows[0];
+
+    // --- SECURITY CHECK (Sama seperti detail) ---
+    if (user.role === 'admin_prodi' && dataMhs.prodi !== user.prodi) {
+      return res.status(403).send('Akses Ditolak: Bukan Prodi Anda');
+    }
+    if (user.role === 'admin_jurusan' && dataMhs.jurusan !== user.jurusan) {
+      return res.status(403).send('Akses Ditolak: Bukan Jurusan Anda');
+    }
+    // ---------------------------------------------
+
     const [dokumen] = await db.query(`
       SELECT * FROM dokumen_wisuda 
       WHERE pendaftaran_id = ?
     `, [pendaftaranId]);
 
-    // Render ke halaman cetak khusus
     res.render('cetak_detail_admin', {
-      pendaftaran: rows[0],
+      pendaftaran: dataMhs,
       dokumen: dokumen
     });
 
