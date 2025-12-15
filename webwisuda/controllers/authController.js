@@ -50,38 +50,63 @@ exports.register = async (req, res) => {
 // ============================================
 // 2. LOGIN & LOGOUT
 // ============================================
+// Di file controllers/authController.js
+
 exports.login = async (req, res) => {
   try {
     let { email, password } = req.body;
     email = email.trim();
 
+    console.log('--- DEBUG LOGIN START ---'); // Cek Terminal
+    console.log('Email Input:', email);
+
+    // 1. Cek User
     const [users] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
     
     if (users.length === 0) {
-      req.flash('error_msg', 'Email atau password salah');
+      console.log('❌ User tidak ditemukan di database');
+      req.flash('error_msg', 'Email tidak terdaftar');
       return res.redirect('/');
     }
 
-    const isMatch = await bcrypt.compare(password, users[0].password);
+    const user = users[0];
+    console.log('✅ User ditemukan:', user.role);
+
+    // 2. Cek Password
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log('Password Match Result:', isMatch); // Harus TRUE
+
     if (!isMatch) {
-      req.flash('error_msg', 'Email atau password salah');
+      console.log('❌ Password Salah');
+      req.flash('error_msg', 'Password salah');
       return res.redirect('/');
     }
 
+    // 3. Set Session (PENTING: Perhatikan tanda koma)
     req.session.user = {
-      id: users[0].id,
-      email: users[0].email,
-      role: users[0].role
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      nama: user.nama || user.email,
+      prodi: user.prodi || null,
+      jurusan: user.jurusan || null
     };
 
-    if (users[0].role === 'admin') {
-      res.redirect('/admin/dashboard');
+    console.log('✅ Session Created. Role:', user.role);
+
+    // 4. Redirect Logic (Support untuk semua jenis admin)
+    // Cek apakah role mengandung kata 'admin' (misal: admin_prodi, admin_jurusan, super_admin)
+    if (user.role && user.role.includes('admin')) {
+      console.log('➡️ Redirecting to /admin/dashboard');
+      return res.redirect('/admin/dashboard');
     } else {
-      res.redirect('/mahasiswa/dashboard');
+      console.log('➡️ Redirecting to /mahasiswa/dashboard');
+      return res.redirect('/mahasiswa/dashboard');
     }
+
   } catch (error) {
-    console.error('Error Login:', error);
-    req.flash('error_msg', 'Terjadi kesalahan');
+    console.error('CRITICAL ERROR LOGIN:', error);
+    req.flash('error_msg', 'Terjadi kesalahan sistem');
     res.redirect('/');
   }
 };
