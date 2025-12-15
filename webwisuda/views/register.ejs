@@ -78,22 +78,110 @@
             
             <div class="col-md-6 mb-3">
               <label class="form-label"><i class="fas fa-building me-2"></i>Jurusan</label>
-              <select name="jurusan" class="form-select" required>
+              <select name="jurusan" id="jurusanSelect" class="form-select" required onchange="updateProdi()">
                 <option value="">Pilih Jurusan</option>
-                <option value="Teknologi Informasi">Teknologi Informasi</option>
                 <option value="Budidaya Tanaman Pangan">Budidaya Tanaman Pangan</option>
                 <option value="Budidaya Tanaman Perkebunan">Budidaya Tanaman Perkebunan</option>
                 <option value="Teknologi Pertanian">Teknologi Pertanian</option>
-                <option value="Teknik">Teknik</option>
                 <option value="Peternakan">Peternakan</option>
                 <option value="Ekonomi dan Bisnis">Ekonomi dan Bisnis</option>
+                <option value="Teknik">Teknik</option>
                 <option value="Perikanan dan Kelautan">Perikanan dan Kelautan</option>
+                <option value="Teknologi Informasi">Teknologi Informasi</option>
               </select>
             </div>
             
             <div class="col-md-6 mb-3">
               <label class="form-label"><i class="fas fa-graduation-cap me-2"></i>Program Studi</label>
-              <input type="text" name="prodi" class="form-control" placeholder="Contoh: Teknik Informatika" required>
+              <select name="prodi" id="prodiSelect" class="form-select" required disabled>
+                <option value="">Pilih Jurusan Terlebih Dahulu</option>
+              </select>
+
+              <script>
+// Data Program Studi SESUAI DATA POLINELA TERBARU
+const dataProdi = {
+    "Budidaya Tanaman Pangan": [
+        "D3. Hortikultura",
+        "S1.Tr. Teknologi Produksi Tanaman Pangan",
+        "S1.Tr. Teknologi Perbenihan",
+        "S1.Tr. Teknologi Produksi Tanaman Hortikultura",
+        "S2.Tr. Ketahanan Pangan (Pasca Sarjana)"
+    ],
+    "Budidaya Tanaman Perkebunan": [
+        "D3. Produksi Tanaman Perkebunan",
+        "S1.Tr. Produksi dan Manajemen Industri Perkebunan",
+        "S1.Tr. Pengelolaan Perkebunan Kopi"
+    ],
+    "Teknologi Pertanian": [
+        "D2. Pengolahan Patiseri",
+        "D3. Mekanisasi Pertanian",
+        "D3. Teknologi Pangan",
+        "S1.Tr. Pengembangan Produk Agroindustri",
+        "S1.Tr. Kimia Terapan"
+    ],
+    "Peternakan": [
+        "S1.Tr. Teknologi Produksi Ternak",
+        "S1.Tr. Agribisnis Peternakan",
+        "S1.Tr. Teknologi Pakan Ternak"
+    ],
+    "Ekonomi dan Bisnis": [
+        "D3. Perjalanan Wisata",
+        "S1.Tr. Agribisnis Pangan",
+        "S1.Tr. Pengelolaan Agribisnis",
+        "S1.Tr. Akuntansi Perpajakan",
+        "S1.Tr. Akuntansi Bisnis Digital",
+        "S1.Tr. Pengelolaan Perhotelan",
+        "S1.Tr. Pengelolaan Konvensi dan Acara",
+        "S1.Tr. Produksi Media",
+        "S1.Tr. Bahasa Inggris untuk Bisnis dan Profesional"
+    ],
+    "Teknik": [
+        "D3. Teknik Sumberdaya Lahan dan Lingkungan",
+        "S1.Tr. Teknologi Rekayasa Konstruksi Jalan dan Jembatan",
+        "S1.Tr. Teknologi Rekayasa Kimia Industri",
+        "S1.Tr. Teknologi Rekayasa Otomotif"
+    ],
+    "Perikanan dan Kelautan": [
+        "D3. Budidaya Perikanan",
+        "D3. Perikanan Tangkap",
+        "S1.Tr. Teknologi Pembenihan Ikan"
+    ],
+    "Teknologi Informasi": [
+        "D3. Manajemen Informatika",
+        "S1.Tr. Teknologi Rekayasa Internet",
+        "S1.Tr. Teknologi Rekayasa Elektronika",
+        "S1.Tr. Teknologi Rekayasa Perangkat Lunak"
+    ]
+};
+
+function updateProdi() {
+    const jurusanSelect = document.getElementById('jurusanSelect');
+    const prodiSelect = document.getElementById('prodiSelect');
+    const selectedJurusan = jurusanSelect.value;
+
+    // Reset isi dropdown prodi
+    prodiSelect.innerHTML = '<option value="">Pilih Program Studi</option>';
+
+    // Cek apakah jurusan yang dipilih ada datanya
+    if (selectedJurusan && dataProdi[selectedJurusan]) {
+        // Aktifkan dropdown prodi
+        prodiSelect.disabled = false;
+
+        // Loop data prodi dan masukkan ke dropdown
+        dataProdi[selectedJurusan].forEach(function(prodi) {
+            const option = document.createElement('option');
+            option.value = prodi;
+            option.text = prodi;
+            prodiSelect.appendChild(option);
+        });
+    } else {
+        // Jika tidak ada jurusan dipilih, matikan dropdown prodi
+        prodiSelect.disabled = true;
+        prodiSelect.innerHTML = '<option value="">Pilih Jurusan Terlebih Dahulu</option>';
+    }
+}
+</script>
+
             </div>
             
             <div class="col-md-6 mb-3">
