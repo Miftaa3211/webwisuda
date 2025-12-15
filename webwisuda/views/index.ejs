@@ -89,10 +89,80 @@
 <!-- PERSYARATAN SECTION -->
 <section class="section-persyaratan" id="informasi">
   <div class="container">
-    <h2 class="section-title">Persyaratan Wisuda</h2>
-    <p class="section-subtitle">Pastikan Anda memenuhi semua persyaratan dan ketentuan wisuda sebelum melakukan pendaftaran</p>
-    
-    <div class="accordion accordion-custom" id="persyaratanAccordion">
+    <div class="text-center mb-4">
+      <h2 class="section-title">Informasi Wisuda</h2>
+      <p class="section-subtitle">Panduan lengkap alur pendaftaran dan persyaratan wisuda</p>
+      
+      <div class="toggle-wrapper">
+        <div class="toggle-container">
+          <button class="toggle-btn active" onclick="switchTab('alur')">Alur Pendaftaran</button>
+          <button class="toggle-btn" onclick="switchTab('syarat')">Syarat Wisuda</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="content-alur" class="tab-content active-content">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="card border-0 shadow-sm p-4">
+            <div class="timeline-online">
+                <div class="timeline-row">
+                <div class="timeline-time">Langkah 1</div>
+                <div class="timeline-dot bg-primary"></div>
+                <div class="timeline-content">
+                  <i class="fas fa-user-plus text-primary mb-2 fs-4"></i>
+                  <h4>Registrasi Akun</h4>
+                  <p>Mahasiswa mendaftar akun menggunakan email aktif dan mengisi biodata awal (NPM, Nama, Prodi) pada menu Registrasi.</p>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="timeline-time">Langkah 2</div>
+                <div class="timeline-dot bg-info"></div>
+                <div class="timeline-content">
+                  <i class="fas fa-sign-in-alt text-info mb-2 fs-4"></i>
+                  <h4>Login Sistem</h4>
+                  <p>Masuk (Login) ke dalam sistem menggunakan email dan password yang telah didaftarkan sebelumnya.</p>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="timeline-time">Langkah 3</div>
+                <div class="timeline-dot bg-warning"></div>
+                <div class="timeline-content">
+                  <i class="fas fa-cloud-upload-alt text-warning mb-2 fs-4"></i>
+                  <h4>Upload Berkas Digital</h4>
+                  <p>Pada halaman dashboard, upload scan dokumen asli (PDF/JPG) seperti KTP, Transkrip, Sertifikat TOEIC, dan Bukti Bebas Tanggungan.</p>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="timeline-time">Langkah 4</div>
+                <div class="timeline-dot" style="background-color: #6f42c1;"></div> <div class="timeline-content">
+                  <i class="fas fa-user-check mb-2 fs-4" style="color: #6f42c1;"></i>
+                  <h4>Verifikasi Admin</h4>
+                  <p>Admin Prodi dan Akademik memverifikasi berkas. Pantau status kelulusan berkas melalui dashboard (Status: <strong>Diajukan</strong> &rarr; <strong>Lengkap</strong>).</p>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="timeline-time">Langkah 5</div>
+                <div class="timeline-dot bg-success"></div>
+                <div class="timeline-content">
+                  <i class="fas fa-print text-success mb-2 fs-4"></i>
+                  <h4>Cetak Bukti Pendaftaran</h4>
+                  <p>Jika seluruh berkas berstatus <strong>"Lengkap"</strong>, tombol cetak akan aktif. Cetak Bukti Pendaftaran untuk pengambilan toga.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="content-syarat" class="tab-content" style="display: none;">
+      <div class="accordion accordion-custom" id="persyaratanAccordion">
+        
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#akademik">
@@ -172,8 +242,10 @@
       </div>
     </div>
   </div>
-</section>
+  </div>
 
+  </div>
+</section>
 <!-- STATISTIK SECTION -->
 <section class="section-statistik" id="statistik">
   <div class="container">
@@ -234,7 +306,7 @@
             <tr>
               <th style="width: 80px;">Rank</th>
               <th>Nama Mahasiswa</th>
-              <th>NIM</th>
+              <th>NPM</th>
               <th>Jurusan</th>
               <th style="width: 100px;">IPK</th>
               <th style="width: 120px;">Tahun Lulus</th>
@@ -294,7 +366,7 @@
             <p>Jurusan</p>
           </div>
           <div class="about-stat-card">
-            <h4>B</h4>
+            <h4>Baik Sekali</h4>
             <p>Akreditasi</p>
           </div>
         </div>
@@ -879,6 +951,44 @@ document.addEventListener('DOMContentLoaded', function() {
     loginModal.show();
   }
 });
+function switchTab(tabName) {
+    // 1. Ubah tampilan tombol Active
+    const buttons = document.querySelectorAll('.toggle-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    // Cari tombol yang diklik (logic sederhana berdasarkan urutan/text)
+    // Atau gunakan event.target jika dipassing
+    if(tabName === 'alur') {
+      buttons[0].classList.add('active');
+    } else {
+      buttons[1].classList.add('active');
+    }
+
+    // 2. Tampilkan Konten yang sesuai
+    const contentAlur = document.getElementById('content-alur');
+    const contentSyarat = document.getElementById('content-syarat');
+
+    if (tabName === 'alur') {
+      contentAlur.style.display = 'block';
+      contentSyarat.style.display = 'none';
+      
+      // Animasi Fade In sederhana
+      contentAlur.style.opacity = 0;
+      setTimeout(() => contentAlur.style.opacity = 1, 50);
+    } else {
+      contentAlur.style.display = 'none';
+      contentSyarat.style.display = 'block';
+      
+      contentSyarat.style.opacity = 0;
+      setTimeout(() => contentSyarat.style.opacity = 1, 50);
+    }
+  }
+  
+  // Set transition css for fade effect
+  document.addEventListener("DOMContentLoaded", () => {
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.style.transition = 'opacity 0.3s ease');
+  });
 </script>
 
 <!-- Custom JavaScript -->
