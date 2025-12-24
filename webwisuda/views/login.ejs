@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Wisuda Polinela</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-blue: #0047AB;
+      --secondary-gold: #FFD700;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Layout Split Screen */
+    .login-container {
+      min-height: 100vh;
+    }
+
+    /* --- SISI KIRI (VIDEO PLAYLIST) --- */
+    .left-pane {
+      position: relative;
+      background-color: #002a6b;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    /* Container untuk video agar menumpuk */
+    .video-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: -30%;
+      width: 140%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 1.5s ease-in-out;
+      opacity: 0; /* Default tersembunyi */
+      z-index: 0;
+    }
+
+    .hero-video.active {
+      opacity: 1; /* Muncul */
+      z-index: 2; /* Di atas */
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 71, 171, 0.95) 0%, rgba(0, 71, 171, 0.4) 50%, rgba(0,0,0,0.1) 100%);
+      z-index: 3; /* Di atas video */
+    }
+
+    .brand-content {
+      position: absolute;
+      bottom: 8%;
+      left: 10%;
+      right: 10%;
+      z-index: 4;
+      color: white;
+    }
+
+    .brand-content h1 {
+      font-weight: 800;
+      font-size: 3rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .brand-content p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      font-weight: 300;
+      max-width: 500px;
+    }
+
+    /* --- SISI KANAN (FORM) --- */
+    .right-pane {
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 6rem;
+      position: relative;
+    }
+
+    .btn-back {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      text-decoration: none;
+      color: #6c757d;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background-color: #f8f9fa;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .btn-back:hover {
+      background-color: #e9ecef;
+      color: var(--primary-blue);
+      transform: translateX(-3px);
+    }
+
+    .form-header { margin-bottom: 3rem; margin-top: 2rem; }
+    .logo-img { width: 60px; margin-bottom: 1.5rem; }
+    .welcome-title { font-weight: 700; color: #333; font-size: 1.8rem; margin-bottom: 0.5rem; }
+    
+    .form-control {
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      border: 2px solid #f0f2f5;
+      background: #f8f9fa;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus {
+      background: #fff;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 4px rgba(0, 71, 171, 0.1);
+    }
+    
+    .input-group-text {
+      background: #f8f9fa;
+      border: 2px solid #f0f2f5;
+      border-right: none;
+      border-radius: 12px 0 0 12px;
+      color: #888;
+    }
+
+    .btn-primary {
+      background: var(--primary-blue);
+      border: none;
+      padding: 1rem;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 12px;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+    .btn-primary:hover {
+      background: #003380;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 71, 171, 0.3);
+    }
+
+    .forgot-link { color: var(--primary-blue); font-weight: 600; font-size: 0.9rem; text-decoration: none; }
+    .register-link a { color: var(--primary-blue); text-decoration: none; font-weight: 700; }
+    .alert { border-radius: 12px; border: none; font-size: 0.9rem; }
+    .alert-danger { background: #fee2e2; color: #991b1b; }
+    
+    .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+
+    @media (max-width: 991px) {
+      .left-pane { display: none; }
+      .right-pane { padding: 3rem 2rem; }
+      .btn-back { top: 1.5rem; left: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid p-0 overflow-hidden">
+  <div class="row g-0 login-container">
+    
+    <div class="col-lg-7 left-pane d-none d-lg-block">
+      
+      <div class="video-wrapper">
+        <video id="player1" class="hero-video active" muted playsinline></video>
+        <video id="player2" class="hero-video" muted playsinline></video>
+      </div>
+      
+      <div class="video-overlay"></div>
+      
+      <div class="brand-content">
+        <h1>Momen Puncak<br><span style="color: var(--secondary-gold);">Kebanggaan.</span></h1>
+        <p>Satu langkah lagi menuju perayaan kelulusan Anda. Persiapkan diri untuk masa depan yang gemilang bersama Polinela.</p>
+      </div>
+    </div>
+
+    <div class="col-lg-5 right-pane">
+      <a href="/" class="btn-back"><i class="fas fa-arrow-left me-2"></i> Beranda</a>
+
+      <div class="w-100" style="max-width: 480px;">
+        <div class="form-header">
+          <img src="/images/logopolinela.png" alt="Logo" class="logo-img">
+          <h2 class="welcome-title">Selamat Datang 👋</h2>
+          <p class="text-muted">Masuk ke Aplikasi Pendaftaran Wisuda</p>
+        </div>
+
+        <div id="loginAlert" class="alert d-none"></div>
+
+        <form id="loginForm">
+          <div class="mb-4">
+            <label class="form-label">Email Mahasiswa</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              <input type="email" name="email" class="form-control border-start-0 ps-2" placeholder="Masukan Email yang Sesuai" required>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input type="password" name="password" class="form-control border-start-0 ps-2" placeholder="••••••••" required>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mb-4">
+            <a href="#" class="forgot-link" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Lupa password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 shadow-sm">Masuk Sekarang <i class="fas fa-arrow-right ms-2"></i></button>
+        </form>
+
+        <div class="text-center mt-5 register-link">
+          <p class="text-muted small">Belum memiliki akun?</p>
+          <a href="/auth/register">Registrasi Mahasiswa</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow-lg">
+      <div class="modal-header bg-primary text-white border-0">
+        <h5 class="modal-title fw-bold"><i class="fas fa-key me-2"></i>Reset Password</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div id="forgotAlert" class="alert d-none"></div>
+        <form id="forgotForm">
+          <div class="mb-3">
+            <label class="fw-semibold small mb-2">Email Terdaftar</label>
+            <input type="email" name="email" class="form-control" placeholder="email@polinela.ac.id" required>
+          </div>
+          <button class="btn btn-primary w-100 rounded-3">Kirim Link Reset</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// === SCRIPT CROSS-FADE VIDEO PLAYER (SMOOTH TRANSITION) ===
+document.addEventListener('DOMContentLoaded', function() {
+  const playlist = [
+    "/images/Animasi_Wisuda_Gaya_Melempar_Toga.mp4",
+    "/images/Permintaan_Video_Wisuda_Dramatis.mp4"
+  ];
+
+  let currentIdx = 0;
+  
+  // Dua player untuk teknik double buffering
+  const player1 = document.getElementById('player1');
+  const player2 = document.getElementById('player2');
+  
+  // Inisialisasi awal
+  player1.src = playlist[0];
+  player2.src = playlist[1]; // Preload video kedua
+  
+  player1.play().catch(e => console.log("Autoplay blocked", e));
+  
+  // Fungsi Swap Player
+  function swapPlayers(activePlayer, hiddenPlayer, nextIndex) {
+    // 1. Putar video yang tersembunyi
+    hiddenPlayer.play().then(() => {
+      // 2. Lakukan Cross-Fade (Tukar class active)
+      hiddenPlayer.classList.add('active');
+      activePlayer.classList.remove('active');
+      
+      // 3. Siapkan video selanjutnya di player yang barusan selesai (untuk putaran berikutnya)
+      // Kita beri sedikit delay agar transisi CSS selesai dulu sebelum ganti src
+      setTimeout(() => {
+         activePlayer.pause();
+         activePlayer.currentTime = 0;
+         activePlayer.src = playlist[nextIndex];
+         activePlayer.load(); // Paksa browser download buffer baru
+      }, 1500); // Sesuaikan dengan durasi transition CSS (1.5s)
+      
+    }).catch(e => console.error("Play error", e));
+  }
+
+  // Event Listener saat Video 1 Selesai
+  player1.addEventListener('ended', () => {
+    // Hitung index video berikutnya untuk dipreload ke player1 nanti
+    currentIdx = (currentIdx + 1) % playlist.length; // Naik ke index 1
+    const nextNextIdx = (currentIdx + 1) % playlist.length; // Index 0 (untuk preload)
+    
+    // Player 1 selesai -> Aktifkan Player 2 -> Siapkan Player 1 dengan video index 0
+    swapPlayers(player1, player2, nextNextIdx);
+  });
+
+  // Event Listener saat Video 2 Selesai
+  player2.addEventListener('ended', () => {
+    currentIdx = (currentIdx + 1) % playlist.length; // Naik ke index 0 (Loop)
+    const nextNextIdx = (currentIdx + 1) % playlist.length; // Index 1 (untuk preload)
+    
+    // Player 2 selesai -> Aktifkan Player 1 -> Siapkan Player 2 dengan video index 1
+    swapPlayers(player2, player1, nextNextIdx);
+  });
+});
+
+// === LOGIKA LOGIN ===
+const form = document.getElementById('loginForm');
+const alertBox = document.getElementById('loginAlert');
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  alertBox.className = 'alert d-none';
+  const btn = form.querySelector('button');
+  const originalContent = btn.innerHTML;
+  btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Memproses...';
+  btn.disabled = true;
+
+  const formData = new FormData(form);
+  const data = new URLSearchParams(formData);
+
+  try {
+    const res = await fetch('/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: data 
+    });
+    const result = await res.json();
+    if (!result.success) throw new Error(result.message);
+    window.location.href = result.redirect;
+  } catch (error) {
+    alertBox.className = 'alert alert-danger';
+    alertBox.innerHTML = `<i class="fas fa-exclamation-triangle me-2"></i> ${error.message || 'Terjadi kesalahan.'}`;
+    form.classList.add('shake');
+    setTimeout(() => form.classList.remove('shake'), 500);
+  } finally {
+    btn.innerHTML = originalContent;
+    btn.disabled = false;
+  }
+});
+
+// === LOGIKA LUPA PASSWORD ===
+document.getElementById('forgotForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const alert = document.getElementById('forgotAlert');
+  alert.className = 'alert alert-info';
+  alert.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim email...';
+  const formData = new FormData(e.target);
+  const data = new URLSearchParams(formData);
+  try {
+    const res = await fetch('/auth/forgot-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: data
+    });
+    const result = await res.json();
+    if (result.success) {
+        alert.className = 'alert alert-success';
+        alert.innerHTML = `<i class="fas fa-check-circle me-2"></i> ${result.message}`;
+    } else {
+        alert.className = 'alert alert-danger';
+        alert.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i> ${result.message}`;
+    }
+  } catch (error) {
+    alert.className = 'alert alert-danger';
+    alert.innerHTML = `<i class="fas fa-times-circle"></i> Gagal terhubung ke server.`;
+  }
+});
+</script>
+
+</body>
+</html>
