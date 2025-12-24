@@ -40,9 +40,9 @@
         <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
         <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
       </ul>
-      <button class="btn-masuk" data-bs-toggle="modal" data-bs-target="#loginModal">
+      <a href="/auth/login" class="btn-masuk">
         Masuk
-      </button>
+      </a>
     </div>
   </div>
 </nav>
@@ -567,7 +567,7 @@
   </div>
 </div>
 
-<!-- SCRIPTS -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -837,121 +837,7 @@
       transition: all 0.3s ease;
     }
   `;
-  document.head.appendChild(style);
-document.addEventListener('DOMContentLoaded', function() {
-  const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-  
-  if (forgotPasswordForm) {
-    forgotPasswordForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const emailInput = document.getElementById('forgotEmail');
-      const email = emailInput.value.trim();
-      
-      // Validasi di frontend
-      if (!email || email === '') {
-        Swal.fire({
-          icon: 'error',
-          title: 'Email Kosong!',
-          text: 'Silakan masukkan email Anda.',
-          confirmButtonColor: '#0047AB'
-        });
-        emailInput.focus();
-        return;
-      }
-      
-      // Validasi format email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Format Email Salah!',
-          text: 'Silakan masukkan email yang valid.',
-          confirmButtonColor: '#0047AB'
-        });
-        emailInput.focus();
-        return;
-      }
-      
-      console.log('Email yang akan dikirim:', email);
-      
-      // Show loading
-      Swal.fire({
-        title: 'Mengirim...',
-        html: 'Sedang memproses permintaan reset password',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-      
-      // KIRIM DENGAN URLSearchParams (BUKAN FormData!)
-      // Ini akan otomatis set Content-Type: application/x-www-form-urlencoded
-      const formData = new URLSearchParams();
-      formData.append('email', email);
-      
-      console.log('FormData yang dikirim:', formData.toString());
-      
-      // Submit via AJAX
-      fetch('/auth/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData.toString()
-      })
-      .then(response => {
-        console.log('Response status:', response.status);
-        console.log('Response headers:', response.headers);
-        return response.json();
-      })
-      .then(data => {
-        console.log('Response data:', data);
-        
-        if (data.success) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Email Terkirim!',
-            html: `Link reset password telah dikirim ke <strong>${email}</strong>.<br>Silakan cek email Anda (termasuk folder spam).`,
-            confirmButtonColor: '#0047AB',
-            confirmButtonText: 'OK'
-          }).then(() => {
-            // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
-            if (modal) modal.hide();
-            
-            // Reset form
-            forgotPasswordForm.reset();
-          });
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Gagal!',
-            text: data.message || 'Email tidak ditemukan atau terjadi kesalahan.',
-            confirmButtonColor: '#0047AB'
-          });
-        }
-      })
-      .catch(error => {
-        console.error('Fetch error:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: 'Terjadi kesalahan saat memproses permintaan: ' + error.message,
-          confirmButtonColor: '#0047AB'
-        });
-      });
-    });
-  }
-  
-  // Handle login error parameter
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('loginError') === 'true' || document.querySelector('#loginModal .alert')) {
-    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-    loginModal.show();
-  }
-});
-function switchTab(tabName) {
+  function switchTab(tabName) {
     // 1. Ubah tampilan tombol Active
     const buttons = document.querySelectorAll('.toggle-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
@@ -989,8 +875,8 @@ function switchTab(tabName) {
       const tabs = document.querySelectorAll('.tab-content');
       tabs.forEach(tab => tab.style.transition = 'opacity 0.3s ease');
   });
+  document.head.appendChild(style);
 </script>
-
 <!-- Custom JavaScript -->
 <script src="/js/main.js"></script>
 
