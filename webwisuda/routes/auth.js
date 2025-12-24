@@ -1,41 +1,28 @@
-// routes/auth.js
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 
-// ============================================
-// REGISTRATION ROUTES
-// ============================================
-router.get('/register', (req, res) => {
-  res.render('register', {
-    error_msg: req.flash('error_msg') || ''
-  });
-});
-
+// ================= REGISTER =================
+router.get('/register', authController.showRegister);
 router.post('/register', authController.register);
 
-// ============================================
-// LOGIN & LOGOUT ROUTES
-// ============================================
+// ================= LOGIN =================
 router.get('/login', (req, res) => {
   res.render('login', {
-    error_msg: req.flash('error_msg') || '',
-    success_msg: req.flash('success_msg') || ''
+    title: 'Login - Wisuda Polinela', 
+    error_msg: req.flash('error_msg'),
+    success_msg: req.flash('success_msg')
   });
 });
 
 router.post('/login', authController.login);
+
+// ================= LOGOUT =================
 router.get('/logout', authController.logout);
 
-// ============================================
-// FORGOT PASSWORD ROUTES
-// ============================================
+// ================= PASSWORD =================
 router.post('/forgot-password', authController.forgotPassword);
-
-// ============================================
-// RESET PASSWORD ROUTES
-// ============================================
 router.get('/reset-password/:token', authController.showResetPasswordForm);
 router.post('/reset-password/:token', authController.resetPassword);
 
-module.exports = router; 
+module.exports = router;
