@@ -50,70 +50,54 @@ exports.register = async (req, res) => {
 // ============================================
 // 2. LOGIN & LOGOUT
 // ============================================
-// Di file controllers/authController.js
-
 exports.login = async (req, res) => {
   try {
     let { email, password } = req.body;
-    email = email.trim();
+    email = email.trim().toLowerCase();
 
-    console.log('--- DEBUG LOGIN START ---'); // Cek Terminal
-    console.log('Email Input:', email);
+    const [users] = await db.query(
+      'SELECT * FROM users WHERE email = ?',
+      [email]
+    );
 
-    // 1. Cek User
-    const [users] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
-    
-    if (users.length === 0) {
-      console.log('❌ User tidak ditemukan di database');
-      req.flash('error_msg', 'Email tidak terdaftar');
-      return res.redirect('/');
+    if (!users.length) {
+      return res.status(401).json({
+        success: false,
+        message: 'Email tidak terdaftar'
+      });
     }
 
-    const user = users[0];
-    console.log('✅ User ditemukan:', user.role);
-
-    // 2. Cek Password
-    const isMatch = await bcrypt.compare(password, user.password);
-    console.log('Password Match Result:', isMatch); // Harus TRUE
-
-    if (!isMatch) {
-      console.log('❌ Password Salah');
-      req.flash('error_msg', 'Password salah');
-      return res.redirect('/');
+    const valid = await bcrypt.compare(password, users[0].password);
+    if (!valid) {
+      return res.status(401).json({
+        success: false,
+        message: 'Password salah'
+      });
     }
 
-    // 3. Set Session (PENTING: Perhatikan tanda koma)
     req.session.user = {
-      id: user.id,
-      email: user.email,
-      role: user.role,
-      nama: user.nama || user.email,
-      prodi: user.prodi || null,
-      jurusan: user.jurusan || null
+      id: users[0].id,
+      email: users[0].email,
+      role: users[0].role
     };
 
-    console.log('✅ Session Created. Role:', user.role);
+    return res.json({
+      success: true,
+      redirect:
+        users[0].role === 'admin'
+          ? '/admin/dashboard'
+          : '/mahasiswa/dashboard'
+    });
 
-    // 4. Redirect Logic (Support untuk semua jenis admin)
-    // Cek apakah role mengandung kata 'admin' (misal: admin_prodi, admin_jurusan, super_admin)
-    if (user.role && user.role.includes('admin')) {
-      console.log('➡️ Redirecting to /admin/dashboard');
-      return res.redirect('/admin/dashboard');
-    } else {
-      console.log('➡️ Redirecting to /mahasiswa/dashboard');
-      return res.redirect('/mahasiswa/dashboard');
-    }
-
-  } catch (error) {
-    console.error('CRITICAL ERROR LOGIN:', error);
-    req.flash('error_msg', 'Terjadi kesalahan sistem');
-    res.redirect('/');
+  } catch (err) {
+    console.error('Login error:', err);
+    return res.status(500).json({
+      success: false,
+      message: 'Terjadi kesalahan server'
+    });
   }
 };
 
-exports.logout = (req, res) => {
-  req.session.destroy(() => res.redirect('/'));
-};
 
 // ============================================
 // 3. FORGOT PASSWORD (Kirim Email)
@@ -377,4 +361,13 @@ exports.resetPassword = async (req, res) => {
     req.flash('error_msg', 'Terjadi kesalahan sistem.');
     return res.redirect(`/auth/reset-password/${token}`);
   }
+};
+exports.logout = (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Logout error:', err);
+      return res.redirect('/');
+    }
+    res.redirect('/auth/login');
+  });
 };
