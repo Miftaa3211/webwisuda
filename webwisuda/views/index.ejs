@@ -6,879 +6,283 @@
   <title>Wisuda Politeknik Negeri Lampung</title>
   <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
   
-  <!-- Bootstrap CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  
-  <!-- DataTables CSS -->
-  <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-  
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Custom CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
   <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    /* Agar slider tidak terlalu mepet */
+    .swiper-container-wrapper {
+      padding: 40px 0;
+      overflow: hidden; /* Mencegah scrollbar horizontal */
+    }
+
+    .swiper {
+      width: 100%;
+      padding-top: 20px;
+      padding-bottom: 50px;
+    }
+
+    .swiper-slide {
+      background-position: center;
+      background-size: cover;
+      width: 350px; /* Sedikit diperkecil agar efek 'mengalir' lebih terasa */
+      height: 450px; /* Format Portrait biasanya lebih estetik untuk riam */
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3); /* Bayangan lebih lembut */
+      /* Efek kaca (Glassmorphism) optional pada border */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    /* Kustomisasi Pagination (Titik-titik bawah) */
+    .swiper-pagination-bullet {
+      background: #fff;
+      opacity: 0.5;
+      width: 10px;
+      height: 10px;
+    }
+    .swiper-pagination-bullet-active {
+      background: #0047AB; /* Warna biru Polinela */
+      opacity: 1;
+      width: 25px; /* Indikator aktif memanjang */
+      border-radius: 5px;
+      transition: width 0.3s;
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-custom">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <img src="/images/logopolinela.png" alt="Logo Polinela">
-      <span>Wisuda Polinela</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border-color: rgba(255,255,255,0.3);">
-      <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item"><a class="nav-link" href="#informasi">Informasi</a></li>
-        <li class="nav-item"><a class="nav-link" href="#statistik">Statistik kelulusan</a></li>
-        <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
-        <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
-      </ul>
-      <a href="/auth/login" class="btn-masuk">
-        Masuk
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="/images/logopolinela.png" alt="Logo Polinela">
+        <span style="font-family: 'Volkhov', serif; font-weight: 700;">SIWILA</span>
       </a>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO SECTION -->
-<section class="hero-section">
-  <div class="circle-decoration circle-1"></div>
-  <div class="circle-decoration circle-2"></div>
-  <div class="circle-decoration circle-3"></div>
-  <div class="circle-decoration circle-4"></div>
-  <div class="circle-decoration circle-5"></div>
-  <div class="circle-decoration circle-6"></div>
-  <div class="circle-decoration circle-7"></div>
-  <div class="circle-decoration circle-8"></div>
-  <div class="circle-decoration circle-9"></div>
-  
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 hero-content">
-        <h1 class="hero-title">Wisuda<br>Politeknik Negeri Lampung</h1>
-        <p class="hero-subtitle">
-          Kamu datang dengan mimpi, bertahan dengan tekad, lulus dengan cerita yang 
-          layak diperjuangkan. Yuk, daftar! Panggungnya udah siap, tinggal kamu yang bersinar!
-        </p>
-        <a href="/auth/register" class="btn-daftar">
-          Daftar Sekarang
-          <i class="fas fa-arrow-right"></i>
-        </a>
-      </div>
-      <div class="col-lg-6 text-center">
-        <div class="hero-illustration">
-          <img src="/images/Wisuda.png" alt="Graduation">
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Wave SVG -->
-  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="height: 100px;">
-    <path fill="#F8F9FA" fill-opacity="1" d="M0,50 C240,80 480,80 720,50 C960,20 1200,20 1440,50 L1440,100 L0,100 Z"></path>
-  </svg>
-</section>
-
-<!-- PERSYARATAN SECTION -->
-<section class="section-persyaratan" id="informasi">
-  <div class="container">
-    <div class="text-center mb-4">
-      <h2 class="section-title">Informasi Wisuda</h2>
-      <p class="section-subtitle">Panduan lengkap alur pendaftaran dan persyaratan wisuda</p>
-      
-      <div class="toggle-wrapper">
-        <div class="toggle-container">
-          <button class="toggle-btn active" onclick="switchTab('alur')">Alur Pendaftaran</button>
-          <button class="toggle-btn" onclick="switchTab('syarat')">Syarat Wisuda</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="content-alur" class="tab-content active-content">
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <div class="card border-0 shadow-sm p-4">
-            <div class="timeline-online">
-                <div class="timeline-row">
-                <div class="timeline-time">Langkah 1</div>
-                <div class="timeline-dot bg-primary"></div>
-                <div class="timeline-content">
-                  <i class="fas fa-user-plus text-primary mb-2 fs-4"></i>
-                  <h4>Registrasi Akun</h4>
-                  <p>Mahasiswa mendaftar akun menggunakan email aktif dan mengisi biodata awal (NPM, Nama, Prodi) pada menu Registrasi.</p>
-                </div>
-              </div>
-
-              <div class="timeline-row">
-                <div class="timeline-time">Langkah 2</div>
-                <div class="timeline-dot bg-info"></div>
-                <div class="timeline-content">
-                  <i class="fas fa-sign-in-alt text-info mb-2 fs-4"></i>
-                  <h4>Login Sistem</h4>
-                  <p>Masuk (Login) ke dalam sistem menggunakan email dan password yang telah didaftarkan sebelumnya.</p>
-                </div>
-              </div>
-
-              <div class="timeline-row">
-                <div class="timeline-time">Langkah 3</div>
-                <div class="timeline-dot bg-warning"></div>
-                <div class="timeline-content">
-                  <i class="fas fa-cloud-upload-alt text-warning mb-2 fs-4"></i>
-                  <h4>Upload Berkas Digital</h4>
-                  <p>Pada halaman dashboard, upload scan dokumen asli (PDF/JPG) seperti KTP, Transkrip, Sertifikat TOEIC, dan Bukti Bebas Tanggungan.</p>
-                </div>
-              </div>
-
-              <div class="timeline-row">
-                <div class="timeline-time">Langkah 4</div>
-                <div class="timeline-dot" style="background-color: #6f42c1;"></div> <div class="timeline-content">
-                  <i class="fas fa-user-check mb-2 fs-4" style="color: #6f42c1;"></i>
-                  <h4>Verifikasi Admin</h4>
-                  <p>Admin Prodi dan Akademik memverifikasi berkas. Pantau status kelulusan berkas melalui dashboard (Status: <strong>Diajukan</strong> &rarr; <strong>Lengkap</strong>).</p>
-                </div>
-              </div>
-
-              <div class="timeline-row">
-                <div class="timeline-time">Langkah 5</div>
-                <div class="timeline-dot bg-success"></div>
-                <div class="timeline-content">
-                  <i class="fas fa-print text-success mb-2 fs-4"></i>
-                  <h4>Cetak Bukti Pendaftaran</h4>
-                  <p>Jika seluruh berkas berstatus <strong>"Lengkap"</strong>, tombol cetak akan aktif. Cetak Bukti Pendaftaran untuk pengambilan toga.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="content-syarat" class="tab-content" style="display: none;">
-      <div class="accordion accordion-custom" id="persyaratanAccordion">
-        
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#akademik">
-            <i class="fas fa-graduation-cap me-2"></i> Persyaratan Akademik
-          </button>
-        </h2>
-        <div id="akademik" class="accordion-collapse collapse show">
-          <div class="accordion-body">
-            <ul>
-              <li>Telah menyelesaikan seluruh mata kuliah sesuai kurikulum (120 SKS)</li>
-              <li>IPK minimal 2.50 (skala 4.00)</li>
-              <li>Tidak memiliki nilai D lebih dari 3 mata kuliah</li>
-              <li>Telah lulus Tugas Akhir dengan nilai minimal B</li>
-              <li>Memiliki sertifikat TOEIC minimal skor 400</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#administrasi">
-            <i class="fas fa-file-alt me-2"></i> Persyaratan Administrasi
-          </button>
-        </h2>
-        <div id="administrasi" class="accordion-collapse collapse">
-          <div class="accordion-body">
-            <ul>
-              <li>Fotocopy KTP (1 lembar)</li>
-              <li>Fotocopy Kartu Keluarga (1 lembar)</li>
-              <li>Fotocopy Kartu Tanda Mahasiswa (KTM)</li>
-              <li>Transkrip Nilai sementara</li>
-              <li>Pas foto berwarna ukuran 3x4 (4 lembar, background biru)</li>
-              <li>Cover Tugas Akhir (PDF)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#khusus">
-            <i class="fas fa-check-circle me-2"></i> Persyaratan Khusus
-          </button>
-        </h2>
-        <div id="khusus" class="accordion-collapse collapse">
-          <div class="accordion-body">
-            <ul>
-              <li>Surat Keterangan Bebas Pinjaman Perpustakaan</li>
-              <li>Surat Keterangan Bebas Tanggungan Jurusan</li>
-              <li>Surat Keterangan Bebas Tanggungan Keuangan</li>
-              <li>Bukti lunas biaya wisuda</li>
-              <li>Sertifikat TOEIC (asli dan fotocopy)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion-item accordion-catatan">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#catatan">
-            <i class="fas fa-exclamation-triangle me-2"></i> Catatan Penting
-          </button>
-        </h2>
-        <div id="catatan" class="accordion-collapse collapse">
-          <div class="accordion-body">
-            <ul>
-              <li><strong>Pendaftaran dibuka 3 bulan sebelum pelaksanaan wisuda</strong></li>
-              <li>Semua dokumen harus diupload dalam format PDF atau JPG (max 2MB per file)</li>
-              <li>Verifikasi dokumen dilakukan maksimal 2 minggu setelah upload</li>
-              <li>Jika dokumen ditolak, mahasiswa wajib melakukan upload ulang</li> 
-              <li>Pendaftaran yang tidak lengkap tidak akan diproses</li>
-              <li>Untuk informasi lebih lanjut hubungi: <strong>wisuda@polinela.ac.id</strong></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  </div>
-</section>
-<!-- STATISTIK SECTION -->
-<section class="section-statistik" id="statistik">
-  <div class="container">
-    <h2 class="section-title">Statistik Kelulusan</h2>
-    <p class="section-subtitle">Data kelulusan dan keberhasilan mahasiswa Politeknik Negeri Lampung</p>
-    
-    <div class="stats-grid">
-      <div class="stats-card stats-card-blue">
-        <h3><%= totalLulusan %></h3>
-        <p>Total Lulusan</p>
-      </div>
-      <div class="stats-card stats-card-green">
-        <h3><%= lulusanAktif %></h3>
-        <p>Lulusan 2024</p>
-      </div>
-      <div class="stats-card stats-card-purple">
-        <h3><%= persentaseKelulusan %>%</h3>
-        <p>Persentase Kelulusan</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-8 mb-4">
-        <div class="chart-wrapper">
-          <h3 class="chart-title">Grafik Kelulusan Tiap Tahun</h3>
-          <canvas id="chartKelulusan" height="120"></canvas>
-        </div>
-      </div>
-      <div class="col-lg-4 mb-4">
-        <div class="chart-wrapper">
-          <h4 class="chart-title">Kelulusan per Jurusan</h4>
-          <canvas id="chartJurusan" width="400" height="200"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TABEL IPK SECTION -->
-<section class="section-ipk" id="faq">
-  <div class="container">
-    <h2 class="section-title">Daftar Mahasiswa IPK Tertinggi</h2>
-    <p class="section-subtitle">Mahasiswa berprestasi dengan IPK terbaik tahun 2024</p>
-    <div class="table-wrapper">
-      <div class="search-box-container mb-4">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-md-8">
-            <div class="custom-search-wrapper">
-              <i class="fas fa-search search-icon"></i>
-              <input type="text" id="customSearch" class="custom-search-input" placeholder="Cari berdasarkan nama mahasiswa...">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table id="ipkTable" class="table table-hover table-custom" style="width:100%">
-          <thead>
-            <tr>
-              <th style="width: 80px;">Rank</th>
-              <th>Nama Mahasiswa</th>
-              <th>NPM</th>
-              <th>Jurusan</th>
-              <th style="width: 100px;">IPK</th>
-              <th style="width: 120px;">Tahun Lulus</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% topStudents.forEach((student, index) => { %>
-            <tr>
-              <td class="rank-cell"></td>
-              <td class="nama-column"><%= student.nama %></td>
-              <td><%= student.nim %></td>
-              <td><%= student.jurusan %></td>
-              <td><span class="ipk-value"><%= student.ipk %></span></td>
-              <td><%= student.tahun_lulus %></td>
-            </tr>
-            <% }); %>
-          </tbody>
-        </table>
-      </div>
-      <div class="search-results-info text-center mt-3" id="searchInfo" style="display: none;">
-        <small class="text-muted">
-          <i class="fas fa-check-circle text-success me-1"></i>
-          Ditemukan <strong class="text-primary" id="resultCount">0</strong> hasil
-        </small>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TENTANG SECTION -->
-<section class="section-tentang" id="tentang">
-  <div class="container">
-    <h2 class="section-title">Tentang Politeknik Negeri Lampung</h2>
-    <p class="section-subtitle">Lembaga pendidikan vokasi terkemuka di Provinsi Lampung</p>
-    
-    <div class="row align-items-center">
-      <div class="col-lg-6 mb-4">
-        <p class="about-text">
-          Politeknik Negeri Lampung adalah perguruan tinggi vokasi yang berkomitmen menghasilkan lulusan 
-          berkompeten, profesional, dan siap kerja. Dengan berbagai program studi terakreditasi dan 
-          didukung oleh tenaga pendidik berpengalaman serta fasilitas modern, Polinela terus berinovasi 
-          dalam mengembangkan pendidikan vokasi yang relevan dengan kebutuhan industri dan menghasilkan 
-          lulusan yang mampu bersaing di dunia kerja.
-        </p>
-        
-        <div class="about-stats-grid">
-          <div class="about-stat-card">
-            <h4>35</h4>
-            <p>Program Studi</p>
-          </div>
-          <div class="about-stat-card">
-            <h4>5000+</h4>
-            <p>Mahasiswa Aktif</p>
-          </div>
-          <div class="about-stat-card">
-            <h4>8</h4>
-            <p>Jurusan</p>
-          </div>
-          <div class="about-stat-card">
-            <h4>Baik Sekali</h4>
-            <p>Akreditasi</p>
-          </div>
-        </div>
-
-        <div class="pengumuman-card">
-          <h5>
-            <i class="fas fa-bullhorn"></i>
-            Pengumuman Wisuda Periode 2025
-          </h5>
-          <div class="pengumuman-item">
-            <i class="fas fa-calendar-alt"></i>
-            <div>
-              <strong>Tanggal Wisuda:</strong> September 2025
-            </div>
-          </div>
-          <div class="pengumuman-item">
-            <i class="fas fa-clock"></i>
-            <div>
-              <strong>Mulai Pendaftaran:</strong> Mei 2025
-            </div>
-          </div>
-          <div class="pengumuman-item">
-            <i class="fas fa-map-marker-alt"></i>
-            <div>
-              <strong>Tempat:</strong> Gedung Serba Guna Polinela
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-lg-6 mb-4">
-        <img src="/images/polinela.png" alt="Kampus Polinela" class="campus-image">
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-4 mb-4">
-        <div class="footer-logo">
-          <img src="/images/logopolinela.png" alt="Logo Polinela">
-          <h5>Wisuda Online Polinela</h5>
-        </div>
-        <p class="footer-text">
-          Sistem pendaftaran wisuda online Politeknik Negeri Lampung yang memudahkan 
-          mahasiswa dalam proses pendaftaran dan verifikasi dokumen secara digital.
-        </p>
-        <div class="social-icons">
-          <a href="https://web.facebook.com/PoliteknikNegeriLampung/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/politeknik_negeri_lampung/" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://x.com/humaspolinela" target="_blank"><i class="fab fa-twitter"></i></a>
-          <a href="https://www.youtube.com/@politeknik_negeri_lampung" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-6 mb-4">
-        <h6>Menu Cepat</h6>
-        <ul class="footer-links">
-          <li><a href="#informasi">Informasi</a></li>
-          <li><a href="#panduan">Panduan</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#tentang">Tentang</a></li>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="/informasi">Informasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="/statistik">Statistik Kelulusan</a></li>
+          <li class="nav-item"><a class="nav-link" href="/daftar-ipk">Daftar IPK</a></li>
+          <li class="nav-item"><a class="nav-link" href="/tentang">Tentang</a></li>
         </ul>
+        <a href="/auth/login" class="btn-masuk" data-bs-toggle="modal" data-bs-target="#loginModal">Masuk</a>
       </div>
-      
-      <div class="col-lg-3 col-md-6 mb-4">
-        <h6>Kontak</h6>
-        <ul class="footer-links">
-          <li><i class="fas fa-map-marker-alt"></i>Jl. Soekarno Hatta No.10, Rajabasa</li>
-          <li><i class="fas fa-envelope"></i>wisuda@polinela.ac.id</li>
-          <li><i class="fas fa-phone"></i>(0721) 787309</li>
-          <li><i class="fas fa-globe"></i>www.polinela.ac.id</li>
-        </ul>
-      </div>
-      
-      <div class="col-lg-3 col-md-6 mb-4">
-        <h6>Jam Pelayanan</h6>
-        <ul class="footer-links">
-          <li><i class="fas fa-clock"></i>Senin - Jumat</li>
-          <li><i class="fas fa-clock"></i>08:00 - 16:00 WIB</li>
-          <li style="margin-top: 1rem; color: #FFC107;">
-            <i class="fas fa-info-circle"></i>Libur pada hari besar nasional
-          </li>
-        </ul>
+    </div>
+  </nav>
+
+  <section class="hero-section text-center">
+    <div class="container-fluid p-0"> <div class="row justify-content-center align-items-center m-0">
+        <div class="col-lg-12">
+
+          <div class="container mb-4">
+            <h1 class="hero-title" style="font-family: 'Volkhov', serif; font-size: 5rem; font-weight: 700; line-height: 1.2;">SIWILA</h1>
+            <p class="hero-subtitle mx-auto mb-4" style="max-width: 700px;">
+              Kamu datang dengan mimpi, bertahan dengan tekad, lulus dengan cerita yang 
+              layak diperjuangkan. Yuk, daftar! Panggungnya udah siap, tinggal kamu yang bersinar!
+            </p>
+            <a href="/auth/register" class="btn-daftar d-inline-block">Daftar Sekarang <i class="fas fa-arrow-right"></i></a>
+          </div>
+
+          <div class="swiper-container-wrapper">
+            <div class="swiper mySwiper">
+              <div class="swiper-wrapper">
+                
+                <div class="swiper-slide">
+                  <img src="/images/Wisuda.png" alt="Momen Wisuda 1">
+                </div>
+                
+                <div class="swiper-slide">
+                  <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop" alt="Wisuda 2">
+                </div>
+                <div class="swiper-slide">
+                  <img src="https://images.unsplash.com/photo-1627556704290-2b1f5853bf78?q=80&w=800&auto=format&fit=crop" alt="Wisuda 3">
+                </div>
+                <div class="swiper-slide">
+                  <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=800&auto=format&fit=crop" alt="Wisuda 4">
+                </div>
+                <div class="swiper-slide">
+                  <img src="https://images.unsplash.com/photo-1590012314607-cda9d9b699ae?q=80&w=800&auto=format&fit=crop" alt="Wisuda 5">
+                </div>
+                <div class="swiper-slide">
+                  <img src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=800&auto=format&fit=crop" alt="Wisuda 6">
+                </div>
+                <div class="swiper-slide">
+                  <img src="https://images.unsplash.com/photo-1525921429624-479b6a26d84d?q=80&w=800&auto=format&fit=crop" alt="Wisuda 7">
+                </div>
+                
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+          </div>
       </div>
     </div>
     
-    <div class="footer-bottom">
-      <p>&copy; 2025 Politeknik Negeri Lampung. All rights reserved.</p>
-    </div>
-  </div>
-</footer>
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="height: 100px;">
+      <path fill="#F8F9FA" fill-opacity="1" d="M0,50 C240,80 480,80 720,50 C960,20 1200,20 1440,50 L1440,100 L0,100 Z"></path>
+    </svg>
+  </section>
 
-<!-- LOGIN MODAL -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
-      <div class="modal-header" style="border: none; background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%); color: white; padding: 1.5rem;">
-        <h5 class="modal-title fw-bold" id="loginModalLabel">
-          <i class="fas fa-sign-in-alt me-2"></i>Login Wisuda Online
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body p-4">
-        <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
-          <div class="alert alert-danger">
-            <i class="fas fa-exclamation-circle me-2"></i><%= error_msg %>
-          </div>
-        <% } %>
+  <footer class="footer text-white" style="background-color: #111; padding-top: 80px;">
+    <div class="container">
+      <div class="row">
         
-        <form action="/auth/login" method="POST">
-          <div class="mb-3">
-            <label class="form-label fw-semibold">
-              <i class="fas fa-envelope me-2 text-primary"></i>Email
-            </label>
-            <input type="email" name="email" class="form-control" placeholder="email@polinela.ac.id" required 
-                   style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
+        <div class="col-lg-4 col-md-6 mb-5">
+          <div class="footer-logo mb-4 d-flex align-items-center">
+            <img src="/images/logopolinela.png" alt="Logo Polinela" style="height: 50px;">
+            <h5 class="ms-3 mb-0 fw-bold" style="font-family: 'Volkhov', serif; letter-spacing: 1px;">Wisuda Online</h5>
           </div>
-          <div class="mb-3">
-            <label class="form-label fw-semibold">
-              <i class="fas fa-lock me-2 text-primary"></i>Password
-            </label>
-            <input type="password" name="password" class="form-control" placeholder="••••••••" required 
-                   style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
-          </div>
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="remember">
-            <label class="form-check-label" for="remember">Ingat saya</label>
-          </div>
-          
-          <div class="d-flex justify-content-end mb-3">
-            <a href="#" class="text-primary" style="font-size: 0.9rem; text-decoration: none;" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" data-bs-dismiss="modal">
-              <i class="fas fa-key me-1"></i>Lupa Password?
-            </a>
-          </div>
-          
-          <button type="submit" class="btn w-100" 
-                  style="background: #0047AB; color: white; border: none; border-radius: 10px; padding: 0.75rem; font-weight: 600;">
-            <i class="fas fa-sign-in-alt me-2"></i>Masuk
-          </button>
-        </form>
-        <hr class="my-4">
-        <div class="text-center">
-          <p class="mb-0">Belum punya akun? <a href="/auth/register" style="color: #0047AB; font-weight: 600; text-decoration: none;">Daftar di sini</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
-      
-      <div class="modal-header" style="border: none; background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%); color: white; padding: 1.5rem;">
-        <h5 class="modal-title fw-bold" id="forgotPasswordModalLabel">
-          <i class="fas fa-key me-2"></i>Lupa Password
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <div class="modal-body p-4">
-        <div class="alert alert-info" style="background: #E3F2FD; border: none; color: #0047AB;">
-          <i class="fas fa-info-circle me-2"></i>
-          Masukkan email Anda yang terdaftar. Kami akan mengirimkan link reset password ke email Anda.
-        </div>
-        
-        <form id="forgotPasswordForm">
-          <div class="mb-3">
-            <label class="form-label fw-semibold">
-              <i class="fas fa-envelope me-2 text-primary"></i>Email Terdaftar
-            </label>
-            <input type="email" name="email" id="forgotEmail" class="form-control" placeholder="email@polinela.ac.id" required 
-                   style="border-radius: 10px; padding: 0.75rem; border: 2px solid #e0e0e0;">
-            <small class="text-muted">Email yang Anda gunakan saat registrasi</small>
-          </div>
-          
-          <button type="submit" class="btn w-100" 
-                  style="background: #0047AB; color: white; border: none; border-radius: 10px; padding: 0.75rem; font-weight: 600;">
-            <i class="fas fa-paper-plane me-2"></i>Kirim Link Reset Password
-          </button>
-        </form>
-        
-        <hr class="my-4">
-        
-        <div class="text-center">
-          <p class="mb-0">
-            Sudah ingat password? 
-            <a href="#" class="text-primary" style="font-weight: 600; text-decoration: none;" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">
-              Login di sini
-            </a>
+          <p class="footer-text text-white-50" style="text-align: justify; line-height: 1.8;">
+            Politeknik Negeri Lampung adalah perguruan tinggi vokasi yang berkomitmen menghasilkan lulusan 
+            berkompeten, profesional, dan siap kerja. Kami terus berinovasi dalam mengembangkan pendidikan 
+            vokasi yang relevan dengan kebutuhan industri.
           </p>
+          <div class="social-icons mt-4">
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle me-2" style="width: 35px; height: 35px;"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle me-2" style="width: 35px; height: 35px;"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle me-2" style="width: 35px; height: 35px;"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle" style="width: 35px; height: 35px;"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-6 mb-5 offset-lg-1">
+          <h6 class="text-uppercase fw-bold mb-4 text-warning" style="letter-spacing: 1px;">Menu Cepat</h6>
+          <ul class="list-unstyled footer-links">
+            <li class="mb-3"><a href="/informasi" class="text-white-50 text-decoration-none hover-white">Informasi</a></li>
+            <li class="mb-3"><a href="/statistik" class="text-white-50 text-decoration-none hover-white">Statistik</a></li>
+            <li class="mb-3"><a href="/daftar-ipk" class="text-white-50 text-decoration-none hover-white">Daftar IPK</a></li>
+            <li class="mb-3"><a href="/tentang" class="text-white-50 text-decoration-none hover-white">Tentang</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-5">
+          <h6 class="text-uppercase fw-bold mb-4 text-warning" style="letter-spacing: 1px;">Kontak</h6>
+          <ul class="list-unstyled footer-links">
+            <li class="mb-3 d-flex text-white-50">
+              <i class="fas fa-map-marker-alt mt-1 me-3 text-warning"></i>
+              <span>Jl. Soekarno Hatta No.10, Rajabasa, Bandar Lampung</span>
+            </li>
+            <li class="mb-3 d-flex text-white-50">
+              <i class="fas fa-envelope mt-1 me-3 text-warning"></i>
+              <span>wisuda@polinela.ac.id</span>
+            </li>
+            <li class="mb-3 d-flex text-white-50">
+              <i class="fas fa-phone mt-1 me-3 text-warning"></i>
+              <span>(0721) 787309</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-6 mb-5">
+          <h6 class="text-uppercase fw-bold mb-4 text-warning" style="letter-spacing: 1px;">Pelayanan</h6>
+          <ul class="list-unstyled footer-links">
+            <li class="mb-2 text-white-50">
+              <i class="fas fa-clock me-2 text-warning"></i> Senin - Jumat
+            </li>
+            <li class="mb-3 text-white-50 ps-4">
+              08:00 - 16:00
+            </li>
+            <li class="text-white-50" style="font-size: 0.85rem;">
+              <i class="fas fa-info-circle me-1 text-warning"></i> Libur Nasional Tutup
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom border-top border-secondary pt-4 pb-4 mt-2">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            <p class="mb-0 text-white-50 small">&copy; 2025 Politeknik Negeri Lampung. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <p class="mb-0 text-white-50 small">Developed by Tim MI Polinela</p>
+          </div>
         </div>
       </div>
-      
+    </div>
+  </footer>
+
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 15px; border: none;">
+        <div class="modal-header" style="background: linear-gradient(135deg, #0047AB 0%, #0066FF 100%); color: white;">
+          <h5 class="modal-title"><i class="fas fa-sign-in-alt me-2"></i>Login Wisuda Online</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+            <div class="alert alert-danger"><%= error_msg %></div>
+          <% } %>
+          <form action="/auth/login" method="POST">
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn w-100" style="background: #0047AB; color: white;">Masuk</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Pass data from EJS to JavaScript -->
-<script>
-  // --- Ambil data dari EJS (controller) ---
-  const chartYears = <%- JSON.stringify(chartYears) %>;
-  const chartYearData = <%- JSON.stringify(chartYearData) %>;
-  const chartMajors = <%- JSON.stringify(chartMajors) %>;
-  const chartMajorData = <%- JSON.stringify(chartMajorData) %>;
-
-  // --- Grafik Kelulusan Tiap Tahun ---
-  const ctxTahun = document.getElementById('chartKelulusan');
-  if (ctxTahun) {
-    new Chart(ctxTahun, {
-      type: 'bar',
-      data: {
-        labels: chartYears,
-        datasets: [{
-          label: 'Jumlah Lulusan',
-          data: chartYearData,
-          backgroundColor: 'rgba(0, 71, 171, 0.8)',
-          borderColor: '#0047AB',
-          borderWidth: 2,
-          borderRadius: 10,
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { color: '#333', font: { size: 12 } },
-            grid: { color: 'rgba(0,0,0,0.05)' }
-          },
-          x: {
-            ticks: { color: '#333', font: { size: 12 } },
-            grid: { display: false }
-          }
-        }
-      }
-    });
-  }
-
-  // --- Grafik Kelulusan Per Jurusan ---
-  const ctxJurusan = document.getElementById('chartJurusan');
-  if (ctxJurusan) {
-    new Chart(ctxJurusan, {
-      type: 'pie',
-      data: {
-        labels: chartMajors,
-        datasets: [{
-          data: chartMajorData,
-          backgroundColor: ['#0047AB', '#00D084', '#FFC107', '#FF6B6B', '#B366FF', '#FF8C00', '#6C757D', '#28A745'],
-          borderColor: '#fff',
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: { font: { size: 12, family: 'Poppins' }, usePointStyle: true, pointStyle: 'circle' }
-          },
-          tooltip: {
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            titleFont: { size: 13 },
-            bodyFont: { size: 12 }
-          }
-        }
-      }
-    });
-  }
-
-  $(document).ready(function() {
-    
-    // Initialize DataTable dengan Pagination Aktif
-    const table = $('#ipkTable').DataTable({
-      "language": {
-        "zeroRecords": "Tidak ada data yang ditemukan",
-        "emptyTable": "Tidak ada data mahasiswa",
-        "search": "",
-        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ mahasiswa",
-        "paginate": {
-            "previous": "<i class='fas fa-chevron-left'></i>",
-            "next": "<i class='fas fa-chevron-right'></i>"
-        }
-      },
-      "searching": true,
-      "paging": true,           // Mengaktifkan Pagination
-      "pageLength": 15,         // Batas 15 data per halaman
-      "info": true,             // Menampilkan info "Showing 1 to 15..."
-      "lengthChange": false,    // Menyembunyikan selector jumlah entries
-      "order": [[4, 'desc']], 
-      "columnDefs": [
-        { 
-          "orderable": false, 
-          "targets": 0,
-          // Menggunakan meta.row untuk ranking berlanjut antar halaman
-          "render": function(data, type, row, meta) {
-            return '<span class="rank-badge">#' + (meta.row + 1) + '</span>';
-          }
-        }
-      ]
-    });
-
-    // Custom search - HANYA KOLOM NAMA (index 1)
-    $('#customSearch').on('keyup', function() {
-      const searchValue = this.value;
-      table.column(1).search(searchValue).draw();
-      
-      if (searchValue) {
-        const visibleRows = table.rows({ search: 'applied' }).count();
-        $('#resultCount').text(visibleRows);
-        $('#searchInfo').fadeIn();
-        $(this).addClass('searching');
-        
-        if (!$('.clear-search').length) {
-          $(this).after('<button type="button" class="clear-search" title="Hapus pencarian"><i class="fas fa-times"></i></button>');
-        }
-      } else {
-        $('#searchInfo').fadeOut();
-        $(this).removeClass('searching');
-        $('.clear-search').remove();
-      }
-    });
-
-    // Hide default DataTables search box
-    $('.dataTables_filter').hide();
-    $('.dataTables_length').hide();
-
-    // Clear search button
-    $(document).on('click', '.clear-search', function() {
-      $('#customSearch').val('').trigger('keyup');
-      $(this).remove();
-    });
-
-    // Escape key to clear search
-    $('#customSearch').on('keydown', function(e) {
-      if (e.key === 'Escape') {
-        $(this).val('').trigger('keyup');
-      }
-    });
-  });
-
-  // Add animations and Custom CSS for Pagination
-  const style = document.createElement('style');
-  style.textContent = `
-    /* --- Styling Pagination Polinela --- */
-    .dataTables_wrapper .dataTables_paginate {
-        margin-top: 1.5rem;
-        display: flex;
-        justify-content: center;
-    }
-    
-    .dataTables_wrapper .dataTables_info {
-        margin-top: 1rem;
-        color: #666;
-        font-size: 0.85rem;
-        text-align: center; 
-        display: block;
-    }
-
-    .page-item .page-link {
-        color: #0047AB; /* Warna Biru Polinela */
-        border: none;
-        padding: 0.5rem 1rem;
-        margin: 0 2px;
-        border-radius: 8px;
-        font-weight: 500;
-        transition: all 0.3s;
-    }
-
-    .page-item.active .page-link {
-        background-color: #0047AB;
-        color: white;
-        box-shadow: 0 4px 10px rgba(0, 71, 171, 0.3);
-    }
-
-    .page-item .page-link:hover {
-        background-color: #E0E7FF;
-        color: #003380;
-    }
-    
-    .page-item.disabled .page-link {
-        color: #ccc;
-        background: transparent;
-    }
-
-    /* Other Styles */
-    .searching {
-      border-color: #FFC107 !important;
-      box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.2) !important;
-    }
-
-    .clear-search {
-      position: absolute;
-      right: 1.2rem;
-      top: 50%;
-      transform: translateY(-50%);
-      background: #E0E7FF;
-      border: none;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #0047AB;
-      transition: all 0.3s;
-      z-index: 2;
-    }
-
-    .clear-search:hover {
-      background: #0047AB;
-      color: white;
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    /* Hide default search but KEEP pagination visible */
-    .dataTables_wrapper .dataTables_filter,
-    .dataTables_wrapper .dataTables_length {
-      display: none !important;
-    }
-
-    /* Empty state styling */
-    .dataTables_empty {
-      padding: 3rem !important;
-      text-align: center;
-      color: #999;
-      font-size: 1rem;
-    }
-
-    .dataTables_empty::before {
-      content: "🔍 ";
-      font-size: 2.5rem;
-      display: block;
-      margin-bottom: 1rem;
-    }
-
-    .nama-column {
-      font-weight: 500;
-      color: #333;
-    }
-
-    tr:hover .nama-column {
-      color: #0047AB;
-    }
-
-    #searchInfo {
-      animation: slideUp 0.3s ease;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .rank-badge {
-      transition: all 0.3s ease;
-    }
-  `;
-  function switchTab(tabName) {
-    // 1. Ubah tampilan tombol Active
-    const buttons = document.querySelectorAll('.toggle-btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    
-    // Cari tombol yang diklik (logic sederhana berdasarkan urutan/text)
-    // Atau gunakan event.target jika dipassing
-    if(tabName === 'alur') {
-      buttons[0].classList.add('active');
-    } else {
-      buttons[1].classList.add('active');
-    }
-
-    // 2. Tampilkan Konten yang sesuai
-    const contentAlur = document.getElementById('content-alur');
-    const contentSyarat = document.getElementById('content-syarat');
-
-    if (tabName === 'alur') {
-      contentAlur.style.display = 'block';
-      contentSyarat.style.display = 'none';
-      
-      // Animasi Fade In sederhana
-      contentAlur.style.opacity = 0;
-      setTimeout(() => contentAlur.style.opacity = 1, 50);
-    } else {
-      contentAlur.style.display = 'none';
-      contentSyarat.style.display = 'block';
-      
-      contentSyarat.style.opacity = 0;
-      setTimeout(() => contentSyarat.style.opacity = 1, 50);
-    }
-  }
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   
-  // Set transition css for fade effect
-  document.addEventListener("DOMContentLoaded", () => {
-      const tabs = document.querySelectorAll('.tab-content');
-      tabs.forEach(tab => tab.style.transition = 'opacity 0.3s ease');
-  });
-  document.head.appendChild(style);
-</script>
-<!-- Custom JavaScript -->
-<script src="/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      loop: true, // Agar slide berputar terus (infinity loop)
+      
+      // Pengaturan Efek Riam (Coverflow)
+      coverflowEffect: {
+        rotate: 30,    /* Kemiringan kartu */
+        stretch: 0,    /* Jarak tarik antar slide */
+        depth: 300,    /* Kedalaman efek 3D (semakin besar semakin 'dalam') */
+        modifier: 1,   /* Pengali efek */
+        slideShadows: true, /* Bayangan antar slide */
+      },
+      
+      // Navigasi Otomatis (Autoplay)
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+  </script>
 
 </body>
 </html>
