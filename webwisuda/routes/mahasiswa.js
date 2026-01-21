@@ -56,6 +56,8 @@ router.get('/detail-pendaftaran', mahasiswaController.detailPendaftaran);
 router.get('/riwayat', mahasiswaController.riwayatPendaftaran);
 router.get('/cetak-bukti', mahasiswaController.cetakBukti);
 
+router.post('/ajukan-verifikasi', mahasiswaController.ajukanVerifikasi);
+
 
 router.get('/preview/:id', mahasiswaController.previewFile);
 
