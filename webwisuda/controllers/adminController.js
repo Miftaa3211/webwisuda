@@ -1,17 +1,21 @@
 const db = require('../config/database');
 
-// Dashboard Admin
+// ==========================================
+// 1. DASHBOARD & MONITORING
+// ==========================================
+
+// Dashboard Admin (Redirect ke Monitoring)
 exports.dashboard = async (req, res) => {
   res.redirect('/admin/monitoring');
 };
 
-// Monitoring Pendaftaran (Disesuaikan dengan Role)
+// Monitoring Pendaftaran
 exports.monitoring = async (req, res) => {
   try {
-    const user = req.session.user; // Ambil data user dari session
+    const user = req.session.user; 
     let queryParams = [];
     
-    // 1. Query Dasar
+    // Query Dasar
     let query = `
       SELECT 
         p.id,
@@ -29,7 +33,7 @@ exports.monitoring = async (req, res) => {
       JOIN mahasiswa m ON p.mahasiswa_id = m.id
     `;
 
-    // 2. Filter Berdasarkan Role
+    // Filter Berdasarkan Role
     if (user.role === 'admin_prodi') {
       query += ` WHERE m.prodi = ?`;
       queryParams.push(user.prodi);
@@ -37,15 +41,11 @@ exports.monitoring = async (req, res) => {
       query += ` WHERE m.jurusan = ?`;
       queryParams.push(user.jurusan);
     } 
-    // Admin Toic & Super Admin tidak kena filter (melihat semua)
 
-    // 3. Order By
     query += ` ORDER BY p.created_at DESC`;
 
-    // Eksekusi Query
     const [pendaftaran] = await db.query(query, queryParams);
 
-    // Mapping Status Berkas
     const data = pendaftaran.map(p => ({
       ...p,
       status_berkas: (p.jumlah_dokumen > 0 && p.jumlah_dokumen === p.dokumen_lengkap)
@@ -56,7 +56,7 @@ exports.monitoring = async (req, res) => {
     res.render('dashboard_admin', {
       title: 'Monitoring Pendaftaran Wisuda',
       pendaftaran: data,
-      user: req.session.user // Kirim data user untuk Navbar
+      user: req.session.user
     });
 
   } catch (error) {
@@ -66,13 +66,16 @@ exports.monitoring = async (req, res) => {
   }
 };
 
-// Detail Pendaftaran (Dengan Keamanan Role)
+// ==========================================
+// 2. DETAIL & VERIFIKASI
+// ==========================================
+
+// Detail Pendaftaran
 exports.detailPendaftaran = async (req, res) => {
   try {
     const pendaftaranId = req.params.id;
     const user = req.session.user;
 
-    // Ambil data pendaftaran + info mahasiswa
     const [pendaftaran] = await db.query(`
       SELECT 
         p.*,
@@ -91,8 +94,7 @@ exports.detailPendaftaran = async (req, res) => {
 
     const dataMhs = pendaftaran[0];
 
-    // --- SECURITY CHECK ---
-    // Cegah Admin Prodi A melihat data Mahasiswa Prodi B lewat URL
+    // Security Check Role
     if (user.role === 'admin_prodi' && dataMhs.prodi !== user.prodi) {
       req.flash('error_msg', 'Anda tidak memiliki akses ke data prodi lain.');
       return res.redirect('/admin/monitoring');
@@ -102,7 +104,6 @@ exports.detailPendaftaran = async (req, res) => {
       req.flash('error_msg', 'Anda tidak memiliki akses ke data jurusan lain.');
       return res.redirect('/admin/monitoring');
     }
-    // ----------------------
 
     const [dokumen] = await db.query(`
       SELECT * FROM dokumen_wisuda 
@@ -129,9 +130,6 @@ exports.updateStatus = async (req, res) => {
   try {
     const id = req.params.id;
     const { status, catatan } = req.body;
-
-    // Opsional: Anda bisa membatasi admin toic agar tidak bisa mengubah status kelulusan akhir
-    // if (req.session.user.role === 'admin_toic') { ... }
 
     await db.query(
       `UPDATE pendaftaran_wisuda 
@@ -188,13 +186,112 @@ exports.updateDokumen = async (req, res) => {
   }
 };
 
-// Export Data (Disesuaikan dengan Role)
+// ==========================================
+// 3. MANAJEMEN PERIODE WISUDA (HALAMAN PERIODE.EJS)
+// ==========================================
+
+// Kelola Periode (Render View 'periode')
+exports.kelolaPeriode = async (req, res) => {
+    try {
+        const [periode] = await db.query('SELECT * FROM periode_wisuda ORDER BY id DESC');
+        
+        res.render('periode', {
+            title: 'Kelola Periode & Kuota Wisuda',
+            user: req.session.user,
+            periode: periode,
+            msg: req.flash('msg'),
+            error: req.flash('error')
+        });
+    } catch (error) {
+        console.error(error);
+        res.redirect('/admin/dashboard');
+    }
+};
+
+// Tambah Periode
+exports.tambahPeriode = async (req, res) => {
+    try {
+        const { nama_periode, tanggal_buka, tanggal_tutup, kuota } = req.body;
+        await db.query(
+            'INSERT INTO periode_wisuda (nama_periode, tanggal_buka, tanggal_tutup, kuota, terisi, is_active) VALUES (?, ?, ?, ?, 0, 0)',
+            [nama_periode, tanggal_buka, tanggal_tutup, kuota]
+        );
+        req.flash('msg', 'Periode baru berhasil ditambahkan.');
+        res.redirect('/admin/periode');
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Gagal menambah periode.');
+        res.redirect('/admin/periode');
+    }
+};
+
+// Update Periode
+exports.updatePeriode = async (req, res) => {
+    try {
+        const { id, nama_periode, tanggal_buka, tanggal_tutup, kuota } = req.body;
+        await db.query(
+            'UPDATE periode_wisuda SET nama_periode=?, tanggal_buka=?, tanggal_tutup=?, kuota=? WHERE id=?',
+            [nama_periode, tanggal_buka, tanggal_tutup, kuota, id]
+        );
+        req.flash('msg', 'Data periode berhasil diperbarui.');
+        res.redirect('/admin/periode');
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Gagal update periode.');
+        res.redirect('/admin/periode');
+    }
+};
+
+// Aktifkan Periode
+exports.aktifkanPeriode = async (req, res) => {
+    const connection = await db.getConnection();
+    try {
+        const { id } = req.params;
+        await connection.beginTransaction();
+        await connection.query('UPDATE periode_wisuda SET is_active = 0'); 
+        await connection.query('UPDATE periode_wisuda SET is_active = 1 WHERE id = ?', [id]); 
+        await connection.commit();
+        req.flash('msg', 'Periode berhasil diaktifkan.');
+        res.redirect('/admin/periode');
+    } catch (error) {
+        await connection.rollback();
+        req.flash('error', 'Gagal mengaktifkan periode.');
+        res.redirect('/admin/periode');
+    } finally {
+        connection.release();
+    }
+};
+
+// Hapus Periode
+exports.hapusPeriode = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [cek] = await db.query('SELECT terisi FROM periode_wisuda WHERE id = ?', [id]);
+        
+        if (cek[0].terisi > 0) {
+            req.flash('error', 'Tidak bisa menghapus periode yang sudah ada pendaftarnya.');
+            return res.redirect('/admin/periode');
+        }
+
+        await db.query('DELETE FROM periode_wisuda WHERE id = ?', [id]);
+        req.flash('msg', 'Periode berhasil dihapus.');
+        res.redirect('/admin/periode');
+    } catch (error) {
+        req.flash('error', 'Gagal menghapus periode.');
+        res.redirect('/admin/periode');
+    }
+};
+
+// ==========================================
+// 4. EXPORT, CETAK & LAINNYA
+// ==========================================
+
+// Export Data CSV
 exports.exportData = async (req, res) => {
   try {
     const user = req.session.user;
     let queryParams = [];
 
-    // Base Query
     let query = `
       SELECT 
         m.nama, m.nim, m.prodi, m.jurusan, m.no_hp,
@@ -204,7 +301,6 @@ exports.exportData = async (req, res) => {
       JOIN mahasiswa m ON p.mahasiswa_id = m.id
     `;
 
-    // Filter Berdasarkan Role
     if (user.role === 'admin_prodi') {
       query += ` WHERE m.prodi = ?`;
       queryParams.push(user.prodi);
@@ -233,15 +329,7 @@ exports.exportData = async (req, res) => {
   }
 };
 
-// Bantuan Page
-exports.bantuan = (req, res) => {
-  res.render('bantuan_admin', {
-    title: 'Bantuan',
-    user: req.session.user
-  });
-};
-
-// Cetak Detail (Dengan Keamanan Role)
+// Cetak Detail Pendaftaran
 exports.cetakDetailPendaftaran = async (req, res) => {
   try {
     const pendaftaranId = req.params.id;
@@ -264,14 +352,13 @@ exports.cetakDetailPendaftaran = async (req, res) => {
 
     const dataMhs = rows[0];
 
-    // --- SECURITY CHECK (Sama seperti detail) ---
+    // Security Check
     if (user.role === 'admin_prodi' && dataMhs.prodi !== user.prodi) {
       return res.status(403).send('Akses Ditolak: Bukan Prodi Anda');
     }
     if (user.role === 'admin_jurusan' && dataMhs.jurusan !== user.jurusan) {
       return res.status(403).send('Akses Ditolak: Bukan Jurusan Anda');
     }
-    // ---------------------------------------------
 
     const [dokumen] = await db.query(`
       SELECT * FROM dokumen_wisuda 
@@ -287,4 +374,12 @@ exports.cetakDetailPendaftaran = async (req, res) => {
     console.error(error);
     res.status(500).send('Terjadi kesalahan server');
   }
+};
+
+// Halaman Bantuan
+exports.bantuan = (req, res) => {
+  res.render('bantuan_admin', {
+    title: 'Bantuan',
+    user: req.session.user
+  });
 };
