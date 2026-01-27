@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Wisuda Polinela</title>
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/detail-admin.css"> 
+  
+  <style>
+    /* Style Tombol Lembut seperti di Gambar */
+    .btn-soft-primary { background-color: #e0e7ff; color: #4338ca; border: none; }
+    .btn-soft-primary:hover { background-color: #c7d2fe; color: #3730a3; }
+
+    .btn-soft-success { background-color: #d1fae5; color: #065f46; border: none; }
+    .btn-soft-success:hover { background-color: #a7f3d0; color: #047857; }
+
+    .btn-soft-danger { background-color: #fee2e2; color: #b91c1c; border: none; }
+    .btn-soft-danger:hover { background-color: #fecaca; color: #991b1b; }
+
+    .btn-icon-square {
+        width: 38px; height: 38px;
+        display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 8px; transition: all 0.2s;
+        margin-left: 5px;
+    }
+
+    /* Card Dokumen yang Lebih Bersih */
+    .doc-card {
+        background: #fff;
+        border: 1px solid #f3f4f6;
+        border-radius: 12px;
+        padding: 15px 20px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: transform 0.2s;
+    }
+    .doc-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+    .doc-meta h6 { font-weight: 600; font-size: 1rem; color: #1f2937; margin-bottom: 2px; }
+    .doc-meta span { font-size: 0.85rem; color: #9ca3af; }
+
+    /* Modal Preview */
+    .preview-box {
+        width: 100%; min-height: 450px; background: #f9fafb;
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 8px; overflow: hidden;
+    }
+    .preview-box img { max-width: 100%; max-height: 500px; object-fit: contain; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-admin">
+  <div class="container">
+    <a class="navbar-brand" href="/admin/monitoring">
+      <i class="fas fa-user-shield me-2"></i>Dashboard Admin
+    </a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link" href="/admin/monitoring">Dashboard</a></li>
+        <% if (user.role === 'admin') { %>
+        <% } %>
+        <li class="nav-item"><div class="user-avatar">A</div></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container pb-5">
+  <div class="page-header">
+    <div>
+      <div class="breadcrumb-custom">Semua Pendaftar / Detail Pendaftaran</div>
+      <h1 class="applicant-name"><%= pendaftaran.nama %></h1>
+    </div>
+    
+    <% if (user.role === 'admin') { %>
+    <a href="/admin/cetak-detail/<%= pendaftaran.id %>" target="_blank" class="btn btn-danger px-4 py-2" style="background: #DC2626; border:none; font-weight:500;">
+      <i class="fas fa-file-pdf me-2"></i>Export PDF
+    </a>
+    <% } %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card-custom">
+        <h5 class="card-title-custom">Status Pendaftaran</h5>
+        
+        <% 
+          let statusClass = 'bg-status-menunggu';
+          if(pendaftaran.status === 'Diverifikasi') statusClass = 'bg-status-diverifikasi';
+          if(pendaftaran.status === 'Ditolak') statusClass = 'bg-status-ditolak';
+        %>
+        <div class="status-badge-large <%= statusClass %>">
+          <i class="fas fa-hourglass-half me-2"></i><%= pendaftaran.status %>
+        </div>
+
+        <h5 class="card-title-custom mt-4">Detail Pendaftar</h5>
+        <div class="detail-item"><div class="detail-label">NPM</div><div class="detail-value"><%= pendaftaran.nim %></div></div>
+        <div class="detail-item"><div class="detail-label">Program Studi</div><div class="detail-value"><%= pendaftaran.prodi %></div></div>
+        <div class="detail-item"><div class="detail-label">Jurusan</div><div class="detail-value"><%= pendaftaran.jurusan %></div></div>
+        <div class="detail-item"><div class="detail-label">Email</div><div class="detail-value email"><%= pendaftaran.user_email || '-' %></div></div>
+        <div class="detail-item"><div class="detail-label">No HP</div><div class="detail-value"><%= pendaftaran.no_hp %></div></div>
+
+        <% if (user.role === 'admin') { %>
+            <div class="btn-action-group">
+              <button type="button" class="btn-terima" onclick="openMainStatusModal('Diverifikasi')">Terima Pendaftaran</button>
+              <button type="button" class="btn-tolak" onclick="openMainStatusModal('Ditolak')">Tolak Pendaftaran</button>
+            </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card-custom bg-transparent shadow-none border-0 p-0">
+        <h5 class="card-title-custom mb-4" style="color: #374151;">Berkas Persyaratan</h5>
+
+        <% if(dokumen.length === 0) { %>
+          <div class="alert alert-light text-center border">Belum ada dokumen yang diunggah.</div>
+        <% } %>
+
+        <% dokumen.forEach(d => { %>
+          <div class="doc-card">
+            
+            <div class="doc-meta">
+              <h6>
+                <%= d.jenis_dokumen.replace(/_/g, ' ') %>
+                
+                <% if(d.jenis_dokumen === 'Bebas_Tanggungan') { %>
+                    <span class="badge bg-secondary ms-1" style="font-size: 0.65rem;">Tugas Jurusan</span>
+                <% } else if (d.jenis_dokumen === 'Cover_TA') { %>
+                    <span class="badge bg-secondary ms-1" style="font-size: 0.65rem;">Tugas Prodi</span>
+                <% } else if (d.jenis_dokumen === 'TOEIC') { %>
+                    <span class="badge bg-secondary ms-1" style="font-size: 0.65rem;">Tugas Lab Bahasa</span>
+                <% } %>
+              </h6>
+              <span>Diunggah: <%= new Date(d.uploaded_at).toLocaleDateString('id-ID') %></span>
+              
+              <% if(d.status === 'Ditolak') { %>
+                <div class="text-danger small mt-1"><i class="fas fa-exclamation-circle me-1"></i><%= d.catatan %></div>
+              <% } %>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+              
+              <% if(d.status === 'Lengkap' || d.status === 'Diterima') { %>
+                <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3">Diterima</span>
+              <% } else if(d.status === 'Ditolak') { %>
+                <span class="badge rounded-pill bg-danger bg-opacity-10 text-danger px-3">Ditolak</span>
+              <% } else { %>
+                <span class="badge rounded-pill bg-warning bg-opacity-10 text-warning px-3 text-dark">Menunggu</span>
+              <% } %>
+
+              <div class="d-flex">
+                 <% 
+                    let isLocked = false;
+                    // ADMIN PUSAT -> Kunci dokumen spesifik
+                    if (user.role === 'admin') {
+                        if (['TOEIC', 'Bebas_Tanggungan', 'Cover_TA'].includes(d.jenis_dokumen)) {
+                            isLocked = true;
+                        }
+                    } 
+                    // ADMIN LAIN -> Tidak ada kunci (karena sudah difilter di controller)
+                 %>
+
+                 <button type="button" class="btn btn-soft-primary btn-icon-square" 
+                         onclick="openPreviewModal('<%= d.jenis_dokumen %>', '/uploads/<%= d.path_file %>')" 
+                         title="Lihat Berkas">
+                     <i class="fas fa-eye"></i>
+                 </button>
+
+                 <% if (!isLocked) { %>
+                     <button type="button" class="btn btn-soft-danger btn-icon-square" 
+                             onclick="tolakDokumen('<%= d.id %>', '<%= d.jenis_dokumen %>')"
+                             title="Tolak">
+                         <i class="fas fa-times"></i>
+                     </button>
+                     
+                     <form action="/admin/update-dokumen/<%= d.id %>" method="POST" style="display:inline;">
+                        <input type="hidden" name="status" value="Lengkap">
+                        <button type="submit" class="btn btn-soft-success btn-icon-square" title="Terima">
+                            <i class="fas fa-check"></i>
+                        </button>
+                     </form>
+                 <% } else { %>
+                     <div class="d-flex align-items-center ms-2 text-muted" title="Verifikasi dilakukan oleh unit terkait">
+                        <i class="fas fa-lock me-1"></i> <small>Terkunci</small>
+                     </div>
+                 <% } %>
+
+              </div>
+            </div>
+
+          </div>
+        <% }) %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" id="previewTitle">Preview Dokumen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-0 bg-light">
+        <div class="preview-box">
+             <div id="previewContent" class="w-100 h-100 d-flex justify-content-center align-items-center">
+                 <div class="spinner-border text-primary" role="status"></div>
+             </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold">Update Status Pendaftaran</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form action="/admin/update-status/<%= pendaftaran.id %>" method="POST">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Status</label>
+            <select class="form-select" name="status" id="modalMainStatusInput">
+              <option value="Menunggu">Menunggu Verifikasi</option>
+              <option value="Diverifikasi">Diverifikasi (Terima)</option>
+              <option value="Ditolak">Ditolak</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Keterangan</label>
+            <textarea class="form-control" name="catatan" rows="3"><%= pendaftaran.catatan %></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary w-100">Update Status</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  // Fungsi Buka Preview
+  function openPreviewModal(docName, filePath) {
+      const modal = new bootstrap.Modal(document.getElementById('previewModal'));
+      document.getElementById('previewTitle').textContent = docName.replace(/_/g, ' ');
+      
+      const previewBox = document.getElementById('previewContent');
+      const fileExt = filePath.split('.').pop().toLowerCase();
+      
+      if (['jpg', 'jpeg', 'png'].includes(fileExt)) {
+          previewBox.innerHTML = `<img src="${filePath}" alt="Preview">`;
+      } else if (fileExt === 'pdf') {
+          previewBox.innerHTML = `<iframe src="${filePath}" style="width:100%; height:450px;" frameborder="0"></iframe>`;
+      } else {
+          previewBox.innerHTML = `<div class="text-center p-5">Format file tidak mendukung preview.<br><a href="${filePath}" target="_blank" class="btn btn-primary mt-3">Download File</a></div>`;
+      }
+      modal.show();
+  }
+
+  // Fungsi Tolak (Muncul SweetAlert)
+  function tolakDokumen(id, namaDokumen) {
+      Swal.fire({
+          title: 'Tolak Dokumen?',
+          text: `Masukkan alasan penolakan:`,
+          input: 'text',
+          inputPlaceholder: 'Contoh: Dokumen buram / Salah upload',
+          showCancelButton: true,
+          confirmButtonColor: '#DC2626',
+          confirmButtonText: 'Tolak',
+          cancelButtonText: 'Batal',
+          inputValidator: (value) => { if (!value) return 'Wajib diisi!'; }
+      }).then((result) => {
+          if (result.isConfirmed) {
+              // Buat form dinamis untuk submit
+              const form = document.createElement('form');
+              form.method = 'POST';
+              form.action = `/admin/update-dokumen/${id}`;
+
+              const inputStatus = document.createElement('input');
+              inputStatus.type = 'hidden';
+              inputStatus.name = 'status';
+              inputStatus.value = 'Ditolak';
+
+              const inputCatatan = document.createElement('input');
+              inputCatatan.type = 'hidden';
+              inputCatatan.name = 'catatan';
+              inputCatatan.value = result.value;
+
+              form.appendChild(inputStatus);
+              form.appendChild(inputCatatan);
+              document.body.appendChild(form);
+              form.submit();
+          }
+      });
+  }
+
+  function openMainStatusModal(status) {
+    const modal = new bootstrap.Modal(document.getElementById('updateStatusModal'));
+    document.getElementById('modalMainStatusInput').value = status;
+    modal.show();
+  }
+
+  <% if (typeof success_msg !== 'undefined' && success_msg.length > 0) { %>
+    Swal.fire({ icon: 'success', title: 'Berhasil', text: '<%= success_msg %>', confirmButtonColor: '#0047AB' });
+  <% } %>
+  <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+    Swal.fire({ icon: 'error', title: 'Gagal', text: '<%= error_msg %>', confirmButtonColor: '#DC2626' });
+  <% } %>
+</script>
+
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lulusan Terbaik - Wisuda Polinela</title>
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    body { background-color: #f8f9fa; }
+    
+    /* Navigasi Tabs Custom */
+    .nav-pills-custom {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .nav-pills-custom .nav-link {
+      background: white;
+      color: #333;
+      border: 1px solid #ddd;
+      border-radius: 50px;
+      padding: 10px 30px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .nav-pills-custom .nav-link.active,
+    .nav-pills-custom .nav-link:hover {
+      background: #0047AB;
+      color: white;
+      border-color: #0047AB;
+      box-shadow: 0 5px 15px rgba(0, 71, 171, 0.3);
+    }
+
+    /* DESAIN KARTU MAHASISWA (Layout Seperti Calon Wisudawan tapi Tema Emas) */
+    .best-student-card {
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      /* Background Gelap Elegan */
+      background: linear-gradient(145deg, #1a1a1a, #2c3e50);
+      color: white;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+      height: 100%;
+      display: flex;
+      flex-direction: row; /* Horizontal Layout */
+      position: relative;
+    }
+    .best-student-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+    }
+    
+    /* Dekorasi Emas di Pojok */
+    .card-decoration {
+      position: absolute;
+      top: 0; right: 0;
+      width: 70px; height: 70px;
+      background: linear-gradient(135deg, transparent 50%, #D4AF37 50%);
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    .student-photo-box {
+      width: 140px; /* Lebar foto tetap */
+      min-height: 180px;
+      background-color: #000;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .student-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.95;
+    }
+
+    .student-info {
+      padding: 20px 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge-ipk {
+      background: #D4AF37; /* Emas */
+      color: #000;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 10px;
+      width: fit-content;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+    }
+
+    .student-name {
+      font-family: 'Volkhov', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px;
+      line-height: 1.3;
+    }
+    
+    .student-nim {
+      color: #ccc;
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .info-group {
+      margin-top: auto;
+    }
+    .info-label {
+      font-size: 0.7rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .info-value {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #eee;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .trophy-icon {
+      font-size: 2.5rem;
+      color: rgba(255, 215, 0, 0.15); /* Transparan */
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      z-index: 0;
+    }
+
+    /* Responsif HP */
+    @media (max-width: 768px) {
+      .best-student-card { flex-direction: column; }
+      .student-photo-box { width: 100%; height: 250px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/images/logopolinela.png" alt="Logo">
+      <span>SIWILA</span>
+    </a>
+    <div class="ms-auto">
+        <a href="/daftar-ipk" class="btn btn-outline-light btn-sm rounded-pill px-4">
+            <i class="fas fa-arrow-left me-2"></i>Kembali
+        </a>
+    </div>
+  </div>
+</nav>
+
+<div style="padding-top: 120px; padding-bottom: 80px;">
+  <div class="container">
+    
+    <div class="text-center mb-5">
+        <h1 class="fw-bold" style="font-family: 'Volkhov', serif; color: #333;">Lulusan Terbaik</h1>
+        <p class="text-muted">Peraih IPK Tertinggi (Cumlaude) Berdasarkan Jenjang Pendidikan</p>
+        <div style="width: 60px; height: 4px; background: #0047AB; margin: 15px auto;"></div>
+    </div>
+
+    <div class="nav nav-pills nav-pills-custom" id="pills-tab" role="tablist">
+            <button class="nav-link" id="pills-s2-tab" data-bs-toggle="pill" data-bs-target="#pills-s2" type="button" role="tab">Pascasarjana (S2)</button>
+      <button class="nav-link" id="pills-d4-tab" data-bs-toggle="pill" data-bs-target="#pills-d4" type="button" role="tab">Sarjana Terapan (D4)</button>
+       <button class="nav-link active" id="pills-d3-tab" data-bs-toggle="pill" data-bs-target="#pills-d3" type="button" role="tab">Diploma Tiga (D3)</button>
+      <button class="nav-link" id="pills-d2-tab" data-bs-toggle="pill" data-bs-target="#pills-d2" type="button" role="tab">Diploma Dua (D2)</button>
+    </div>
+
+    <div class="tab-content" id="pills-tabContent">
+      
+      <% 
+        const jenjangList = ['D3', 'D4', 'D3', 'D2'];
+        const jenjangLabel = {'D3': 'Diploma Tiga', 'D4': 'Sarjana Terapan', 'S2': 'Magister Terapan', 'D2': 'Diploma Dua'};
+      %>
+
+      <% jenjangList.forEach((jenjang, index) => { %>
+        <div class="tab-pane fade <%= index === 0 ? 'show active' : '' %>" id="pills-<%= jenjang.toLowerCase() %>" role="tabpanel">
+            
+            <% if (bestStudents[jenjang] && bestStudents[jenjang].length > 0) { %>
+                <div class="row g-4 justify-content-center"> <% bestStudents[jenjang].forEach(student => { %>
+                    <div class="col-lg-6 col-xl-6"> <div class="card best-student-card">
+                            <div class="card-decoration"></div>
+                            
+                            <div class="student-photo-box">
+                                <% 
+                                    let fotoSrc = "https://ui-avatars.com/api/?name=" + student.nama + "&background=000&color=D4AF37&size=256";
+                                    if (student.foto_berkas) {
+                                        fotoSrc = "/uploads/" + student.foto_berkas;
+                                    } else if (student.foto_akun) {
+                                        fotoSrc = "/uploads/profile/" + student.foto_akun;
+                                    }
+                                %>
+                                <img src="<%= fotoSrc %>" alt="<%= student.nama %>" class="student-photo">
+                            </div>
+
+                            <div class="student-info">
+                                <div class="badge-ipk">
+                                    <i class="fas fa-star me-1"></i> IPK: <%= student.ipk %>
+                                </div>
+                                
+                                <div class="student-name"><%= student.nama %></div>
+                                <div class="student-nim"><%= student.nim %></div>
+                                
+                                <div class="info-group mt-3">
+                                    <div class="row">
+                                        <div class="col-12 mb-2">
+                                            <div class="info-label">Program Studi</div>
+                                            <div class="info-value"><%= student.prodi %></div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="info-label">Jurusan</div>
+                                            <div class="info-value"><%= student.jurusan %></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <i class="fas fa-medal trophy-icon"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                    <% }) %>
+
+                </div>
+            <% } else { %>
+                <div class="text-center py-5">
+                    <div class="alert alert-secondary d-inline-block px-5 bg-light border-0">
+                        <i class="fas fa-info-circle me-2"></i> Belum ada lulusan <%= jenjangLabel[jenjang] %>
+                    </div>
+                </div>
+            <% } %>
+
+        </div>
+      <% }) %>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrasi - Wisuda Polinela</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  <link rel="stylesheet" href="/css/register.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="register-container">
+    <a href="/" class="back-link">
+      <i class="fas fa-arrow-left me-2"></i>Kembali ke Beranda
+    </a>
+    
+    <div class="register-card">
+      <div class="register-header">
+        <h2><i class="fas fa-user-plus me-2"></i>Registrasi Akun</h2>
+        <p class="mb-0 mt-2">Sistem Pendaftaran Wisuda Online Politeknik Negeri Lampung</p>
+      </div>
+      
+      <div class="register-body">
+        <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i><%= error_msg %>
+          </div>
+        <% } %>
+
+        <form action="/auth/register" method="POST" id="registerForm">
+          
+          <h6 class="fw-bold text-primary mb-3"><i class="fas fa-id-card me-2"></i>Data Akademik</h6>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">NPM</label>
+            <div class="input-group">
+                <input type="text" name="nim" id="nimInput" class="form-control form-control-lg" placeholder="Ketik 8 Digit NPM..." maxlength="8" required>
+                <span class="input-group-text bg-white border-start-0" id="loaderIcon" style="display:none;">
+                    <i class="fas fa-spinner fa-spin text-primary"></i>
+                </span>
+            </div>
+            <div id="npmFeedback" class="form-text mt-1 fw-bold"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nama Lengkap</label>
+            <input type="text" name="nama" id="namaInput" class="form-control bg-light" readonly placeholder="Otomatis terisi...">
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Program Studi</label>
+              <input type="text" name="prodi" id="prodiInput" class="form-control bg-light" readonly placeholder="Otomatis terisi...">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Jurusan</label>
+              <input type="text" name="jurusan" id="jurusanInput" class="form-control bg-light" readonly placeholder="Otomatis terisi...">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Angkatan</label>
+                <input type="text" name="angkatan" id="angkatanInput" class="form-control bg-light" readonly placeholder="Otomatis terisi...">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">No. HP (WhatsApp)</label>
+                <input type="text" name="no_hp" id="hpInput" class="form-control" maxlength="14"> 
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Alamat Domisili</label>
+            <textarea name="alamat" id="alamatInput" class="form-control" rows="2"></textarea>
+          </div>
+
+          <hr class="my-4">
+
+          <h6 class="fw-bold text-primary mb-3"><i class="fas fa-lock me-2"></i>Data Akun Login</h6>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" placeholder="email@mahasiswa.polinela.ac.id" required>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Konfirmasi Password</label>
+              <input type="password" name="password_confirm" class="form-control" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-register w-100 mt-3" id="btnSubmit" disabled>
+            <i class="fas fa-paper-plane me-2"></i>Daftar Sekarang
+          </button>
+
+        </form>
+      </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const nimInput = document.getElementById('nimInput');
+    const namaInput = document.getElementById('namaInput');
+    const prodiInput = document.getElementById('prodiInput');
+    const jurusanInput = document.getElementById('jurusanInput');
+    const angkatanInput = document.getElementById('angkatanInput');
+    const hpInput = document.getElementById('hpInput');
+    const alamatInput = document.getElementById('alamatInput');
+    
+    const feedback = document.getElementById('npmFeedback');
+    const loader = document.getElementById('loaderIcon');
+    const btnSubmit = document.getElementById('btnSubmit');
+
+    // 1. Validasi Input HP (Hanya Angka)
+    if (hpInput) {
+        hpInput.addEventListener('input', function() { this.value = this.value.replace(/\D/g, ''); });
+    }
+
+    // 2. Logika NPM Auto-Fill
+    if (nimInput) {
+        nimInput.addEventListener('input', function() {
+            // Hapus non-angka
+            this.value = this.value.replace(/\D/g, '');
+            const npm = this.value;
+
+            if (npm.length === 0) {
+                resetForm();
+                feedback.innerHTML = '';
+                nimInput.classList.remove('is-invalid', 'is-valid');
+                return;
+            }
+
+            if (npm.length < 8) {
+                feedback.innerHTML = `<span class="text-danger">Kurang ${8 - npm.length} digit lagi...</span>`;
+                nimInput.classList.add('is-invalid');
+                nimInput.classList.remove('is-valid');
+                resetForm();
+            } else if (npm.length === 8) {
+                // PANGGIL SERVER
+                checkNPM(npm);
+            }
+        });
+    }
+
+    function checkNPM(npm) {
+        // Tampilkan Loading
+        loader.style.display = 'block';
+        feedback.innerHTML = '<span class="text-primary">Mengecek database...</span>';
+        
+        fetch(`/auth/check-npm/${npm}`)
+            .then(response => response.json())
+            .then(data => {
+                loader.style.display = 'none';
+
+                if (data.success) {
+                    // BERHASIL: Isi Data
+                    const mhs = data.data;
+                    namaInput.value = mhs.nama;
+                    prodiInput.value = mhs.prodi;
+                    jurusanInput.value = mhs.jurusan;
+                    angkatanInput.value = mhs.angkatan;
+                    hpInput.value = mhs.no_hp;
+                    alamatInput.value = mhs.alamat;
+
+                    // UI Feedback
+                    feedback.innerHTML = '<i class="fas fa-check-circle"></i> <span class="text-success">Data ditemukan! Silakan lengkapi akun login di bawah.</span>';
+                    nimInput.classList.remove('is-invalid');
+                    nimInput.classList.add('is-valid');
+                    btnSubmit.disabled = false; // Aktifkan tombol daftar
+                } else {
+                    // GAGAL: Data tidak ada
+                    feedback.innerHTML = '<i class="fas fa-times-circle"></i> <span class="text-danger">NPM tidak terdaftar di Database Akademik.</span>';
+                    nimInput.classList.add('is-invalid');
+                    nimInput.classList.remove('is-valid');
+                    resetForm();
+                }
+            })
+            .catch(error => {
+                loader.style.display = 'none';
+                console.error(error);
+                feedback.innerHTML = '<span class="text-danger">Gagal menghubungi server.</span>';
+            });
+    }
+
+    function resetForm() {
+        namaInput.value = '';
+        prodiInput.value = '';
+        jurusanInput.value = '';
+        angkatanInput.value = '';
+        hpInput.value = '';
+        alamatInput.value = '';
+        btnSubmit.disabled = true; // Matikan tombol jika data belum valid
+    }
+  });
+</script>
+
+</body>
+</html>

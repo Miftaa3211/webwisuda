@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informasi Wisuda - Polinela</title>
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/images/logopolinela.png" alt="Logo Polinela">
+      <span>SIWILA</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link active" href="/informasi">Informasi</a></li>
+        <li class="nav-item"><a class="nav-link" href="/statistik">Statistik Kelulusan</a></li>
+        <li class="nav-item"><a class="nav-link" href="/daftar-ipk">Daftar IPK</a></li>
+        <li class="nav-item"><a class="nav-link" href="/tentang">Tentang</a></li>
+      </ul>
+      <a href="/auth/login" class="btn-masuk">Masuk</a>
+    </div>
+  </div>
+</nav>
+
+<div style="padding-top: 100px;">
+<section class="section-persyaratan" id="informasi">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="section-title">Informasi Wisuda</h2>
+      <p class="section-subtitle">Panduan lengkap alur pendaftaran dan persyaratan wisuda</p>
+      
+      <div class="toggle-wrapper">
+        <div class="toggle-container">
+          <button class="toggle-btn active" onclick="switchTab('alur')">Alur Pendaftaran</button>
+          <button class="toggle-btn" onclick="switchTab('syarat')">Syarat Wisuda</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="content-alur" class="tab-content active-content">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="card border-0 shadow-sm p-4">
+            <div class="timeline-online">
+                <div class="timeline-row">
+                <div class="timeline-time">Langkah 1</div>
+                <div class="timeline-dot bg-primary"></div>
+                <div class="timeline-content">
+                  <i class="fas fa-user-plus text-primary mb-2 fs-4"></i>
+                  <h4>Registrasi Akun</h4>
+                  <p>Mahasiswa mendaftar akun menggunakan email aktif dan mengisi biodata awal (NPM, Nama, Prodi) pada menu Registrasi.</p>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="timeline-time">Langkah 2</div>
+                <div class="timeline-dot bg-info"></div>
+                <div class="timeline-content">
+                  <i class="fas fa-sign-in-alt text-info mb-2 fs-4"></i>
+                  <h4>Login Sistem</h4>
+                  <p>Masuk (Login) ke dalam sistem menggunakan email dan password yang telah didaftarkan sebelumnya.</p>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="timeline-time">Langkah 3</div>
+                <div class="timeline-dot bg-warning"></div>
+                <div class="timeline-content">
+                  <i class="fas fa-cloud-upload-alt text-warning mb-2 fs-4"></i>
+                  <h4>Upload Berkas Digital</h4>
+                  <p>Pada halaman dashboard, upload scan dokumen asli (PDF/JPG) seperti KTP, Transkrip, Sertifikat TOEIC, dan Bukti Bebas Tanggungan.</p>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="timeline-time">Langkah 4</div>
+                <div class="timeline-dot" style="background-color: #6f42c1;"></div> <div class="timeline-content">
+                  <i class="fas fa-user-check mb-2 fs-4" style="color: #6f42c1;"></i>
+                  <h4>Verifikasi Admin</h4>
+                  <p>Admin Prodi dan Akademik memverifikasi berkas. Pantau status kelulusan berkas melalui dashboard (Status: <strong>Diajukan</strong> &rarr; <strong>Lengkap</strong>).</p>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="timeline-time">Langkah 5</div>
+                <div class="timeline-dot bg-success"></div>
+                <div class="timeline-content">
+                  <i class="fas fa-print text-success mb-2 fs-4"></i>
+                  <h4>Cetak Bukti Pendaftaran</h4>
+                  <p>Jika seluruh berkas berstatus <strong>"Lengkap"</strong>, tombol cetak akan aktif. Cetak Bukti Pendaftaran untuk pengambilan toga.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div id="content-syarat" class="tab-content" style="display: none;">
+      <div class="accordion accordion-custom" id="persyaratanAccordion">
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#berkasFisik" aria-expanded="true" aria-controls="berkasFisik">
+              <i class="fas fa-folder-open me-2"></i> Penting: Pengumpulan Berkas Fisik
+            </button>
+          </h2>
+          <div id="berkasFisik" class="accordion-collapse collapse show" data-bs-parent="#persyaratanAccordion">
+            <div class="accordion-body">
+              <p class="mb-2">Selain melengkapi data online, calon wisudawan <strong>WAJIB</strong> menyerahkan berkas fisik berikut ke <strong>Bagian Akademik</strong>:</p>
+              <ul>
+                <li>Fotocopy Ijazah Terakhir (Legalisir)</li>
+                <li>Pas Foto Terbaru (Cetak Fisik)</li>
+                <li>Fotocopy KTM (Kartu Tanda Mahasiswa)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#akademik">
+              <i class="fas fa-graduation-cap me-2"></i> Persyaratan Akademik
+            </button>
+          </h2>
+          <div id="akademik" class="accordion-collapse collapse" data-bs-parent="#persyaratanAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>Telah menyelesaikan seluruh mata kuliah sesuai kurikulum (120 SKS)</li>
+                <li>IPK minimal 2.50 (skala 4.00)</li>
+                <li>Tidak memiliki nilai D lebih dari 3 mata kuliah</li>
+                <li>Telah lulus Tugas Akhir dengan nilai minimal B</li>
+                <li>Memiliki sertifikat TOEIC minimal skor 400</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#administrasi">
+              <i class="fas fa-file-alt me-2"></i> Persyaratan Administrasi
+            </button>
+          </h2>
+          <div id="administrasi" class="accordion-collapse collapse" data-bs-parent="#persyaratanAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>Fotocopy KTP (1 lembar)</li>
+                <li>Fotocopy Kartu Keluarga (1 lembar)</li>
+                <li>Fotocopy Kartu Tanda Mahasiswa (KTM)</li>
+                <li>Transkrip Nilai sementara</li>
+                <li>Pas foto berwarna ukuran 3x4 (4 lembar, background biru)</li>
+                <li>Cover Tugas Akhir (PDF)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#khusus">
+              <i class="fas fa-check-circle me-2"></i> Persyaratan Khusus
+            </button>
+          </h2>
+          <div id="khusus" class="accordion-collapse collapse" data-bs-parent="#persyaratanAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>Surat Keterangan Bebas Pinjaman Perpustakaan</li>
+                <li>Surat Keterangan Bebas Tanggungan Jurusan</li>
+                <li>Surat Keterangan Bebas Tanggungan Keuangan</li>
+                <li>Bukti lunas biaya wisuda</li>
+                <li>Sertifikat TOEIC (asli dan fotocopy)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item accordion-catatan">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#catatan">
+              <i class="fas fa-exclamation-triangle me-2"></i> Catatan Penting
+            </button>
+          </h2>
+          <div id="catatan" class="accordion-collapse collapse" data-bs-parent="#persyaratanAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li><strong>Pendaftaran dibuka 3 bulan sebelum pelaksanaan wisuda</strong></li>
+                <li>Semua dokumen harus diupload dalam format PDF atau JPG (max 2MB per file)</li>
+                <li>Verifikasi dokumen dilakukan maksimal 2 minggu setelah upload</li>
+                <li>Jika dokumen ditolak, mahasiswa wajib melakukan upload ulang</li> 
+                <li>Pendaftaran yang tidak lengkap tidak akan diproses</li>
+                <li>Untuk informasi lebih lanjut hubungi: <strong>wisuda@polinela.ac.id</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function switchTab(tabName) {
+    const buttons = document.querySelectorAll('.toggle-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    if(tabName === 'alur') { buttons[0].classList.add('active'); } 
+    else { buttons[1].classList.add('active'); }
+
+    const contentAlur = document.getElementById('content-alur');
+    const contentSyarat = document.getElementById('content-syarat');
+
+    if (tabName === 'alur') {
+      contentAlur.style.display = 'block'; contentSyarat.style.display = 'none';
+      contentAlur.style.opacity = 0; setTimeout(() => contentAlur.style.opacity = 1, 50);
+    } else {
+      contentAlur.style.display = 'none'; contentSyarat.style.display = 'block';
+      contentSyarat.style.opacity = 0; setTimeout(() => contentSyarat.style.opacity = 1, 50);
+    }
+  }
+</script>
+</body>
+</html>

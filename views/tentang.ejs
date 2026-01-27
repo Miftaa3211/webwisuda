@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tentang - Wisuda Polinela</title>
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="/images/logopolinela.png" alt="Logo Polinela">
+        <span>SIWILA</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="/informasi">Informasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="/statistik">Statistik Kelulusan</a></li>
+          <li class="nav-item"><a class="nav-link" href="/daftar-ipk">Daftar IPK</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/tentang">Tentang</a></li>
+        </ul>
+        <a href="/auth/login" class="btn-masuk">Masuk</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="padding-top: 100px;">
+    <section class="section-tentang" id="tentang">
+      <div class="container">
+        <h2 class="section-title">Tentang Politeknik Negeri Lampung</h2>
+        <p class="section-subtitle">Lembaga pendidikan vokasi terkemuka di Provinsi Lampung</p>
+        
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-4">
+            <p class="about-text">
+              Politeknik Negeri Lampung adalah perguruan tinggi vokasi yang berkomitmen menghasilkan lulusan 
+              berkompeten, profesional, dan siap kerja. Dengan berbagai program studi terakreditasi dan 
+              didukung oleh tenaga pendidik berpengalaman serta fasilitas modern, Polinela terus berinovasi 
+              dalam mengembangkan pendidikan vokasi yang relevan dengan kebutuhan industri dan menghasilkan 
+              lulusan yang mampu bersaing di dunia kerja.
+            </p>
+            
+            <div class="about-stats-grid">
+              <div class="about-stat-card">
+                <h4>35</h4>
+                <p>Program Studi</p>
+              </div>
+              <div class="about-stat-card">
+                <h4>5000+</h4>
+                <p>Mahasiswa Aktif</p>
+              </div>
+              <div class="about-stat-card">
+                <h4>8</h4>
+                <p>Jurusan</p>
+              </div>
+              <div class="about-stat-card">
+                <h4>Baik Sekali</h4>
+                <p>Akreditasi</p>
+              </div>
+            </div>
+
+            <div class="pengumuman-card">
+              <h5>
+                <i class="fas fa-bullhorn me-2"></i>
+                Pengumuman Wisuda Periode <%= info.periode %>
+              </h5>
+              
+              <div class="pengumuman-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                  <strong>Tempat:</strong><br> 
+                  <%= info.lokasi %>
+                </div>
+              </div>
+
+              <hr style="border-color: rgba(255,255,255,0.2);">
+              <h6 class="mb-3 text-warning"><i class="fas fa-calendar-alt me-2"></i>Jadwal Pendaftaran & Pelaksanaan:</h6>
+
+              <% if (kloters && kloters.length > 0) { %>
+                <% kloters.forEach(function(k) { %>
+                  <div class="pengumuman-item mb-3 p-2" style="background: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <i class="fas fa-users"></i>
+                    <div style="width: 100%;">
+                      <div class="d-flex justify-content-between align-items-center mb-1">
+                        <strong><%= k.nama %></strong>
+                        <span class="badge bg-warning text-dark"><%= k.sisa %> kuota tersisa</span>
+                      </div>
+                      
+                      <div class="small text-white-50 mt-1">
+                        <div><i class="fas fa-pen-square me-2"></i>pendaftaran: <strong><%= k.masa_daftar %></strong></div>
+                        <div><i class="fas fa-calendar-day me-2"></i>Jadwal Wisuda: <strong><%= k.pelaksanaan %></strong></div>
+                      </div>
+                    </div>
+                  </div>
+                <% }); %>
+              <% } else { %>
+                <div class="text-center py-2 text-white-50">
+                  <small>Belum ada kloter dibuka</small>
+                </div>
+              <% } %>
+
+            </div>
+          </div>
+          <div class="col-lg-6 mb-4">
+            
+            <div id="polinelaCarousel" class="carousel slide carousel-fade shadow-lg" data-bs-ride="carousel" data-bs-interval="3500" data-bs-pause="false">
+              
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="4"></button>
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="5"></button>
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="6"></button>
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="7"></button>
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="8"></button>
+                <button type="button" data-bs-target="#polinelaCarousel" data-bs-slide-to="9"></button>
+              </div>
+
+              <div class="carousel-inner rounded-4 overflow-hidden" style="height: 500px;">
+                <div class="carousel-item active h-100">
+                  <img src="/images/polinela.png" class="d-block w-100 h-100 animated-img" alt="Foto 1">
+                  <div class="carousel-caption d-none d-md-block gradient-caption"></div>
+                </div>
+                <div class="carousel-item h-100"><img src="/images/polinela2.png" class="d-block w-100 h-100 animated-img" alt="Foto 2"></div>
+                <div class="carousel-item h-100"><img src="/images/polinela1.png" class="d-block w-100 h-100 animated-img" alt="Foto 3"></div>
+                <div class="carousel-item h-100"><img src="/images/polinela3.png" class="d-block w-100 h-100 animated-img" alt="Foto 4"></div>
+                <div class="carousel-item h-100"><img src="/images/polinela5.png" class="d-block w-100 h-100 animated-img" alt="Foto 5"></div>
+                <div class="carousel-item h-100"><img src="/images/polinela4.png" class="d-block w-100 h-100 animated-img" alt="Foto 6"></div>
+                <div class="carousel-item h-100"><img src="/images/polinela6.png" class="d-block w-100 h-100 animated-img" alt="Foto 7"></div>
+                <div class="carousel-item h-100"><img src="/images/polinela7.png" class="d-block w-100 h-100 animated-img" alt="Foto 8"></div>
+              </div>
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#polinelaCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon p-3 bg-dark rounded-circle bg-opacity-25" aria-hidden="true"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#polinelaCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon p-3 bg-dark rounded-circle bg-opacity-25" aria-hidden="true"></span>
+              </button>
+
+            </div>
+
+            <div class="card mt-4 border-0 shadow-lg rounded-4 overflow-hidden" style="background: rgba(255, 255, 255, 0.95);">
+                <div class="card-body p-4 text-center">
+                  
+                  <h5 class="fw-bold mb-3" style="color: #0047AB;">
+                    <i class="fas fa-certificate text-warning me-2"></i>Akreditasi Institusi
+                  </h5>
+    
+                  <div class="mb-3 border rounded p-1 bg-white shadow-sm">
+                    <img src="/images/sertifikat-akreditasi.jpg" alt="Sertifikat Akreditasi Polinela" class="img-fluid rounded" style="max-height: 250px; width: auto;">
+                  </div>
+    
+                  <p class="small text-muted mb-3">
+                    Politeknik Negeri Lampung telah terakreditasi dengan predikat <strong>"Baik Sekali"</strong> oleh BAN-PT.
+                  </p>
+    
+                  <a href="https://drive.google.com/file/d/1hZoMm7R8o8kPkUWTAhuYnL5mnq6c1LLG/view" target="_blank" class="btn btn-outline-primary rounded-pill px-4 fw-bold w-100">
+                    <i class="fas fa-file-download me-2"></i>Download SK Akreditasi
+                  </a>
+    
+                </div>
+            </div>
+            </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var myCarousel = document.querySelector('#polinelaCarousel')
+        var carousel = new bootstrap.Carousel(myCarousel, {
+          interval: 2500, 
+          ride: 'carousel', 
+          pause: false 
+        })
+    });
+  </script>
+
+</body>
+</html>

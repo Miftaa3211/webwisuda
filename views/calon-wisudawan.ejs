@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calon Wisudawan - Wisuda Polinela</title>
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Volkhov:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    body { background-color: #f4f6f9; }
+    
+    /* Navigasi Tabs Kloter */
+    .nav-pills-kloter {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .nav-pills-kloter .nav-link {
+      background: white;
+      color: #555;
+      border: 1px solid #ddd;
+      border-radius: 50px;
+      padding: 10px 30px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .nav-pills-kloter .nav-link.active,
+    .nav-pills-kloter .nav-link:hover {
+      background: #0047AB;
+      color: white;
+      border-color: #0047AB;
+      box-shadow: 0 5px 15px rgba(0, 71, 171, 0.2);
+    }
+
+    /* DESAIN KARTU CALON WISUDAWAN */
+    .wisudawan-card {
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      height: 100%;
+      display: flex;
+      flex-direction: row; /* Horizontal Layout */
+    }
+    .wisudawan-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .wisudawan-photo-box {
+      width: 140px; /* Lebar foto tetap */
+      min-height: 160px;
+      background-color: #eee;
+      position: relative;
+    }
+    .wisudawan-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .wisudawan-info {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .wisudawan-name {
+      font-family: 'Volkhov', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .wisudawan-nim {
+      color: #0047AB;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .info-value {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    /* Responsif untuk layar HP: Jadi Vertikal */
+    @media (max-width: 768px) {
+      .wisudawan-card { flex-direction: column; }
+      .wisudawan-photo-box { width: 100%; height: 250px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/images/logopolinela.png" alt="Logo">
+      <span>SIWILA</span>
+    </a>
+    <div class="ms-auto">
+        <a href="/mahasiswa/dashboard" class="btn btn-outline-light btn-sm rounded-pill px-4">
+            <i class="fas fa-home me-2"></i>Dashboard
+        </a>
+    </div>
+  </div>
+</nav>
+
+<div style="padding-top: 120px; padding-bottom: 80px;">
+  <div class="container">
+    
+    <div class="text-center mb-5">
+        <h2 class="fw-bold" style="font-family: 'Volkhov', serif; color: #333;">Calon Wisudawan</h2>
+        <p class="text-muted">Daftar mahasiswa yang telah terverifikasi dan siap mengikuti wisuda</p>
+        <div style="width: 60px; height: 4px; background: #0047AB; margin: 15px auto;"></div>
+    </div>
+
+    <% if (kloterList.length > 0) { %>
+        <div class="nav nav-pills nav-pills-kloter" id="pills-tab" role="tablist">
+          <% kloterList.forEach((kloter, index) => { %>
+            <button class="nav-link <%= index === 0 ? 'active' : '' %>" 
+                    id="pills-<%= index %>-tab" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#pills-<%= index %>" 
+                    type="button" role="tab">
+                <%= kloter %>
+            </button>
+          <% }) %>
+        </div>
+
+        <div class="tab-content" id="pills-tabContent">
+          
+          <% kloterList.forEach((kloter, index) => { %>
+            <div class="tab-pane fade <%= index === 0 ? 'show active' : '' %>" id="pills-<%= index %>" role="tabpanel">
+                
+                <div class="row g-4">
+                    <% groupedStudents[kloter].forEach(student => { %>
+                    <div class="col-lg-6 col-xl-4"> <div class="wisudawan-card">
+                            <div class="wisudawan-photo-box">
+                                <% 
+                                    let fotoSrc = "https://ui-avatars.com/api/?name=" + student.nama + "&background=eee&color=555&size=256";
+                                    if (student.foto_berkas) {
+                                        fotoSrc = "/uploads/" + student.foto_berkas;
+                                    } else if (student.foto_akun) {
+                                        fotoSrc = "/uploads/profile/" + student.foto_akun;
+                                    }
+                                %>
+                                <img src="<%= fotoSrc %>" alt="<%= student.nama %>" class="wisudawan-photo" loading="lazy">
+                            </div>
+
+                            <div class="wisudawan-info">
+                                <div class="wisudawan-name"><%= student.nama %></div>
+                                <div class="wisudawan-nim"><%= student.nim %></div>
+                                <hr style="margin: 10px 0; border-color: #eee;">
+                                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="info-label">Program Studi</div>
+                                        <div class="info-value"><%= student.prodi %></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="info-label">Jurusan</div>
+                                        <div class="info-value"><%= student.jurusan %></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+
+            </div>
+          <% }) %>
+
+        </div>
+    <% } else { %>
+        <div class="text-center py-5">
+            <div class="alert alert-info d-inline-block px-5">
+                <i class="fas fa-info-circle me-2"></i> Belum ada calon wisudawan yang terverifikasi.
+            </div>
+        </div>
+    <% } %>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

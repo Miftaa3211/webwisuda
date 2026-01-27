@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wisuda Politeknik Negeri Lampung</title>
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    /* Agar slider tidak terlalu mepet */
+    .swiper-container-wrapper {
+      padding: 40px 0;
+      overflow: hidden; /* Mencegah scrollbar horizontal */
+    }
+
+    .swiper {
+      width: 100%;
+      padding-top: 20px;
+      padding-bottom: 50px;
+    }
+
+    .swiper-slide {
+      background-position: center;
+      background-size: cover;
+      width: 350px; /* Sedikit diperkecil agar efek 'mengalir' lebih terasa */
+      height: 450px;
+      /* Format Portrait biasanya lebih estetik untuk riam */
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3); /* Bayangan lebih lembut */
+      /* Efek kaca (Glassmorphism) optional pada border */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    /* Kustomisasi Pagination (Titik-titik bawah) */
+    .swiper-pagination-bullet {
+      background: #fff;
+      opacity: 0.5;
+      width: 10px;
+      height: 10px;
+    }
+    .swiper-pagination-bullet-active {
+      background: #0047AB;
+      /* Warna biru Polinela */
+      opacity: 1;
+      width: 25px;
+      /* Indikator aktif memanjang */
+      border-radius: 5px;
+      transition: width 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="/images/logopolinela.png" alt="Logo Polinela">
+        <span style="font-family: 'Volkhov', serif; font-weight: 700;">SIWILA</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="/informasi">Informasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="/statistik">Statistik Kelulusan</a></li>
+          <li class="nav-item"><a class="nav-link" href="/daftar-ipk">Daftar IPK</a></li>
+          <li class="nav-item"><a class="nav-link" href="/tentang">Tentang</a></li>
+        </ul>
+         <a href="/auth/login" class="btn-masuk">Masuk</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-section text-center">
+    <div class="container-fluid p-0"> 
+      <div class="row justify-content-center align-items-center m-0">
+        <div class="col-lg-12">
+
+          <div class="container mb-4">
+            <h1 class="hero-title mb-0" style="font-family: 'Volkhov', serif; font-size: 5rem; font-weight: 700; line-height: 1.2;">SIWILA</h1>
+            
+            <h4 class="mb-4 text-uppercase" style="font-weight: 700; color: #ebedf0; letter-spacing: 2px;">
+              APLIKASI PENDAFTARAN WISUDA POLINELA
+            </h4>
+
+            <p class="hero-subtitle mx-auto mb-4" style="max-width: 750px; font-size: 1.1rem; line-height: 1.6;">
+              Platform digital resmi Politeknik Negeri Lampung untuk mempermudah mahasiswa dalam proses 
+              <strong>pendaftaran wisuda</strong>, <strong>pengumpulan berkas persyaratan</strong>, 
+              dan <strong>pemantauan status verifikasi</strong> secara online, cepat, dan transparan.
+            </p>
+
+            <a href="/auth/register" class="btn-daftar d-inline-block">
+              Daftar Akun <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+          </div>
+
+          <div class="swiper-container-wrapper">
+            <div class="swiper mySwiper">
+              <div class="swiper-wrapper">
+                
+                <div class="swiper-slide">
+                  <img src="/images/wisuda1.jpg" alt="Momen Wisuda 1">
+                </div>
+                
+                <div class="swiper-slide">
+                  <img src="/images/Wisuda12.jpg" alt="Wisuda 4">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/images/Wisuda3.jpg" alt="Wisuda 3">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/images/Wisuda9.jpg" alt="Wisuda 4">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/images/Wisuda5.jpg" alt="Wisuda 5">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/images/Wisuda6.jpg" alt="Wisuda 6">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/images/Wisuda7.jpg" alt="Wisuda 7">
+                </div>
+                
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="height: 100px;">
+      <path fill="#F8F9FA" fill-opacity="1" d="M0,50 C240,80 480,80 720,50 C960,20 1200,20 1440,50 L1440,100 L0,100 Z"></path>
+    </svg>
+  </section>
+
+  <footer class="footer text-white" style="background-color: #111; padding-top: 80px;">
+    <div class="container">
+      <div class="row">
+        
+        <div class="col-lg-4 col-md-6 mb-5">
+          <div class="footer-logo mb-4 d-flex align-items-center">
+            <img src="/images/logopolinela.png" alt="Logo Polinela" style="height: 50px;">
+            <h5 class="ms-3 mb-0 fw-bold" style="font-family: 'Volkhov', serif; letter-spacing: 1px;">SIWILA</h5>
+          </div>
+          <p class="footer-text text-white-50" style="text-align: justify; line-height: 1.8;">
+            Politeknik Negeri Lampung adalah perguruan tinggi vokasi yang berkomitmen menghasilkan lulusan 
+            berkompeten, profesional, dan siap kerja. Kami terus berinovasi dalam mengembangkan pendidikan 
+            vokasi yang relevan dengan kebutuhan industri.
+          </p>
+          <div class="social-icons mt-4">
+          <a href="https://www.facebook.com/humaspolinela/" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2" style="width: 35px; height: 35px;">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com/politeknik_negeri_lampung/" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2" style="width: 35px; height: 35px;">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.youtube.com/@politeknik_negeri_lampung" target="_blank" class="btn btn-outline-light btn-sm rounded-circle" style="width: 35px; height: 35px;">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+        </div>
+
+        <div class="col-lg-2 col-md-6 mb-5 offset-lg-1">
+          <h6 class="text-uppercase fw-bold mb-4 text-warning" style="letter-spacing: 1px;">Menu Cepat</h6>
+          <ul class="list-unstyled footer-links">
+            <li class="mb-3"><a href="/informasi" class="text-white-50 text-decoration-none hover-white">Informasi</a></li>
+            <li class="mb-3"><a href="/statistik" class="text-white-50 text-decoration-none hover-white">Statistik</a></li>
+            <li class="mb-3"><a href="/daftar-ipk" class="text-white-50 text-decoration-none hover-white">Daftar IPK</a></li>
+            <li class="mb-3"><a href="/tentang" class="text-white-50 text-decoration-none hover-white">Tentang</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-5">
+          <h6 class="text-uppercase fw-bold mb-4 text-warning" style="letter-spacing: 1px;">Kontak</h6>
+          <ul class="list-unstyled footer-links">
+            <li class="mb-3 d-flex text-white-50">
+              <i class="fas fa-map-marker-alt mt-1 me-3 text-warning"></i>
+              <span>Jl. Soekarno Hatta No.10, Rajabasa, Bandar Lampung</span>
+            </li>
+            <li class="mb-3 d-flex text-white-50">
+              <i class="fas fa-envelope mt-1 me-3 text-warning"></i>
+              <span>wisuda@polinela.ac.id</span>
+            </li>
+            <li class="mb-3 d-flex text-white-50">
+              <i class="fas fa-phone mt-1 me-3 text-warning"></i>
+              <span>(0721) 787309</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-6 mb-5">
+          <h6 class="text-uppercase fw-bold mb-4 text-warning" style="letter-spacing: 1px;">Pelayanan</h6>
+          <ul class="list-unstyled footer-links">
+            <li class="mb-2 text-white-50">
+              <i class="fas fa-clock me-2 text-warning"></i> Senin - Jumat
+            </li>
+            <li class="mb-3 text-white-50 ps-4">
+              08:00 - 16:00
+            </li>
+            <li class="text-white-50" style="font-size: 0.85rem;">
+              <i class="fas fa-info-circle me-1 text-warning"></i> Libur Nasional Tutup
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom border-top border-secondary pt-4 pb-4 mt-2">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            <p class="mb-0 text-white-50 small">&copy; 2025 Politeknik Negeri Lampung. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <p class="mb-0 text-white-50 small">Developed by Tim MI Polinela</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      loop: true, 
+      
+      coverflowEffect: {
+        rotate: 30,
+        stretch: 0,
+        depth: 300,
+        modifier: 1,
+        slideShadows: true,
+      },
+      
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+  </script>
+
+</body>
+</html>

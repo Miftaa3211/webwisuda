@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Mahasiswa - Wisuda Polinela</title>
+  <link rel="shortcut icon" href="/images/logopolinela.png" type="image/png">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container">
+    <a class="navbar-brand" href="/mahasiswa/dashboard">
+      <i class="fas fa-graduation-cap me-2"></i>Profil Mahasiswa
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link active" href="/mahasiswa/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/calon-wisudawan">Calon wisudawan</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/logout">Logout</a>
+        </li>
+        <li class="nav-item ms-3">
+          <div class="nav-avatar-img">
+            <% if (mahasiswa.foto_profil) { %>
+              <img src="/uploads/profile/<%= mahasiswa.foto_profil %>" alt="Foto Profil">
+            <% } else { %>
+              <img src="https://ui-avatars.com/api/?name=<%= mahasiswa.nama %>&size=120&background=0047AB&color=fff&bold=true" alt="Avatar">
+            <% } %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-content">
+  <div class="container">
+    <h1 class="page-title">Profil Mahasiswa</h1>
+    <p class="page-subtitle">Lihat dan kelola informasi pribadi serta status pendaftaran wisuda Anda.</p>
+    
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">
+              <% if (mahasiswa.foto_profil) { %>
+                 <img src="/uploads/profile/<%= mahasiswa.foto_profil %>" alt="Foto Profil">
+              <% } else { %>
+                <img src="https://ui-avatars.com/api/?name=<%= mahasiswa.nama %>&size=120&background=0047AB&color=fff&bold=true" alt="Avatar">
+              <% } %>
+            </div>
+            <div class="profile-info flex-grow-1">
+              <h2><%= mahasiswa.nama %></h2>
+              <p class="role">Mahasiswa</p>
+              <p class="faculty">Jurusan <%= mahasiswa.jurusan %></p>
+            </div>
+            <button class="btn-edit-profile" onclick="window.location.href='/mahasiswa/edit-profile'">
+              <i class="fas fa-pen me-2"></i>Edit Profil
+            </button>
+          </div>
+          
+          <div class="profile-details">
+            <div class="detail-row"><div class="detail-label">NIM</div><div class="detail-value"><%= mahasiswa.nim %></div></div>
+            <div class="detail-row"><div class="detail-label">Prodi</div><div class="detail-value"><%= mahasiswa.prodi %></div></div>
+            <div class="detail-row"><div class="detail-label">Email</div><div class="detail-value"><%= user.email %></div></div>
+            <div class="detail-row"><div class="detail-label">No. HP</div><div class="detail-value"><%= mahasiswa.no_hp || '-' %></div></div>
+            <div class="detail-row"><div class="detail-label">Angkatan</div><div class="detail-value"><%= mahasiswa.angkatan || '-' %></div></div>
+            <div class="detail-row"><div class="detail-label">IPK</div><div class="detail-value"><%= mahasiswa.ipk || '-' %></div></div>
+            <div class="detail-row"><div class="detail-label">Tahun Lulus</div><div class="detail-value"><%= mahasiswa.tahun_lulus || '-' %></div></div>
+          </div>
+        </div>
+        
+        <div class="quick-access">
+          <h3>Akses Cepat</h3>
+          <div class="access-grid">
+            <a href="/mahasiswa/riwayat" class="access-card">
+              <i class="fas fa-history"></i><h4>Riwayat</h4><p>Lihat status.</p>
+            </a>
+            
+            <% if (statusWaktu.isVerified) { %>
+              <div class="access-card locked" style="background: #f0f0f0; border: 1px solid #0047AB; cursor: default;">
+                <i class="fas fa-check-circle" style="color: #0047AB;"></i>
+                <h4 style="color: #0047AB;">Data Terverifikasi</h4>
+                <p class="small" style="color: #003366;">Upload dikunci.</p>
+              </div>
+            <% } else if (statusWaktu.isNotOpenYet) { %>
+              <div class="access-card locked" style="background: #fff3cd; border: 1px solid #ffeeba; cursor: not-allowed;">
+                <i class="fas fa-clock text-warning"></i><h4 class="text-warning">Belum Dibuka</h4>
+              </div>
+            <% } else if (statusWaktu.isClosed) { %>
+              <div class="access-card locked" style="background: #f8d7da; border: 1px solid #f5c6cb; cursor: not-allowed;">
+                <i class="fas fa-lock text-danger"></i><h4 class="text-danger">Ditutup</h4>
+              </div>
+            <% } else { %>
+              <a href="/mahasiswa/upload-berkas" class="access-card">
+                <i class="fas fa-file-upload"></i><h4>Upload Berkas</h4><p>Lengkapi persyaratan.</p>
+              </a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4">
+        <div class="status-card">
+          <h3>Status Wisuda</h3>
+          
+          <% if (pendaftaran) { %>
+            
+            <% if (pendaftaran.status === 'Diverifikasi') { %>
+              <div class="status-badge bg-success text-white mb-3" style="background-color: #0047AB !important;">
+                <i class="fas fa-check-double me-2"></i>Terverifikasi
+              </div>
+              <div class="alert alert-success border-0 shadow-sm">
+                <strong><i class="fas fa-calendar-day me-2"></i>Jadwal Wisuda Anda:</strong>
+                
+                <h4 class="mt-2 mb-0 fw-bold" style="color: #0047AB;">
+                   <%= pendaftaran.tanggal_wisuda ? new Date(pendaftaran.tanggal_wisuda).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'}) : 'Jadwal belum ditentukan' %>
+                </h4>
+                
+                <% if (pendaftaran.nama_kloter) { %>
+                   <div class="mt-2 badge bg-primary text-white p-2">
+                      <i class="fas fa-ticket-alt me-1"></i> <%= pendaftaran.nama_kloter %>
+                   </div>
+                <% } %>
+                <p class="mt-2 mb-0 small">Lokasi: Gedung Serba Guna</p>
+              </div>
+              <button class="btn-secondary-custom w-100 mt-2" onclick="window.location.href='/mahasiswa/cetak-bukti'">
+                <i class="fas fa-print me-2"></i>Cetak Bukti Pendaftaran
+              </button>
+
+            <% } else if (pendaftaran.status === 'Ditolak') { %>
+              <div class="status-badge rejected mb-3"><i class="fas fa-times-circle"></i> Ditolak</div>
+              <p class="small text-danger">Catatan: <%= pendaftaran.catatan %></p>
+              <% if (!statusWaktu.isClosed) { %>
+                <button class="btn-primary-custom w-100" onclick="window.location.href='/mahasiswa/upload-berkas'">
+                  Perbaiki Berkas
+                </button>
+              <% } %>
+
+            <% } else { %>
+              <div class="status-badge pending mb-3">
+                <i class="fas fa-hourglass-half"></i> Menunggu Verifikasi
+              </div>
+              
+              <% if (pendaftaran.nama_kloter) { %>
+                <div class="alert alert-info border-0 shadow-sm mb-3">
+                  <small class="text-muted">Pilihan Jadwal:</small><br>
+                  <strong><%= pendaftaran.nama_kloter %></strong>
+                  <br>
+                  <small class="text-dark"><i class="far fa-calendar-alt"></i> <%= pendaftaran.tanggal_wisuda ? new Date(pendaftaran.tanggal_wisuda).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'}) : '-' %></small>
+                </div>
+              <% } %>
+
+              <div class="alert alert-warning border-0" style="background-color: #fff3cd;">
+                <i class="fas fa-info-circle me-1"></i> 
+                Data Anda sudah masuk. Admin sedang memverifikasi berkas.
+              </div>
+
+              <button class="btn-primary-custom w-100 mt-3" onclick="window.location.href='/mahasiswa/detail-pendaftaran'">
+                Lihat Detail Berkas
+              </button>
+            <% } %>
+
+          <% } else { %>
+             <% if (statusWaktu.isNotOpenYet) { %>
+               <div class="alert alert-warning"><i class="fas fa-clock me-2"></i>Pendaftaran Belum Dibuka</div>
+            <% } else if (statusWaktu.isClosed) { %>
+               <div class="alert alert-danger">Pendaftaran Ditutup</div>
+            <% } else { %>
+              <div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Silakan lakukan pendaftaran.</div>
+              <button class="btn-primary-custom" onclick="window.location.href='/mahasiswa/upload-berkas'">
+                <i class="fas fa-plus me-2"></i>Daftar Wisuda Sekarang
+              </button>
+            <% } %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>&copy; 2025 Politeknik Negeri Lampung. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  <% if (typeof success_msg !== 'undefined' && success_msg.length > 0) { %>
+    Swal.fire({ icon: 'success', title: 'Berhasil!', text: '<%= success_msg %>', confirmButtonColor: '#0047AB' });
+  <% } %>
+  <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+    Swal.fire({ icon: 'error', title: 'Error!', text: '<%= error_msg %>', confirmButtonColor: '#0047AB' });
+  <% } %>
+</script>
+
+</body>
+</html>
